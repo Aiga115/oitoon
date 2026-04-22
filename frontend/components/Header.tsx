@@ -1,12 +1,12 @@
 import Link from "next/link";
 
 const NAV_ITEMS = [
-  { label: "Рассказы", href: "/stories" },
-  { label: "Фанфики", href: "/fanfics" },
-  { label: "Комиксы", href: "/comics" },
-  { label: "Авторы", href: "/authors" },
-  { label: "Рейтинги", href: "/ratings" },
-  { label: "Я хочу быть автором", href: "/become-author" },
+  { label: "Рассказы", href: "/stories", icon: "📖" },
+  { label: "Фанфики", href: "/fanfics", icon: "✨" },
+  { label: "Комиксы", href: "/comics", icon: "🎨" },
+  { label: "Авторы", href: "/authors", icon: "🖊️" },
+  { label: "Рейтинги", href: "/ratings", icon: "🏆" },
+  { label: "Я хочу быть автором", href: "/become-author", icon: "🚀", special: true },
 ];
 
 export default function Header() {
@@ -14,21 +14,32 @@ export default function Header() {
     <div>
       {/* Top bar: logo + auth */}
       <header
-        className="py-3 px-6"
-        style={{ backgroundColor: "#1a1630", borderBottom: "1px solid #2e2550" }}
+        className="py-4 px-6"
+        style={{ backgroundColor: "#13102b", borderBottom: "1px solid #2a2060" }}
       >
         <div className="flex max-w-6xl mx-auto items-center justify-between">
-          <Link href="/" className="text-2xl font-bold tracking-wider">
-            <span style={{ color: "#7c3aed", fontFamily: "var(--font-roboto-mono)" }}>oi</span>
-            <span style={{ color: "#ff8c42", fontFamily: "var(--font-roboto-mono)" }}>toon</span>
+          <Link href="/" className="text-3xl tracking-wider leading-none">
+            <span style={{ color: "#a855f7", fontFamily: "var(--font-roboto-mono)" }}>oi</span>
+            <span style={{ color: "#f97316", fontFamily: "var(--font-roboto-mono)" }}>toon</span>
           </Link>
 
-          <nav className="flex items-center text-sm font-medium">
-            <Link href="/login" className="text-[#ff8c42] hover:text-[#ff9c42] transition-colors">
+          <nav className="flex items-center gap-3">
+            <Link
+              href="/login"
+              className="text-sm font-bold px-5 py-2 rounded-xl transition-colors"
+              style={{
+                color: "#f97316",
+                backgroundColor: "rgba(249,115,22,0.12)",
+                border: "1.5px solid rgba(249,115,22,0.4)",
+              }}
+            >
               Войти
             </Link>
-            <span className="mx-3" style={{ color: "#2e2550" }}>|</span>
-            <Link href="/register" className="text-[#9f67ff] hover:text-[#b78fff] transition-colors">
+            <Link
+              href="/register"
+              className="text-sm font-bold px-5 py-2 rounded-xl text-white transition-colors"
+              style={{ backgroundColor: "#a855f7" }}
+            >
               Регистрация
             </Link>
           </nav>
@@ -37,17 +48,29 @@ export default function Header() {
 
       {/* Sub-header: nav + search */}
       <div
-        className="px-6 py-2"
-        style={{ backgroundColor: "#150f2e", borderBottom: "1px solid #2e2550" }}
+        className="px-6"
+        style={{ backgroundColor: "#13102b", borderBottom: "1px solid #2a2060" }}
       >
-        <div className="flex max-w-6xl mx-auto items-center gap-6 flex-wrap">
-          <nav className="flex items-center gap-5 flex-wrap flex-1">
+        <div className="flex max-w-6xl mx-auto items-center justify-between">
+          <nav className="flex items-center gap-1 flex-wrap">
             {NAV_ITEMS.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
-                className="text-sm text-zinc-300 hover:text-white transition-colors whitespace-nowrap"
+                className="flex items-center gap-2 text-sm font-bold px-4 py-3 rounded-xl whitespace-nowrap transition-colors"
+                style={
+                  item.special
+                    ? {
+                        color: "#f97316",
+                        backgroundColor: "rgba(249,115,22,0.10)",
+                        border: "1px solid rgba(249,115,22,0.25)",
+                      }
+                    : {
+                        color: "#c4b5d4",
+                      }
+                }
               >
+                <span style={{ fontSize: "15px" }}>{item.icon}</span>
                 {item.label}
               </Link>
             ))}
@@ -56,7 +79,7 @@ export default function Header() {
           <div className="relative flex items-center shrink-0">
             <svg
               className="absolute left-3 w-4 h-4 pointer-events-none"
-              style={{ color: "#7c3aed" }}
+              style={{ color: "#6d5fa0" }}
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
@@ -68,10 +91,12 @@ export default function Header() {
             <input
               type="search"
               placeholder="Поиск..."
-              className="pl-9 pr-4 py-1.5 text-sm rounded bg-transparent outline-none text-zinc-200 placeholder-zinc-500 focus:ring-1"
+              className="pl-9 pr-4 py-2 text-sm rounded-xl outline-none text-zinc-200 placeholder-zinc-500 focus:ring-1 focus:ring-purple-500"
               style={{
-                border: "1px solid #2e2550",
+                backgroundColor: "#1e1a3a",
+                border: "1.5px solid #3b2f6e",
                 width: "200px",
+                fontFamily: "var(--font-roboto-mono)",
               }}
             />
           </div>
