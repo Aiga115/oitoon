@@ -1,126 +1,14 @@
 "use client";
 
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import Header from "@/components/Header";
-import StoryCard, { type StoryItem } from "@/components/StoryCard";
+import StoryCard from "@/components/StoryCard";
 import StoryFilters, { type Filters, DEFAULT_FILTERS } from "@/components/StoryFilters";
-
-const MOCK_STORIES: StoryItem[] = [
-  {
-    id: 1,
-    title: "Хроники Тёмного Леса",
-    author: "Артём Белов",
-    genres: ["Фэнтези", "Приключения"],
-    year: 2023,
-    country: "Россия",
-    status: "ongoing",
-    pages: 120,
-    chapters: 18,
-    rating: 4.8,
-    description:
-      "Молодой охотник обнаруживает в глубине проклятого леса древний артефакт, пробуждающий силы, которые не должны были вернуться.",
-  },
-  {
-    id: 2,
-    title: "Город Снов",
-    author: "Мария Соколова",
-    genres: ["Мистика", "Триллер"],
-    year: 2022,
-    country: "Казахстан",
-    status: "completed",
-    pages: 85,
-    chapters: 34,
-    rating: 4.5,
-    description:
-      "Детектив расследует серию странных исчезновений, которые связаны с загадочным городом, существующим только во снах.",
-  },
-  {
-    id: 3,
-    title: "Механический Рыцарь",
-    author: "Дмитрий Орлов",
-    genres: ["Стимпанк", "Научная фантастика"],
-    year: 2024,
-    country: "Россия",
-    status: "ongoing",
-    pages: 200,
-    chapters: 52,
-    rating: 4.2,
-    description:
-      "В мире пара и шестерёнок одинокий изобретатель создаёт боевого голема, чтобы защитить свой город от надвигающейся армии.",
-  },
-  {
-    id: 4,
-    title: "Алая Луна",
-    author: "Наталья Ким",
-    genres: ["Романтика", "Фэнтези"],
-    year: 2023,
-    country: "Кыргызстан",
-    status: "completed",
-    pages: 65,
-    chapters: 29,
-    rating: 4.6,
-    description:
-      "Под кровавой луной двое врагов вынуждены объединиться, чтобы выжить, и постепенно открывают в себе чувства сильнее ненависти.",
-  },
-  {
-    id: 5,
-    title: "Звёздный Странник",
-    author: "Игорь Зайцев",
-    genres: ["Научная фантастика", "Приключения"],
-    year: 2024,
-    country: "Россия",
-    status: "ongoing",
-    pages: 350,
-    chapters: 11,
-    rating: 4.9,
-    description:
-      "Капитан заброшенного звездолёта получает сигнал с планеты, которой нет ни на одной карте. Это может быть спасение — или ловушка.",
-  },
-  {
-    id: 6,
-    title: "Тайны Подземелья",
-    author: "Ольга Федорова",
-    genres: ["Приключения", "Мистика"],
-    year: 2021,
-    country: "Узбекистан",
-    status: "completed",
-    pages: 145,
-    chapters: 7,
-    rating: 4.3,
-    description:
-      "Группа студентов-археологов проникает в запретные катакомбы под Москвой и сталкивается с историей, которую власти хотели скрыть.",
-  },
-  {
-    id: 7,
-    title: "Сердце Дракона",
-    author: "Павел Морозов",
-    genres: ["Фэнтези", "Романтика"],
-    year: 2024,
-    country: "Казахстан",
-    status: "ongoing",
-    pages: 280,
-    chapters: 61,
-    rating: 4.7,
-    description:
-      "Принцесса, проклятая с рождения, отправляется на край света, чтобы найти последнего дракона — единственного, кто может её исцелить.",
-  },
-  {
-    id: 8,
-    title: "Последний Самурай",
-    author: "Анна Петрова",
-    genres: ["Историческое", "Боевик"],
-    year: 2022,
-    country: "Россия",
-    status: "completed",
-    pages: 420,
-    chapters: 23,
-    rating: 4.4,
-    description:
-      "Эпическая история воина, который отказывается принять новый порядок и в одиночку бросает вызов целой империи, чтобы сохранить честь.",
-  },
-];
+import { MOCK_STORIES } from "@/lib/mockStories";
 
 const ALL_GENRES = [...new Set(MOCK_STORIES.flatMap((s) => s.genres))].sort();
+const ALL_LANGUAGES = [...new Set(MOCK_STORIES.flatMap((s) => s.language))].sort();
 const ALL_YEARS = [...new Set(MOCK_STORIES.map((s) => s.year))];
 
 function matchesPages(pages: number, bucket: Filters["pages"]): boolean {
@@ -133,12 +21,18 @@ function matchesPages(pages: number, bucket: Filters["pages"]): boolean {
 }
 
 export default function Home() {
+  const { t } = useTranslation();
   const [filters, setFilters] = useState<Filters>(DEFAULT_FILTERS);
 
   const filtered = MOCK_STORIES.filter((story) => {
     if (
       filters.genres.length > 0 &&
       !filters.genres.some((g) => story.genres.includes(g))
+    )
+      return false;
+    if (
+      filters.languages.length > 0 &&
+      !filters.languages.some((l) => story.language.includes(l))
     )
       return false;
     if (filters.year !== "all" && story.year !== parseInt(filters.year))
@@ -181,10 +75,10 @@ export default function Home() {
             {/* Content */}
             <div style={{ position: "relative", zIndex: 2, padding: "28px 32px", flex: 1 }}>
               <p style={{ fontSize: "11px", fontWeight: 600, letterSpacing: "0.08em", textTransform: "uppercase", color: "#2dd4bf", marginBottom: "8px" }}>
-                ⭐ Рекомендуем сегодня
+                {t("hero.recommended")}
               </p>
               <h1 style={{ fontSize: "22px", fontWeight: 800, color: "#f1f0fa", letterSpacing: "-0.4px", marginBottom: "10px", lineHeight: 1.25 }}>
-                Откройте новые истории
+                {t("hero.title")}
               </h1>
               <div style={{ display: "flex", gap: "6px", marginBottom: "16px", flexWrap: "wrap" }}>
                 {["Фэнтези", "Стимпанк", "Романтика"].map((tag) => (
@@ -196,7 +90,7 @@ export default function Home() {
               <button
                 style={{ fontSize: "12px", fontWeight: 600, padding: "8px 18px", borderRadius: "8px", backgroundColor: "#a78bfa", color: "#fff", border: "none", cursor: "pointer" }}
               >
-                Читать сейчас
+                {t("hero.readNow")}
               </button>
             </div>
 
@@ -204,16 +98,16 @@ export default function Home() {
             <div style={{ position: "absolute", right: "32px", bottom: "28px", textAlign: "center", zIndex: 2 }}>
               <div style={{ fontSize: "32px", fontWeight: 800, color: "#fbbf24", lineHeight: 1 }}>4.8</div>
               <div style={{ fontSize: "10px", color: "#6b6887", marginTop: "3px" }}>★★★★★</div>
-              <div style={{ fontSize: "9px", color: "#6b6887", marginTop: "1px" }}>рейтинг</div>
+              <div style={{ fontSize: "9px", color: "#6b6887", marginTop: "1px" }}>{t("home.ratingLabel")}</div>
             </div>
           </div>
 
           {/* Section heading */}
           <div style={{ display: "inline-block", position: "relative", marginBottom: "20px" }}>
             <h2 style={{ fontSize: "18px", fontWeight: 700, letterSpacing: "-0.3px", color: "#f1f0fa" }}>
-              Популярное
+              {t("home.popular")}
               <span style={{ marginLeft: "6px", fontSize: "14px", fontWeight: 400, color: "#6b6887" }}>
-                · {filtered.length} историй
+                · {filtered.length} {t("home.storiesCountSuffix")}
               </span>
             </h2>
             <div style={{ position: "absolute", bottom: "-4px", left: 0, width: "32px", height: "2px", backgroundColor: "#a78bfa", borderRadius: "1px" }} />
@@ -222,6 +116,7 @@ export default function Home() {
           <StoryFilters
             filters={filters}
             availableGenres={ALL_GENRES}
+            availableLanguages={ALL_LANGUAGES}
             availableYears={ALL_YEARS}
             onChange={setFilters}
           />
@@ -234,7 +129,7 @@ export default function Home() {
             </div>
           ) : (
             <p className="text-sm mt-8" style={{ color: "#6b6887" }}>
-              Ничего не найдено. Попробуйте изменить фильтры.
+              {t("home.emptyFilter")}
             </p>
           )}
         </div>

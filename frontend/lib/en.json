@@ -1,0 +1,102 @@
+{
+  "nav": {
+    "stories": "Stories",
+    "fanfics": "Fanfics",
+    "comics": "Comics",
+    "authors": "Authors",
+    "ratings": "Ratings",
+    "becomeAuthor": "I want to become an author"
+  },
+  "header": {
+    "searchPlaceholder": "Search stories, authors...",
+    "login": "Log in",
+    "register": "Register"
+  },
+  "hero": {
+    "recommended": "⭐ Recommended today",
+    "title": "Discover new stories",
+    "readNow": "Read now"
+  },
+  "home": {
+    "popular": "Popular",
+    "ratingLabel": "rating",
+    "storiesCountSuffix": "stories",
+    "emptyFilter": "Nothing found. Try changing the filters."
+  },
+  "filters": {
+    "genres": "Genres",
+    "year": "Year",
+    "country": "Country",
+    "pages": "Pages",
+    "reset": "Reset",
+    "language": "Language",
+    "status": {
+      "all": "All",
+      "ongoing": "Ongoing",
+      "completed": "Completed"
+    },
+    "pageBuckets": {
+      "all": "All",
+      "upTo50": "up to 50",
+      "from50to200": "50–200",
+      "from200to500": "200–500",
+      "moreThan500": "500+"
+    }
+  },
+  "languageNames": {
+    "ru": "Russian",
+    "ky": "Kyrgyz"
+  },
+  "genreNames": {
+    "fantasy": "Fantasy",
+    "adventure": "Adventure",
+    "mystery": "Mystery",
+    "thriller": "Thriller",
+    "steampunk": "Steampunk",
+    "scifi": "Science Fiction",
+    "romance": "Romance",
+    "action": "Action",
+    "historical": "Historical"
+  },
+  "countries": [
+    "Russia",
+    "Kazakhstan",
+    "Uzbekistan",
+    "Kyrgyzstan",
+    "Tajikistan",
+    "Turkmenistan"
+  ],
+  "storyCard": {
+    "infoLabel": "Information",
+    "ongoing": "Ongoing",
+    "completed": "Completed",
+    "authorLabel": "Author",
+    "chaptersSuffix": "chapters"
+  },
+  "auth": {
+    "login": {
+      "title": "Log in",
+      "description": "Sign in to your account.",
+      "buttonLabel": "Log in",
+      "alternateLabel": "Don't have an account?",
+      "alternateHref": "/register",
+      "alternateAction": "Create one"
+    },
+    "register": {
+      "title": "Register",
+      "description": "Create a new account.",
+      "buttonLabel": "Create account",
+      "alternateLabel": "Already have an account?",
+      "alternateHref": "/login",
+      "alternateAction": "Log in"
+    },
+    "fields": {
+      "name": "Name",
+      "email": "Email",
+      "password": "Password",
+      "namePlaceholder": "John Doe",
+      "emailPlaceholder": "name@example.com",
+      "passwordPlaceholder": "Enter password"
+    }
+  }
+}

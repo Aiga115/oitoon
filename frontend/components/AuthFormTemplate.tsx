@@ -1,28 +1,29 @@
+"use client";
+
+import { useTranslation } from "react-i18next";
+
 type AuthFormTemplateProps = {
   mode: "login" | "register";
 };
 
-const contentByMode = {
-  login: {
-    title: "Login",
-    description: "Template page for signing in.",
-    buttonLabel: "Sign in",
-    alternateLabel: "Need an account?",
-    alternateHref: "/register",
-    alternateAction: "Create one",
-  },
-  register: {
-    title: "Register",
-    description: "Template page for creating an account.",
-    buttonLabel: "Create account",
-    alternateLabel: "Already have an account?",
-    alternateHref: "/login",
-    alternateAction: "Sign in",
-  },
-} as const;
-
 export default function AuthFormTemplate({ mode }: AuthFormTemplateProps) {
-  const content = contentByMode[mode];
+  const { t } = useTranslation();
+  const content = {
+    title: t(`auth.${mode}.title`),
+    description: t(`auth.${mode}.description`),
+    buttonLabel: t(`auth.${mode}.buttonLabel`),
+    alternateLabel: t(`auth.${mode}.alternateLabel`),
+    alternateHref: mode === "login" ? "/register" : "/login",
+    alternateAction: t(`auth.${mode}.alternateAction`),
+  };
+  const fields = {
+    name: t("auth.fields.name"),
+    email: t("auth.fields.email"),
+    password: t("auth.fields.password"),
+    namePlaceholder: t("auth.fields.namePlaceholder"),
+    emailPlaceholder: t("auth.fields.emailPlaceholder"),
+    passwordPlaceholder: t("auth.fields.passwordPlaceholder"),
+  };
 
   return (
     <main className="flex min-h-screen items-center justify-center px-6 py-12">
@@ -36,13 +37,13 @@ export default function AuthFormTemplate({ mode }: AuthFormTemplateProps) {
           {mode === "register" ? (
             <div className="space-y-2">
               <label htmlFor="name" className="block text-sm font-medium">
-                Name
+                {fields.name}
               </label>
               <input
                 id="name"
                 name="name"
                 type="text"
-                placeholder="Jane Doe"
+                placeholder={fields.namePlaceholder}
                 className="w-full rounded border px-3 py-2"
               />
             </div>
@@ -50,26 +51,26 @@ export default function AuthFormTemplate({ mode }: AuthFormTemplateProps) {
 
           <div className="space-y-2">
             <label htmlFor="email" className="block text-sm font-medium">
-              Email
+              {fields.email}
             </label>
             <input
               id="email"
               name="email"
               type="email"
-              placeholder="name@example.com"
+              placeholder={fields.emailPlaceholder}
               className="w-full rounded border px-3 py-2"
             />
           </div>
 
           <div className="space-y-2">
             <label htmlFor="password" className="block text-sm font-medium">
-              Password
+              {fields.password}
             </label>
             <input
               id="password"
               name="password"
               type="password"
-              placeholder="Enter your password"
+              placeholder={fields.passwordPlaceholder}
               className="w-full rounded border px-3 py-2"
             />
           </div>

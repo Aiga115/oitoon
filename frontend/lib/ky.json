@@ -1,0 +1,102 @@
+{
+  "nav": {
+    "stories": "Аңгемелер",
+    "fanfics": "Фанфиктер",
+    "comics": "Комикстер",
+    "authors": "Авторлор",
+    "ratings": "Рейтингдер",
+    "becomeAuthor": "Мен автор болгум келет"
+  },
+  "header": {
+    "searchPlaceholder": "Аңгеме, авторлорду издөө...",
+    "login": "Кирүү",
+    "register": "Катталуу"
+  },
+  "hero": {
+    "recommended": "⭐ Бүгүн сунушталат",
+    "title": "Жаңы аңгемелерди ачыңыз",
+    "readNow": "Азыр окуу"
+  },
+  "home": {
+    "popular": "Популярдуу",
+    "ratingLabel": "рейтинг",
+    "storiesCountSuffix": "аңгеме",
+    "emptyFilter": "Эч нерсе табылган жок. Чыпкаларды өзгөртүп көрүңүз."
+  },
+  "filters": {
+    "genres": "Жанрлар",
+    "year": "Жыл",
+    "country": "Өлкө",
+    "pages": "Барактар",
+    "reset": "Баштапкы абалга келтирүү",
+    "language": "Тил",
+    "status": {
+      "all": "Баары",
+      "ongoing": "Жарыяланууда",
+      "completed": "Аяктады"
+    },
+    "pageBuckets": {
+      "all": "Баары",
+      "upTo50": "50гө чейин",
+      "from50to200": "50–200",
+      "from200to500": "200–500",
+      "moreThan500": "500+"
+    }
+  },
+  "languageNames": {
+    "ru": "Орусча",
+    "ky": "Кыргызча"
+  },
+  "genreNames": {
+    "fantasy": "Фантастика",
+    "adventure": "Авантюра",
+    "mystery": "Мистика",
+    "thriller": "Триллер",
+    "steampunk": "Стимпанк",
+    "scifi": "Илим-фантастика",
+    "romance": "Романтика",
+    "action": "Боевик",
+    "historical": "Тарыхый"
+  },
+  "countries": [
+    "Россия",
+    "Казакстан",
+    "Өзбекстан",
+    "Кыргызстан",
+    "Тажикстан",
+    "Түркмөнстан"
+  ],
+  "storyCard": {
+    "infoLabel": "Маалымат",
+    "ongoing": "Жарыяланууда",
+    "completed": "Аяктады",
+    "authorLabel": "Автор",
+    "chaptersSuffix": "бөлүм"
+  },
+  "auth": {
+    "login": {
+      "title": "Кирүү",
+      "description": "Аккаунтуңузга кириңиз.",
+      "buttonLabel": "Кирүү",
+      "alternateLabel": "Аккаунтуңуз жокпу?",
+      "alternateHref": "/register",
+      "alternateAction": "Катталуу"
+    },
+    "register": {
+      "title": "Катталуу",
+      "description": "Жаңы аккаунт түзүңүз.",
+      "buttonLabel": "Аккаунт түзүү",
+      "alternateLabel": "Аккаунтуңуз барбы?",
+      "alternateHref": "/login",
+      "alternateAction": "Кирүү"
+    },
+    "fields": {
+      "name": "Аты",
+      "email": "Электрондук почта",
+      "password": "Сырсөз",
+      "namePlaceholder": "Айбек Дооронов",
+      "emailPlaceholder": "name@example.com",
+      "passwordPlaceholder": "Сырсөзүңүздү киргизиңиз"
+    }
+  }
+}

@@ -1,0 +1,102 @@
+{
+  "nav": {
+    "stories": "Рассказы",
+    "fanfics": "Фанфики",
+    "comics": "Комиксы",
+    "authors": "Авторы",
+    "ratings": "Рейтинги",
+    "becomeAuthor": "Я хочу стать автором"
+  },
+  "header": {
+    "searchPlaceholder": "Поиск историй, авторов...",
+    "login": "Войти",
+    "register": "Регистрация"
+  },
+  "hero": {
+    "recommended": "⭐ Рекомендуем сегодня",
+    "title": "Откройте новые истории",
+    "readNow": "Читать сейчас"
+  },
+  "home": {
+    "popular": "Популярное",
+    "ratingLabel": "рейтинг",
+    "storiesCountSuffix": "историй",
+    "emptyFilter": "Ничего не найдено. Попробуйте изменить фильтры."
+  },
+  "filters": {
+    "genres": "Жанры",
+    "year": "Год",
+    "country": "Страна",
+    "pages": "Страниц",
+    "reset": "Сбросить",
+    "language": "Язык",
+    "status": {
+      "all": "Все",
+      "ongoing": "Выходит",
+      "completed": "Завершено"
+    },
+    "pageBuckets": {
+      "all": "Все",
+      "upTo50": "до 50",
+      "from50to200": "50–200",
+      "from200to500": "200–500",
+      "moreThan500": "500+"
+    }
+  },
+  "languageNames": {
+    "ru": "Русский",
+    "ky": "Кыргызский"
+  },
+  "genreNames": {
+    "fantasy": "Фэнтези",
+    "adventure": "Приключения",
+    "mystery": "Мистика",
+    "thriller": "Триллер",
+    "steampunk": "Стимпанк",
+    "scifi": "Научная фантастика",
+    "romance": "Романтика",
+    "action": "Боевик",
+    "historical": "Историческое"
+  },
+  "countries": [
+    "Россия",
+    "Казахстан",
+    "Узбекистан",
+    "Кыргызстан",
+    "Таджикистан",
+    "Туркменистан"
+  ],
+  "storyCard": {
+    "infoLabel": "Информация",
+    "ongoing": "Выходит",
+    "completed": "Завершено",
+    "authorLabel": "Автор",
+    "chaptersSuffix": "глав"
+  },
+  "auth": {
+    "login": {
+      "title": "Вход",
+      "description": "Войдите в свой аккаунт.",
+      "buttonLabel": "Войти",
+      "alternateLabel": "Нет аккаунта?",
+      "alternateHref": "/register",
+      "alternateAction": "Создать"
+    },
+    "register": {
+      "title": "Регистрация",
+      "description": "Создайте новый аккаунт.",
+      "buttonLabel": "Создать аккаунт",
+      "alternateLabel": "Уже есть аккаунт?",
+      "alternateHref": "/login",
+      "alternateAction": "Войти"
+    },
+    "fields": {
+      "name": "Имя",
+      "email": "Электронная почта",
+      "password": "Пароль",
+      "namePlaceholder": "Иван Иванов",
+      "emailPlaceholder": "name@example.com",
+      "passwordPlaceholder": "Введите пароль"
+    }
+  }
+}
