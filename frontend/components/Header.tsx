@@ -1,105 +1,160 @@
 import Link from "next/link";
+import { BookOpen, Sparkles, Palette, PenLine, Trophy, Rocket, Search } from "lucide-react";
 
 const NAV_ITEMS = [
-  { label: "Рассказы", href: "/stories", icon: "📖" },
-  { label: "Фанфики", href: "/fanfics", icon: "✨" },
-  { label: "Комиксы", href: "/comics", icon: "🎨" },
-  { label: "Авторы", href: "/authors", icon: "🖊️" },
-  { label: "Рейтинги", href: "/ratings", icon: "🏆" },
-  { label: "Я хочу быть автором", href: "/become-author", icon: "🚀", special: true },
+  { label: "Рассказы", href: "/stories", icon: <BookOpen size={14} />, active: true },
+  { label: "Фанфики", href: "/fanfics", icon: <Sparkles size={14} /> },
+  { label: "Комиксы", href: "/comics", icon: <Palette size={14} /> },
+  { label: "Авторы", href: "/authors", icon: <PenLine size={14} /> },
+  { label: "Рейтинги", href: "/ratings", icon: <Trophy size={14} /> },
 ];
+
+const BORDER = "0.5px solid rgba(255,255,255,0.07)";
+const BG = "#13102b";
 
 export default function Header() {
   return (
-    <div>
-      {/* Top bar: logo + auth */}
+    <div style={{ position: "sticky", top: 0, zIndex: 100 }}>
+      {/* Top bar: logo + search + auth */}
       <header
-        className="py-4 px-6"
-        style={{ backgroundColor: "#13102b", borderBottom: "1px solid #2a2060" }}
+        style={{
+          backgroundColor: BG,
+          borderBottom: BORDER,
+          padding: "0 28px",
+          height: "58px",
+          display: "flex",
+          alignItems: "center",
+          gap: "20px",
+        }}
       >
-        <div className="flex max-w-6xl mx-auto items-center justify-between">
-          <Link href="/" className="text-3xl tracking-wider leading-none">
-            <span style={{ color: "#a855f7", fontFamily: "var(--font-roboto-mono)" }}>oi</span>
-            <span style={{ color: "#f97316", fontFamily: "var(--font-roboto-mono)" }}>toon</span>
-          </Link>
+        <Link
+          href="/"
+          style={{
+            fontSize: "22px",
+            fontWeight: 800,
+            letterSpacing: "-0.5px",
+            background: "linear-gradient(135deg,#c4b5fd,#a78bfa,#f97316)",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+            backgroundClip: "text",
+            fontFamily: "var(--font-roboto-mono)",
+            flexShrink: 0,
+            textDecoration: "none",
+          }}
+        >
+          oitoon
+        </Link>
 
-          <nav className="flex items-center gap-3">
-            <Link
-              href="/login"
-              className="text-sm font-bold px-5 py-2 rounded-xl transition-colors"
-              style={{
-                color: "#f97316",
-                backgroundColor: "rgba(249,115,22,0.12)",
-                border: "1.5px solid rgba(249,115,22,0.4)",
-              }}
-            >
-              Войти
-            </Link>
-            <Link
-              href="/register"
-              className="text-sm font-bold px-5 py-2 rounded-xl text-white transition-colors"
-              style={{ backgroundColor: "#a855f7" }}
-            >
-              Регистрация
-            </Link>
-          </nav>
+        <div style={{ position: "relative", flex: 1, maxWidth: "240px", marginLeft: "8px" }}>
+          <Search
+            size={13}
+            style={{
+              position: "absolute",
+              left: "10px",
+              top: "50%",
+              transform: "translateY(-50%)",
+              color: "#6b6887",
+              pointerEvents: "none",
+            }}
+          />
+          <input
+            type="search"
+            placeholder="Поиск историй, авторов..."
+            style={{
+              width: "100%",
+              backgroundColor: "rgba(255,255,255,0.05)",
+              border: BORDER,
+              borderRadius: "8px",
+              padding: "7px 12px 7px 30px",
+              fontSize: "12px",
+              color: "#f1f0fa",
+              outline: "none",
+              fontFamily: "var(--font-roboto-mono)",
+            }}
+          />
         </div>
+
+        <div style={{ flex: 1 }} />
+
+        <Link
+          href="/login"
+          style={{
+            background: "transparent",
+            border: "0.5px solid rgba(249,115,22,0.5)",
+            color: "#f97316",
+            padding: "7px 16px",
+            borderRadius: "8px",
+            fontSize: "13px",
+            fontWeight: 500,
+            textDecoration: "none",
+          }}
+        >
+          Войти
+        </Link>
+        <Link
+          href="/register"
+          style={{
+            backgroundColor: "#a78bfa",
+            color: "#fff",
+            padding: "7px 16px",
+            borderRadius: "8px",
+            fontSize: "13px",
+            fontWeight: 500,
+            textDecoration: "none",
+          }}
+        >
+          Регистрация
+        </Link>
       </header>
 
-      {/* Sub-header: nav + search */}
+      {/* Subnav */}
       <div
-        className="px-6"
-        style={{ backgroundColor: "#13102b", borderBottom: "1px solid #2a2060" }}
+        style={{
+          backgroundColor: BG,
+          borderBottom: BORDER,
+          padding: "0 28px",
+          height: "46px",
+          display: "flex",
+          alignItems: "center",
+          gap: "4px",
+        }}
       >
-        <div className="flex max-w-6xl mx-auto items-center justify-between">
-          <nav className="flex items-center gap-1 flex-wrap">
-            {NAV_ITEMS.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className="flex items-center gap-2 text-sm font-bold px-4 py-3 rounded-xl whitespace-nowrap transition-colors"
-                style={
-                  item.special
-                    ? {
-                        color: "#f97316",
-                        backgroundColor: "rgba(249,115,22,0.10)",
-                        border: "1px solid rgba(249,115,22,0.25)",
-                      }
-                    : {
-                        color: "#c4b5d4",
-                      }
-                }
-              >
-                <span style={{ fontSize: "15px" }}>{item.icon}</span>
-                {item.label}
-              </Link>
-            ))}
-          </nav>
+        {NAV_ITEMS.map((item) => (
+          <Link
+            key={item.href}
+            href={item.href}
+            className="flex items-center gap-1.5 whitespace-nowrap transition-colors"
+            style={{
+              fontSize: "13px",
+              color: item.active ? "#a78bfa" : "#6b6887",
+              padding: "6px 12px",
+              borderRadius: "6px",
+              textDecoration: "none",
+            }}
+          >
+            {item.icon}
+            {item.label}
+          </Link>
+        ))}
 
-          <div className="relative flex items-center shrink-0">
-            <svg
-              className="absolute left-3 w-4 h-4 pointer-events-none"
-              style={{ color: "#6d5fa0" }}
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth={2}
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z" />
-            </svg>
-            <input
-              type="search"
-              placeholder="Поиск..."
-              className="pl-9 pr-4 py-2 text-sm rounded-xl outline-none text-zinc-200 placeholder-zinc-500 focus:ring-1 focus:ring-purple-500"
-              style={{
-                backgroundColor: "#1e1a3a",
-                border: "1.5px solid #3b2f6e",
-                width: "200px",
-                fontFamily: "var(--font-roboto-mono)",
-              }}
-            />
-          </div>
+        <div style={{ marginLeft: "auto" }}>
+          <Link
+            href="/become-author"
+            className="flex items-center gap-1.5"
+            style={{
+              backgroundColor: "rgba(249,115,22,0.12)",
+              border: "0.5px solid rgba(249,115,22,0.35)",
+              color: "#f97316",
+              fontSize: "12px",
+              fontWeight: 500,
+              padding: "6px 14px",
+              borderRadius: "6px",
+              textDecoration: "none",
+            }}
+          >
+            <Rocket size={13} />
+            Я хочу быть автором
+          </Link>
         </div>
       </div>
     </div>

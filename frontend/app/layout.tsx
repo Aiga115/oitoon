@@ -34,8 +34,8 @@ export default function RootLayout({
       lang="en"
       className={`${inter.variable} ${geistMono.variable} ${robotoMono.variable} h-full antialiased`}
       style={{
-        backgroundColor: "#0d0b1a",
-        color: "#e0e0e0",
+        backgroundColor: "#0d0b1e",
+        color: "#f1f0fa",
       }}
     >
       <body className={`${inter.className} min-h-full flex flex-col`}>{children}</body>
