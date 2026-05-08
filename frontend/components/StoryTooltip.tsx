@@ -4,6 +4,7 @@ import { Star } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { GENRE_STYLES, DEFAULT_GENRE_STYLE } from "@/lib/genreStyles";
 import type { StoryItem } from "@/components/StoryCard";
+import styles from "./StoryTooltip.module.css";
 
 export default function StoryTooltip({
   story,
@@ -18,18 +19,9 @@ export default function StoryTooltip({
 
   return (
     <div
-      className="absolute z-50 rounded-xl text-left"
+      className={styles.tooltip}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
-      style={{
-        top: "36px",
-        right: "8px",
-        width: "240px",
-        backgroundColor: "#2a2060",
-        border: "0.5px solid rgba(167,139,250,0.30)",
-        boxShadow: "0 8px 32px rgba(0,0,0,0.5)",
-        padding: "14px",
-      }}
     >
       {/* Stars + rating */}
       <div className="flex items-center gap-1 mb-2">
@@ -43,7 +35,7 @@ export default function StoryTooltip({
             }}
           />
         ))}
-        <span className="text-xs ml-1" style={{ color: "#a09cbe" }}>
+        <span className={`text-xs ml-1 ${styles.ratingValue}`}>
           {story.rating.toFixed(1)}
         </span>
       </div>
@@ -55,13 +47,8 @@ export default function StoryTooltip({
           return (
             <span
               key={g}
+              className={styles.genreBadge}
               style={{
-                fontSize: "9px",
-                fontWeight: 600,
-                letterSpacing: "0.04em",
-                textTransform: "uppercase",
-                padding: "3px 7px",
-                borderRadius: "4px",
                 backgroundColor: gStyle.badgeBg,
                 color: gStyle.badgeColor,
                 border: `0.5px solid ${gStyle.badgeBorder}`,
@@ -78,16 +65,7 @@ export default function StoryTooltip({
         {story.language.map((l) => (
           <span
             key={l}
-            style={{
-              fontSize: "9px",
-              fontWeight: 500,
-              letterSpacing: "0.03em",
-              padding: "3px 8px",
-              borderRadius: "20px",
-              backgroundColor: "rgba(99,102,241,0.15)",
-              color: "#a5b4fc",
-              border: "0.5px solid rgba(99,102,241,0.30)",
-            }}
+            className={styles.langBadge}
           >
             {t(`languageNames.${l}`, { defaultValue: l })}
           </span>
@@ -95,13 +73,13 @@ export default function StoryTooltip({
       </div>
 
       {/* Author */}
-      <p className="text-xs mb-2" style={{ color: "#6b6887" }}>
+      <p className={`text-xs mb-2 ${styles.authorLabel}`}>
         {t("storyCard.authorLabel")}:{" "}
-        <span style={{ color: "#a09cbe" }}>{story.author}</span>
+        <span className={styles.authorName}>{story.author}</span>
       </p>
 
       {/* Description — no clamping, expands fully */}
-      <p className="text-xs leading-relaxed" style={{ color: "#a09cbe" }}>
+      <p className={`text-xs leading-relaxed ${styles.description}`}>
         {story.description}
       </p>
     </div>

@@ -1,0 +1,192 @@
+.main {
+  background-color: #0d0b1e;
+  position: relative;
+  z-index: 1;
+}
+
+/* ── Hero Banner ─────────────────────────────────── */
+.heroBanner {
+  border-radius: 16px;
+  overflow: hidden;
+  margin-bottom: 32px;
+  position: relative;
+  height: 200px;
+  display: flex;
+  align-items: flex-end;
+  background: linear-gradient(135deg, #1a0a3b 0%, #2a1060 40%, #1a2060 70%, #0a1a3b 100%);
+  border: 0.5px solid rgba(167, 139, 250, 0.2);
+}
+
+.heroOrb1 {
+  position: absolute;
+  width: 260px;
+  height: 260px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(167, 139, 250, 0.18) 0%, transparent 70%);
+  top: -60px;
+  left: 200px;
+  pointer-events: none;
+}
+
+.heroOrb2 {
+  position: absolute;
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(249, 115, 22, 0.12) 0%, transparent 70%);
+  top: -30px;
+  right: 120px;
+  pointer-events: none;
+}
+
+.heroOrb3 {
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(45, 212, 191, 0.10) 0%, transparent 70%);
+  bottom: 10px;
+  left: 60px;
+  pointer-events: none;
+}
+
+.heroGrid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+}
+
+.heroContent {
+  position: relative;
+  z-index: 2;
+  padding: 28px 32px;
+  flex: 1;
+}
+
+.heroSubtitle {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #2dd4bf;
+  margin-bottom: 8px;
+}
+
+.heroTitle {
+  font-size: 22px;
+  font-weight: 800;
+  color: #f1f0fa;
+  letter-spacing: -0.4px;
+  margin-bottom: 10px;
+  line-height: 1.25;
+}
+
+.heroTags {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.heroTag {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 3px 9px;
+  border-radius: 4px;
+  background-color: rgba(167, 139, 250, 0.15);
+  color: #c4b5fd;
+  border: 0.5px solid rgba(167, 139, 250, 0.3);
+}
+
+.heroReadBtn {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 8px 18px;
+  border-radius: 8px;
+  background-color: #a78bfa;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+.heroRating {
+  position: absolute;
+  right: 32px;
+  bottom: 28px;
+  text-align: center;
+  z-index: 2;
+}
+
+.heroRatingScore {
+  font-size: 32px;
+  font-weight: 800;
+  color: #fbbf24;
+  line-height: 1;
+}
+
+.heroRatingStars {
+  font-size: 10px;
+  color: #6b6887;
+  margin-top: 3px;
+}
+
+.heroRatingLabel {
+  font-size: 9px;
+  color: #6b6887;
+  margin-top: 1px;
+}
+
+/* ── Section headings ────────────────────────────── */
+.sectionHeading {
+  display: inline-block;
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.sectionTitle {
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+  color: #f1f0fa;
+}
+
+.sectionCount {
+  margin-left: 6px;
+  font-size: 14px;
+  font-weight: 400;
+  color: #6b6887;
+}
+
+.sectionUnderlineYellow {
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 32px;
+  height: 2px;
+  background-color: #fbbf24;
+  border-radius: 1px;
+}
+
+.sectionUnderlinePurple {
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 32px;
+  height: 2px;
+  background-color: #a78bfa;
+  border-radius: 1px;
+}
+
+.top10Grid {
+  margin-bottom: 48px;
+}
+
+.emptyText {
+  color: #6b6887;
+}

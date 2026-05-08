@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { ChevronDown, X } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import styles from "./StoryFilters.module.css";
 
 export type Filters = {
   genres: string[];
@@ -31,20 +32,6 @@ type Props = {
 };
 
 const COUNTRY_KEYS = ["Russia", "Kazakhstan", "Uzbekistan", "Kyrgyzstan", "Tajikistan", "Turkmenistan"];
-
-// ── shared style helpers ──────────────────────────────────────────────────────
-const selectStyle: React.CSSProperties = {
-  backgroundColor: "#252145",
-  border: "0.5px solid rgba(255,255,255,0.07)",
-  color: "#a09cbe",
-  borderRadius: "8px",
-  padding: "7px 12px",
-  fontSize: "12px",
-  outline: "none",
-  cursor: "pointer",
-  appearance: "none" as const,
-  WebkitAppearance: "none" as const,
-};
 
 // ── Generic multi-select dropdown ────────────────────────────────────────────
 function MultiSelectDropdown({
@@ -92,16 +79,7 @@ function MultiSelectDropdown({
     <div ref={ref} className="relative">
       <button
         onClick={() => setOpen((v) => !v)}
-        className="flex items-center gap-2 text-sm"
-        style={{
-          ...selectStyle,
-          color: selected.length > 0 ? "#a78bfa" : "#a09cbe",
-          border:
-            selected.length > 0
-              ? "0.5px solid rgba(167,139,250,0.40)"
-              : "0.5px solid rgba(255,255,255,0.07)",
-          paddingRight: "10px",
-        }}
+        className={`${styles.filterBtn} ${selected.length > 0 ? styles.filterBtnActive : ""}`}
       >
         <span>{label}</span>
         {selected.length > 0 && (
@@ -126,33 +104,18 @@ function MultiSelectDropdown({
       </button>
 
       {open && (
-        <div
-          className="absolute z-40 mt-1 rounded-xl overflow-hidden"
-          style={{
-            minWidth: "160px",
-            backgroundColor: "#252145",
-            border: "1px solid rgba(167,139,250,0.20)",
-            boxShadow: "0 8px 24px rgba(0,0,0,0.5)",
-          }}
-        >
+        <div className={styles.dropdown}>
           {options.map((opt) => {
             const checked = selected.includes(opt);
             return (
               <label
                 key={opt}
-                className="flex items-center gap-2 px-3 py-2 cursor-pointer text-sm transition-colors"
-                style={{
-                  color: checked ? "#a78bfa" : "#a09cbe",
-                  backgroundColor: checked
-                    ? "rgba(167,139,250,0.08)"
-                    : "transparent",
-                }}
+                className={`${styles.dropdownItem} ${checked ? styles.dropdownItemChecked : ""}`}
               >
                 <input
                   type="checkbox"
                   checked={checked}
                   onChange={() => toggle(opt)}
-                  className="accent-violet-400"
                   style={{ accentColor: "#a78bfa" }}
                 />
                 {getOptionLabel(opt)}
@@ -197,15 +160,7 @@ function FilterSelect({
     <div ref={ref} className="relative">
       <button
         onClick={() => setOpen((v) => !v)}
-        className="flex items-center gap-2 text-sm"
-        style={{
-          ...selectStyle,
-          color: active ? "#a78bfa" : "#a09cbe",
-          border: active
-            ? "0.5px solid rgba(167,139,250,0.40)"
-            : "0.5px solid rgba(255,255,255,0.07)",
-          paddingRight: "10px",
-        }}
+        className={`${styles.filterBtn} ${active ? styles.filterBtnActive : ""}`}
       >
         <span>{active ? selectedLabel : placeholder}</span>
         {active && (
@@ -230,26 +185,14 @@ function FilterSelect({
       </button>
 
       {open && (
-        <div
-          className="absolute z-40 mt-1 rounded-xl overflow-hidden"
-          style={{
-            minWidth: "140px",
-            backgroundColor: "#252145",
-            border: "1px solid rgba(167,139,250,0.20)",
-            boxShadow: "0 8px 24px rgba(0,0,0,0.5)",
-          }}
-        >
+        <div className={`${styles.dropdown} ${styles.dropdownNarrow}`}>
           {options.map((opt) => {
             const checked = value === opt.value;
             return (
               <div
                 key={opt.value}
                 onClick={() => { onChange(opt.value); setOpen(false); }}
-                className="px-3 py-2 cursor-pointer text-sm transition-colors"
-                style={{
-                  color: checked ? "#a78bfa" : "#a09cbe",
-                  backgroundColor: checked ? "rgba(167,139,250,0.08)" : "transparent",
-                }}
+                className={`${styles.dropdownItem} ${checked ? styles.dropdownItemChecked : ""}`}
               >
                 {opt.label}
               </div>
@@ -351,28 +294,17 @@ export default function StoryFilters({
       />
 
       {/* Divider */}
-      <div style={{ width: "1px", height: "20px", background: "rgba(255,255,255,0.07)" }} />
+      <div className={styles.divider} />
 
       {/* Status pills */}
-      <div
-        style={{ display: "flex", gap: "2px", backgroundColor: "#252145", borderRadius: "8px", padding: "3px", border: "0.5px solid rgba(255,255,255,0.07)" }}
-      >
+      <div className={styles.statusGroup}>
         {STATUS_OPTIONS.map((opt) => {
           const active = filters.status === opt.value;
           return (
             <button
               key={opt.value}
               onClick={() => onChange({ ...filters, status: opt.value })}
-              className="transition-colors"
-              style={{
-                padding: "5px 14px",
-                borderRadius: "6px",
-                fontSize: "12px",
-                fontWeight: 500,
-                cursor: "pointer",
-                backgroundColor: active ? "#a78bfa" : "transparent",
-                color: active ? "#fff" : "#6b6887",
-              }}
+              className={`${styles.statusPill} ${active ? styles.statusPillActive : ""}`}
             >
               {opt.label}
             </button>
@@ -384,12 +316,7 @@ export default function StoryFilters({
       {hasAnyFilter && (
         <button
           onClick={() => onChange(DEFAULT_FILTERS)}
-          className="flex items-center gap-1 text-sm px-3 py-1.5 rounded-xl transition-colors"
-          style={{
-            color: "#ef4444",
-            backgroundColor: "rgba(239,68,68,0.10)",
-            border: "0.5px solid rgba(239,68,68,0.25)",
-          }}
+          className={`flex items-center gap-1 text-sm px-3 py-1.5 rounded-xl transition-colors ${styles.resetBtn}`}
         >
           <X size={12} />
           {t("filters.reset")}

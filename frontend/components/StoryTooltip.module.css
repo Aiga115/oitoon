@@ -1,0 +1,49 @@
+.tooltip {
+  position: absolute;
+  z-index: 50;
+  border-radius: 12px;
+  text-align: left;
+  top: 36px;
+  right: 8px;
+  width: 240px;
+  background-color: #2a2060;
+  border: 0.5px solid rgba(167, 139, 250, 0.30);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+  padding: 14px;
+}
+
+.ratingValue {
+  color: #a09cbe;
+}
+
+.langBadge {
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  padding: 3px 8px;
+  border-radius: 20px;
+  background-color: rgba(99, 102, 241, 0.15);
+  color: #a5b4fc;
+  border: 0.5px solid rgba(99, 102, 241, 0.30);
+}
+
+.genreBadge {
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 3px 7px;
+  border-radius: 4px;
+}
+
+.authorLabel {
+  color: #6b6887;
+}
+
+.authorName {
+  color: #a09cbe;
+}
+
+.description {
+  color: #a09cbe;
+}

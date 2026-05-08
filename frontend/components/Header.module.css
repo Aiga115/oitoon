@@ -1,0 +1,165 @@
+.wrapper {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+/* ── Top bar ──────────────────────────────────────── */
+.topBar {
+  background-color: #13102b;
+  border-bottom: 0.5px solid rgba(255, 255, 255, 0.07);
+  padding: 0 28px;
+  height: 58px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.logo {
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  background: linear-gradient(135deg, #c4b5fd, #a78bfa, #f97316);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-family: var(--font-roboto-mono);
+  flex-shrink: 0;
+  text-decoration: none;
+}
+
+/* ── Search ───────────────────────────────────────── */
+.searchWrapper {
+  position: relative;
+  flex: 1;
+  max-width: 240px;
+  margin-left: 8px;
+}
+
+.searchIcon {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #6b6887;
+  pointer-events: none;
+}
+
+.searchInput {
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.05);
+  border: 0.5px solid rgba(255, 255, 255, 0.07);
+  border-radius: 8px;
+  padding: 7px 12px 7px 30px;
+  font-size: 12px;
+  color: #f1f0fa;
+  outline: none;
+  font-family: var(--font-roboto-mono);
+}
+
+/* ── Language switcher ────────────────────────────── */
+.langSwitcher {
+  display: flex;
+  gap: 4px;
+}
+
+.langBtn {
+  padding: 4px 7px;
+  border-radius: 6px;
+  line-height: 1;
+  cursor: pointer;
+  border: 0.5px solid rgba(255, 255, 255, 0.07);
+  background-color: transparent;
+  opacity: 0.45;
+  transition: all 0.15s;
+  display: flex;
+  align-items: center;
+}
+
+.langBtnActive {
+  border-color: rgba(167, 139, 250, 0.5);
+  background-color: rgba(167, 139, 250, 0.15);
+  opacity: 1;
+}
+
+.flag {
+  width: 20px;
+  height: auto;
+  display: block;
+}
+
+/* ── Auth buttons ─────────────────────────────────── */
+.authButtons {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 192px;
+  justify-content: flex-end;
+}
+
+.btnLogin {
+  background: transparent;
+  border: 0.5px solid rgba(249, 115, 22, 0.5);
+  color: #f97316;
+  padding: 7px 16px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.btnRegister {
+  background-color: #a78bfa;
+  color: #fff;
+  padding: 7px 16px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+/* ── Subnav ───────────────────────────────────────── */
+.subnav {
+  background-color: #13102b;
+  border-bottom: 0.5px solid rgba(255, 255, 255, 0.07);
+  padding: 0 28px;
+  height: 46px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.navLink {
+  font-size: 13px;
+  color: #6b6887;
+  padding: 6px 12px;
+  border-radius: 6px;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+  transition: color 0.15s;
+}
+
+.navLinkActive {
+  color: #a78bfa;
+}
+
+.subnavRight {
+  margin-left: auto;
+}
+
+.btnBecomeAuthor {
+  background-color: rgba(249, 115, 22, 0.12);
+  border: 0.5px solid rgba(249, 115, 22, 0.35);
+  color: #f97316;
+  font-size: 12px;
+  font-weight: 500;
+  padding: 6px 14px;
+  border-radius: 6px;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}

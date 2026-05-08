@@ -1,0 +1,94 @@
+/* ── Filter button (shared base) ─────────────────── */
+.filterBtn {
+  background-color: #252145;
+  border: 0.5px solid rgba(255, 255, 255, 0.07);
+  color: #a09cbe;
+  border-radius: 8px;
+  padding: 7px 10px 7px 12px;
+  font-size: 12px;
+  outline: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.filterBtnActive {
+  color: #a78bfa;
+  border-color: rgba(167, 139, 250, 0.40);
+}
+
+/* ── Dropdown panel ──────────────────────────────── */
+.dropdown {
+  position: absolute;
+  z-index: 40;
+  margin-top: 4px;
+  border-radius: 12px;
+  overflow: hidden;
+  min-width: 160px;
+  background-color: #252145;
+  border: 1px solid rgba(167, 139, 250, 0.20);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+}
+
+.dropdownNarrow {
+  min-width: 140px;
+}
+
+/* ── Dropdown item (shared for label + div) ──────── */
+.dropdownItem {
+  padding: 8px 12px;
+  cursor: pointer;
+  font-size: 12px;
+  color: #a09cbe;
+  background-color: transparent;
+  transition: background-color 0.15s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.dropdownItemChecked {
+  color: #a78bfa;
+  background-color: rgba(167, 139, 250, 0.08);
+}
+
+/* ── Status pills ────────────────────────────────── */
+.statusGroup {
+  display: flex;
+  gap: 2px;
+  background-color: #252145;
+  border-radius: 8px;
+  padding: 3px;
+  border: 0.5px solid rgba(255, 255, 255, 0.07);
+}
+
+.statusPill {
+  padding: 5px 14px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  background-color: transparent;
+  color: #6b6887;
+  transition: background-color 0.15s, color 0.15s;
+}
+
+.statusPillActive {
+  background-color: #a78bfa;
+  color: #fff;
+}
+
+/* ── Divider ─────────────────────────────────────── */
+.divider {
+  width: 1px;
+  height: 20px;
+  background: rgba(255, 255, 255, 0.07);
+}
+
+/* ── Reset button ────────────────────────────────── */
+.resetBtn {
+  color: #ef4444;
+  background-color: rgba(239, 68, 68, 0.10);
+  border: 0.5px solid rgba(239, 68, 68, 0.25);
+}
