@@ -7,9 +7,14 @@ import StoryCard from "@/components/StoryCard";
 import StoryFilters, { type Filters, DEFAULT_FILTERS } from "@/components/StoryFilters";
 import { MOCK_STORIES } from "@/lib/mockStories";
 
-const ALL_GENRES = [...new Set(MOCK_STORIES.flatMap((s) => s.genres))].sort();
-const ALL_LANGUAGES = [...new Set(MOCK_STORIES.flatMap((s) => s.language))].sort();
-const ALL_YEARS = [...new Set(MOCK_STORIES.map((s) => s.year))];
+const SORTED_BY_RATING = [...MOCK_STORIES].sort((a, b) => b.rating - a.rating);
+const TOP_10_IDS = new Set(SORTED_BY_RATING.slice(0, 10).map((s) => s.id));
+const TOP_10_STORIES = SORTED_BY_RATING.slice(0, 10);
+const REST_STORIES = MOCK_STORIES.filter((s) => !TOP_10_IDS.has(s.id));
+
+const ALL_GENRES = [...new Set(REST_STORIES.flatMap((s) => s.genres))].sort();
+const ALL_LANGUAGES = [...new Set(REST_STORIES.flatMap((s) => s.language))].sort();
+const ALL_YEARS = [...new Set(REST_STORIES.map((s) => s.year))];
 
 function matchesPages(pages: number, bucket: Filters["pages"]): boolean {
   if (bucket === "all") return true;
@@ -24,7 +29,7 @@ export default function Home() {
   const { t } = useTranslation();
   const [filters, setFilters] = useState<Filters>(DEFAULT_FILTERS);
 
-  const filtered = MOCK_STORIES.filter((story) => {
+  const filtered = REST_STORIES.filter((story) => {
     if (
       filters.genres.length > 0 &&
       !filters.genres.some((g) => story.genres.includes(g))
@@ -102,10 +107,27 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Section heading */}
+          {/* Top 10 Section */}
           <div style={{ display: "inline-block", position: "relative", marginBottom: "20px" }}>
             <h2 style={{ fontSize: "18px", fontWeight: 700, letterSpacing: "-0.3px", color: "#f1f0fa" }}>
-              {t("home.popular")}
+              {t("home.mostPopular")}
+              <span style={{ marginLeft: "6px", fontSize: "14px", fontWeight: 400, color: "#6b6887" }}>
+                · {TOP_10_STORIES.length} {t("home.storiesCountSuffix")}
+              </span>
+            </h2>
+            <div style={{ position: "absolute", bottom: "-4px", left: 0, width: "32px", height: "2px", backgroundColor: "#fbbf24", borderRadius: "1px" }} />
+          </div>
+
+          <div className="flex flex-wrap gap-5" style={{ marginBottom: "48px" }}>
+            {TOP_10_STORIES.map((story) => (
+              <StoryCard key={story.id} story={story} />
+            ))}
+          </div>
+
+          {/* Explore / All Stories Section */}
+          <div style={{ display: "inline-block", position: "relative", marginBottom: "20px" }}>
+            <h2 style={{ fontSize: "18px", fontWeight: 700, letterSpacing: "-0.3px", color: "#f1f0fa" }}>
+              {t("home.explore")}
               <span style={{ marginLeft: "6px", fontSize: "14px", fontWeight: 400, color: "#6b6887" }}>
                 · {filtered.length} {t("home.storiesCountSuffix")}
               </span>

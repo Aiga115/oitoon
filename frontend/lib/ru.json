@@ -19,6 +19,8 @@
   },
   "home": {
     "popular": "Популярное",
+    "mostPopular": "Самые популярные",
+    "explore": "Все истории",
     "ratingLabel": "рейтинг",
     "storiesCountSuffix": "историй",
     "emptyFilter": "Ничего не найдено. Попробуйте изменить фильтры."
@@ -56,7 +58,12 @@
     "scifi": "Научная фантастика",
     "romance": "Романтика",
     "action": "Боевик",
-    "historical": "Историческое"
+    "historical": "Историческое",
+    "horror": "Хоррор",
+    "drama": "Драма",
+    "dystopia": "Антиутопия",
+    "comedy": "Комедия",
+    "poetry": "Поэзия"
   },
   "countries": [
     "Россия",

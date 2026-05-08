@@ -19,6 +19,8 @@
   },
   "home": {
     "popular": "Popular",
+    "mostPopular": "Most Popular",
+    "explore": "Explore",
     "ratingLabel": "rating",
     "storiesCountSuffix": "stories",
     "emptyFilter": "Nothing found. Try changing the filters."
@@ -56,7 +58,12 @@
     "scifi": "Science Fiction",
     "romance": "Romance",
     "action": "Action",
-    "historical": "Historical"
+    "historical": "Historical",
+    "horror": "Horror",
+    "drama": "Drama",
+    "dystopia": "Dystopia",
+    "comedy": "Comedy",
+    "poetry": "Poetry"
   },
   "countries": [
     "Russia",

@@ -19,6 +19,8 @@
   },
   "home": {
     "popular": "Популярдуу",
+    "mostPopular": "Эң популярдуулар",
+    "explore": "Бардык аңгемелер",
     "ratingLabel": "рейтинг",
     "storiesCountSuffix": "аңгеме",
     "emptyFilter": "Эч нерсе табылган жок. Чыпкаларды өзгөртүп көрүңүз."
@@ -56,7 +58,12 @@
     "scifi": "Илим-фантастика",
     "romance": "Романтика",
     "action": "Боевик",
-    "historical": "Тарыхый"
+    "historical": "Тарыхый",
+    "horror": "Коркунуч",
+    "drama": "Драма",
+    "dystopia": "Антиутопия",
+    "comedy": "Комедия",
+    "poetry": "Поэзия"
   },
   "countries": [
     "Россия",
