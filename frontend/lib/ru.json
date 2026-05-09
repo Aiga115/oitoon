@@ -37,7 +37,9 @@
     "status": {
       "all": "Все",
       "ongoing": "Выходит",
-      "completed": "Завершено"
+      "completed": "Завершено",
+      "upcoming": "Скоро",
+      "hiatus": "Пауза"
     },
     "pageBuckets": {
       "all": "Все",

@@ -37,7 +37,9 @@
     "status": {
       "all": "All",
       "ongoing": "Ongoing",
-      "completed": "Completed"
+      "completed": "Completed",
+      "upcoming": "Upcoming",
+      "hiatus": "Hiatus"
     },
     "pageBuckets": {
       "all": "All",
