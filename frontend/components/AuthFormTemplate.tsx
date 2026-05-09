@@ -1,6 +1,23 @@
 "use client";
 
+import Link from "next/link";
 import { useTranslation } from "react-i18next";
+import i18n from "@/lib/i18n";
+import GB from "country-flag-icons/react/3x2/GB";
+import RU from "country-flag-icons/react/3x2/RU";
+import KG from "country-flag-icons/react/3x2/KG";
+import styles from "./AuthFormTemplate.module.css";
+
+const LANGUAGES = [
+  { code: "en", label: "EN", Flag: GB },
+  { code: "ru", label: "RU", Flag: RU },
+  { code: "ky", label: "KY", Flag: KG },
+];
+
+function changeLanguage(code: string) {
+  i18n.changeLanguage(code);
+  localStorage.setItem("oitoon-lang", code);
+}
 
 type AuthFormTemplateProps = {
   mode: "login" | "register";
@@ -19,74 +36,103 @@ export default function AuthFormTemplate({ mode }: AuthFormTemplateProps) {
   const fields = {
     name: t("auth.fields.name"),
     email: t("auth.fields.email"),
+    usernameOrEmail: t("auth.fields.usernameOrEmail"),
     password: t("auth.fields.password"),
     namePlaceholder: t("auth.fields.namePlaceholder"),
     emailPlaceholder: t("auth.fields.emailPlaceholder"),
+    usernameOrEmailPlaceholder: t("auth.fields.usernameOrEmailPlaceholder"),
     passwordPlaceholder: t("auth.fields.passwordPlaceholder"),
   };
 
   return (
-    <main className="flex min-h-screen items-center justify-center px-6 py-12">
-      <section className="w-full max-w-md space-y-6">
-        <header className="space-y-2">
-          <h1 className="text-3xl font-semibold">{content.title}</h1>
-          <p>{content.description}</p>
-        </header>
+    <div className={styles.page}>
+      <div className={styles.orb1} />
+      <div className={styles.orb2} />
 
-        <form className="space-y-4">
-          {mode === "register" ? (
-            <div className="space-y-2">
-              <label htmlFor="name" className="block text-sm font-medium">
-                {fields.name}
+      <div className={styles.topBar}>
+        <Link href="/" className={styles.topBrand}>
+          oitoon
+        </Link>
+        <div className={styles.langSwitcher}>
+          {LANGUAGES.map((lang) => {
+            const active = i18n.language === lang.code;
+            return (
+              <button
+                key={lang.code}
+                onClick={() => changeLanguage(lang.code)}
+                title={lang.label}
+                className={`${styles.langBtn} ${active ? styles.langBtnActive : ""}`}
+              >
+                <lang.Flag className={styles.flag} />
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
+      <div className={styles.card}>
+        <h1 className={styles.heading}>{content.title}</h1>
+        <p className={styles.subheading}>{content.description}</p>
+
+        <form>
+          <div className={styles.fieldGroup}>
+            {mode === "register" && (
+              <div className={styles.field}>
+                <label htmlFor="name" className={styles.label}>
+                  {fields.name}
+                </label>
+                <input
+                  id="name"
+                  name="name"
+                  type="text"
+                  placeholder={fields.namePlaceholder}
+                  className={styles.input}
+                />
+              </div>
+            )}
+
+            <div className={styles.field}>
+              <label htmlFor="identifier" className={styles.label}>
+                {mode === "login" ? fields.usernameOrEmail : fields.email}
               </label>
               <input
-                id="name"
-                name="name"
-                type="text"
-                placeholder={fields.namePlaceholder}
-                className="w-full rounded border px-3 py-2"
+                id="identifier"
+                name={mode === "login" ? "identifier" : "email"}
+                type={mode === "login" ? "text" : "email"}
+                autoComplete={mode === "login" ? "username" : "email"}
+                placeholder={mode === "login" ? fields.usernameOrEmailPlaceholder : fields.emailPlaceholder}
+                className={styles.input}
               />
             </div>
-          ) : null}
 
-          <div className="space-y-2">
-            <label htmlFor="email" className="block text-sm font-medium">
-              {fields.email}
-            </label>
-            <input
-              id="email"
-              name="email"
-              type="email"
-              placeholder={fields.emailPlaceholder}
-              className="w-full rounded border px-3 py-2"
-            />
+            <div className={styles.field}>
+              <label htmlFor="password" className={styles.label}>
+                {fields.password}
+              </label>
+              <input
+                id="password"
+                name="password"
+                type="password"
+                placeholder={fields.passwordPlaceholder}
+                className={styles.input}
+              />
+            </div>
           </div>
 
-          <div className="space-y-2">
-            <label htmlFor="password" className="block text-sm font-medium">
-              {fields.password}
-            </label>
-            <input
-              id="password"
-              name="password"
-              type="password"
-              placeholder={fields.passwordPlaceholder}
-              className="w-full rounded border px-3 py-2"
-            />
-          </div>
-
-          <button type="submit" className="w-full rounded border px-4 py-2">
+          <button type="submit" className={styles.submitBtn}>
             {content.buttonLabel}
           </button>
         </form>
 
-        <p className="text-sm">
+        <div className={styles.divider} />
+
+        <p className={styles.altText}>
           {content.alternateLabel}{" "}
-          <a href={content.alternateHref} className="underline">
+          <Link href={content.alternateHref} className={styles.altLink}>
             {content.alternateAction}
-          </a>
+          </Link>
         </p>
-      </section>
-    </main>
+      </div>
+    </div>
   );
 }

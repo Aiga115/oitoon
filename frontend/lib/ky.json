@@ -100,9 +100,11 @@
     "fields": {
       "name": "Аты",
       "email": "Электрондук почта",
+      "usernameOrEmail": "Колдонуучу аты же почта",
       "password": "Сырсөз",
       "namePlaceholder": "Айбек Дооронов",
       "emailPlaceholder": "name@example.com",
+      "usernameOrEmailPlaceholder": "Колдонуучу аты же email",
       "passwordPlaceholder": "Сырсөзүңүздү киргизиңиз"
     }
   }

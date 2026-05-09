@@ -100,9 +100,11 @@
     "fields": {
       "name": "Имя",
       "email": "Электронная почта",
+      "usernameOrEmail": "Имя пользователя или почта",
       "password": "Пароль",
       "namePlaceholder": "Иван Иванов",
       "emailPlaceholder": "name@example.com",
+      "usernameOrEmailPlaceholder": "Имя пользователя или email",
       "passwordPlaceholder": "Введите пароль"
     }
   }
