@@ -96,6 +96,21 @@
   "storyList": {
     "readButton": "Окуу"
   },
+  "storyDetail": {
+    "backToStories": "Аңгемелерге кайтуу",
+    "description": "Аңгеме жөнүндө",
+    "aboutAuthor": "Автор жөнүндө",
+    "rateStory": "Аңгемени баалоо",
+    "comments": "Комментарийлер",
+    "commentPlaceholder": "Пикириңизди жазыңыз…",
+    "submitComment": "Жөнөтүү",
+    "chapters": "Бөлүмдөр",
+    "chapter": "Бөлүм",
+    "prologue": "Пролог",
+    "epilogue": "Эпилог",
+    "you": "Сиз",
+    "notFound": "Аңгеме табылган жок."
+  },
   "auth": {
     "login": {
       "title": "Кирүү",

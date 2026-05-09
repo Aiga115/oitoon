@@ -96,6 +96,21 @@
   "storyList": {
     "readButton": "Читать"
   },
+  "storyDetail": {
+    "backToStories": "Назад к историям",
+    "description": "Описание",
+    "aboutAuthor": "Об авторе",
+    "rateStory": "Оцените историю",
+    "comments": "Комментарии",
+    "commentPlaceholder": "Поделитесь впечатлениями…",
+    "submitComment": "Отправить",
+    "chapters": "Главы",
+    "chapter": "Глава",
+    "prologue": "Пролог",
+    "epilogue": "Эпилог",
+    "you": "Вы",
+    "notFound": "История не найдена."
+  },
   "auth": {
     "login": {
       "title": "Вход",

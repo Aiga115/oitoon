@@ -96,6 +96,21 @@
   "storyList": {
     "readButton": "Read"
   },
+  "storyDetail": {
+    "backToStories": "Back to stories",
+    "description": "Description",
+    "aboutAuthor": "About the Author",
+    "rateStory": "Rate this story",
+    "comments": "Comments",
+    "commentPlaceholder": "Share your thoughts…",
+    "submitComment": "Post comment",
+    "chapters": "Chapters",
+    "chapter": "Chapter",
+    "prologue": "Prologue",
+    "epilogue": "Epilogue",
+    "you": "You",
+    "notFound": "Story not found."
+  },
   "auth": {
     "login": {
       "title": "Log in",
