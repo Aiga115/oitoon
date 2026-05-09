@@ -29,11 +29,11 @@
 
 .genreBadge {
   font-size: 9px;
-  font-weight: 600;
-  letter-spacing: 0.04em;
+  font-weight: 700;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
-  padding: 3px 7px;
-  border-radius: 4px;
+  padding: 3px 8px;
+  border-radius: 999px;
 }
 
 .authorLabel {

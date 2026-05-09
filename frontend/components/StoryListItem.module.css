@@ -30,11 +30,11 @@
   top: 10px;
   left: 10px;
   font-size: 9px;
-  font-weight: 600;
+  font-weight: 700;
   letter-spacing: 0.05em;
   text-transform: uppercase;
-  padding: 3px 7px;
-  border-radius: 4px;
+  padding: 3px 8px;
+  border-radius: 999px;
 }
 
 .statusBadge {
@@ -42,9 +42,11 @@
   bottom: 10px;
   left: 10px;
   font-size: 9px;
-  font-weight: 500;
-  padding: 2px 7px;
-  border-radius: 3px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: 999px;
 }
 
 /* ── Content ───────────────────────────────────────────────── */
@@ -114,11 +116,11 @@
 
 .genreTag {
   font-size: 9px;
-  font-weight: 600;
-  letter-spacing: 0.04em;
+  font-weight: 700;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
   padding: 3px 8px;
-  border-radius: 4px;
+  border-radius: 999px;
 }
 
 /* Description */

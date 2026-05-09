@@ -10,7 +10,7 @@ export type Filters = {
   languages: string[];
   year: string;
   country: string;
-  status: "all" | "ongoing" | "completed";
+  status: "all" | "ongoing" | "completed" | "upcoming" | "hiatus";
   pages: "all" | "0-50" | "51-200" | "201-500" | "500+";
 };
 
@@ -226,6 +226,8 @@ export default function StoryFilters({
     { label: t("filters.status.all"), value: "all" },
     { label: t("filters.status.ongoing"), value: "ongoing" },
     { label: t("filters.status.completed"), value: "completed" },
+    { label: t("filters.status.upcoming"), value: "upcoming" },
+    { label: t("filters.status.hiatus"), value: "hiatus" },
   ];
 
   const COUNTRY_OPTIONS = COUNTRY_KEYS.map((key) => ({

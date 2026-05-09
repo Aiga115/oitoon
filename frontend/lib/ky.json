@@ -37,7 +37,9 @@
     "status": {
       "all": "Баары",
       "ongoing": "Жарыяланууда",
-      "completed": "Аяктады"
+      "completed": "Аяктады",
+      "upcoming": "Жакында",
+      "hiatus": "Үзгүлтүк"
     },
     "pageBuckets": {
       "all": "Баары",
@@ -85,6 +87,8 @@
     "infoLabel": "Маалымат",
     "ongoing": "Жарыяланууда",
     "completed": "Аяктады",
+    "upcoming": "Жакында",
+    "hiatus": "Үзгүлтүк",
     "authorLabel": "Автор",
     "chaptersSuffix": "бөлүм",
     "pagesSuffix": "барак"

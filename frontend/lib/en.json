@@ -37,7 +37,9 @@
     "status": {
       "all": "All",
       "ongoing": "Ongoing",
-      "completed": "Completed"
+      "completed": "Completed",
+      "upcoming": "Upcoming",
+      "hiatus": "Hiatus"
     },
     "pageBuckets": {
       "all": "All",
@@ -85,6 +87,8 @@
     "infoLabel": "Information",
     "ongoing": "Ongoing",
     "completed": "Completed",
+    "upcoming": "Upcoming",
+    "hiatus": "Hiatus",
     "authorLabel": "Author",
     "chaptersSuffix": "chapters",
     "pagesSuffix": "pages"
