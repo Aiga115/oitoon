@@ -82,6 +82,12 @@
   opacity: 1;
 }
 
+.langBtn:not(.langBtnActive):hover {
+  opacity: 0.75;
+  border-color: rgba(255, 255, 255, 0.18);
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
 .flag {
   width: 20px;
   height: auto;
@@ -106,6 +112,12 @@
   font-size: 13px;
   font-weight: 500;
   text-decoration: none;
+  transition: background-color 0.15s, border-color 0.15s;
+}
+
+.btnLogin:hover {
+  background-color: rgba(249, 115, 22, 0.12);
+  border-color: rgba(249, 115, 22, 0.8);
 }
 
 .btnRegister {
@@ -116,6 +128,11 @@
   font-size: 13px;
   font-weight: 500;
   text-decoration: none;
+  transition: background-color 0.15s;
+}
+
+.btnRegister:hover {
+  background-color: #9172f7;
 }
 
 /* ── Subnav ───────────────────────────────────────── */
@@ -139,7 +156,12 @@
   align-items: center;
   gap: 6px;
   white-space: nowrap;
-  transition: color 0.15s;
+  transition: color 0.15s, background-color 0.15s;
+}
+
+.navLink:hover {
+  color: #c4b5fd;
+  background-color: rgba(167, 139, 250, 0.08);
 }
 
 .navLinkActive {
@@ -162,4 +184,10 @@
   display: flex;
   align-items: center;
   gap: 6px;
+  transition: background-color 0.15s, border-color 0.15s;
+}
+
+.btnBecomeAuthor:hover {
+  background-color: rgba(249, 115, 22, 0.22);
+  border-color: rgba(249, 115, 22, 0.65);
 }

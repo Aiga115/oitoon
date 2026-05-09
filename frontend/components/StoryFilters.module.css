@@ -79,6 +79,11 @@
   color: #fff;
 }
 
+.statusPill:not(.statusPillActive):hover {
+  background-color: rgba(167, 139, 250, 0.08);
+  color: #c4b5fd;
+}
+
 /* ── Divider ─────────────────────────────────────── */
 .divider {
   width: 1px;

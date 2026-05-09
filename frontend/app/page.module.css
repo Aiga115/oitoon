@@ -113,6 +113,11 @@
   color: #fff;
   border: none;
   cursor: pointer;
+  transition: background-color 0.15s;
+}
+
+.heroReadBtn:hover {
+  background-color: #9172f7;
 }
 
 .heroRating {
