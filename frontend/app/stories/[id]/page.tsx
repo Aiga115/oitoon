@@ -305,16 +305,12 @@ export default function StoryDetailPage() {
             </h2>
             <div className={styles.chapterGrid}>
               {chapters.map((chapter, idx) => (
-                <Link
-                  key={chapter.id}
-                  href={`/stories/${story.id}/chapter/${chapter.number}`}
-                  className={styles.chapterItem}
-                >
+                <div key={chapter.id} className={styles.chapterItem}>
                   <span className={styles.chapterNumber}>{chapter.number}</span>
                   <span className={styles.chapterTitle}>
                     {chapterTitle(idx, chapters.length)}
                   </span>
-                </Link>
+                </div>
               ))}
             </div>
           </section>
