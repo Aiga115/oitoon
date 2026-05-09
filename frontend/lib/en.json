@@ -24,6 +24,7 @@
     "ratingLabel": "rating",
     "storiesCountSuffix": "stories",
     "fanficsCountSuffix": "fanfics",
+    "comicsCountSuffix": "comics",
     "emptyFilter": "Nothing found. Try changing the filters."
   },
   "filters": {
@@ -66,20 +67,30 @@
     "comedy": "Comedy",
     "poetry": "Poetry"
   },
-  "countries": [
-    "Russia",
-    "Kazakhstan",
-    "Uzbekistan",
-    "Kyrgyzstan",
-    "Tajikistan",
-    "Turkmenistan"
-  ],
+  "countries": {
+    "Russia": "Russia",
+    "Kazakhstan": "Kazakhstan",
+    "Uzbekistan": "Uzbekistan",
+    "Kyrgyzstan": "Kyrgyzstan",
+    "Tajikistan": "Tajikistan",
+    "Turkmenistan": "Turkmenistan"
+  },
+  "authors": {
+    "popular": "Popular",
+    "thisWeek": "This week",
+    "subscribersSuffix": "subscribers",
+    "weeklyGainPrefix": "+"
+  },
   "storyCard": {
     "infoLabel": "Information",
     "ongoing": "Ongoing",
     "completed": "Completed",
     "authorLabel": "Author",
-    "chaptersSuffix": "chapters"
+    "chaptersSuffix": "chapters",
+    "pagesSuffix": "pages"
+  },
+  "storyList": {
+    "readButton": "Read"
   },
   "auth": {
     "login": {
@@ -99,6 +110,10 @@
       "alternateAction": "Log in"
     },
     "fields": {
+      "firstName": "First Name",
+      "lastName": "Last Name",
+      "firstNamePlaceholder": "John",
+      "lastNamePlaceholder": "Doe",
       "username": "Username",
       "email": "Email",
       "usernameOrEmail": "Username or Email",

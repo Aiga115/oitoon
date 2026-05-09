@@ -5,12 +5,12 @@ import { useTranslation } from "react-i18next";
 import Header from "@/components/Header";
 import StoryListItem from "@/components/StoryListItem";
 import StoryFilters, { type Filters, DEFAULT_FILTERS } from "@/components/StoryFilters";
-import { MOCK_FANFICS } from "@/lib/mockFanfics";
+import { MOCK_COMICS } from "@/lib/mockComics";
 import styles from "./page.module.css";
 
-const ALL_GENRES = [...new Set(MOCK_FANFICS.flatMap((s) => s.genres))].sort();
-const ALL_LANGUAGES = [...new Set(MOCK_FANFICS.flatMap((s) => s.language))].sort();
-const ALL_YEARS = [...new Set(MOCK_FANFICS.map((s) => s.year))];
+const ALL_GENRES = [...new Set(MOCK_COMICS.flatMap((c) => c.genres))].sort();
+const ALL_LANGUAGES = [...new Set(MOCK_COMICS.flatMap((c) => c.language))].sort();
+const ALL_YEARS = [...new Set(MOCK_COMICS.map((c) => c.year))];
 
 function matchesPages(pages: number, bucket: Filters["pages"]): boolean {
   if (bucket === "all") return true;
@@ -21,28 +21,28 @@ function matchesPages(pages: number, bucket: Filters["pages"]): boolean {
   return true;
 }
 
-export default function FanficsPage() {
+export default function ComicsPage() {
   const { t } = useTranslation();
   const [filters, setFilters] = useState<Filters>(DEFAULT_FILTERS);
 
-  const filtered = MOCK_FANFICS.filter((fanfic) => {
+  const filtered = MOCK_COMICS.filter((comic) => {
     if (
       filters.genres.length > 0 &&
-      !filters.genres.some((g) => fanfic.genres.includes(g))
+      !filters.genres.some((g) => comic.genres.includes(g))
     )
       return false;
     if (
       filters.languages.length > 0 &&
-      !filters.languages.some((l) => fanfic.language.includes(l))
+      !filters.languages.some((l) => comic.language.includes(l))
     )
       return false;
-    if (filters.year !== "all" && fanfic.year !== parseInt(filters.year))
+    if (filters.year !== "all" && comic.year !== parseInt(filters.year))
       return false;
-    if (filters.country !== "all" && fanfic.country !== filters.country)
+    if (filters.country !== "all" && comic.country !== filters.country)
       return false;
-    if (filters.status !== "all" && fanfic.status !== filters.status)
+    if (filters.status !== "all" && comic.status !== filters.status)
       return false;
-    if (!matchesPages(fanfic.pages, filters.pages)) return false;
+    if (!matchesPages(comic.pages, filters.pages)) return false;
     return true;
   });
 
@@ -55,9 +55,9 @@ export default function FanficsPage() {
           {/* Page heading */}
           <div className={styles.pageHeading}>
             <h1 className={styles.pageTitle}>
-              {t("nav.fanfics")}
+              {t("nav.comics")}
               <span className={styles.pageCount}>
-                · {filtered.length} {t("home.fanficsCountSuffix")}
+                · {filtered.length} {t("home.comicsCountSuffix")}
               </span>
             </h1>
             <div className={styles.pageUnderline} />
@@ -73,8 +73,8 @@ export default function FanficsPage() {
 
           {filtered.length > 0 ? (
             <div className="flex flex-col gap-4">
-              {filtered.map((fanfic) => (
-                <StoryListItem key={fanfic.id} story={fanfic} />
+              {filtered.map((comic) => (
+                <StoryListItem key={comic.id} story={comic} />
               ))}
             </div>
           ) : (

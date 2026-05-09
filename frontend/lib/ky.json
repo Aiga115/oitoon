@@ -24,6 +24,7 @@
     "ratingLabel": "рейтинг",
     "storiesCountSuffix": "аңгеме",
     "fanficsCountSuffix": "фанфик",
+    "comicsCountSuffix": "комикс",
     "emptyFilter": "Эч нерсе табылган жок. Чыпкаларды өзгөртүп көрүңүз."
   },
   "filters": {
@@ -66,20 +67,30 @@
     "comedy": "Комедия",
     "poetry": "Поэзия"
   },
-  "countries": [
-    "Россия",
-    "Казакстан",
-    "Өзбекстан",
-    "Кыргызстан",
-    "Тажикстан",
-    "Түркмөнстан"
-  ],
+  "countries": {
+    "Russia": "Россия",
+    "Kazakhstan": "Казакстан",
+    "Uzbekistan": "Өзбекстан",
+    "Kyrgyzstan": "Кыргызстан",
+    "Tajikistan": "Тажикстан",
+    "Turkmenistan": "Түркмөнстан"
+  },
+  "authors": {
+    "popular": "Популярдуу",
+    "thisWeek": "Бул аптада",
+    "subscribersSuffix": "жазылуучу",
+    "weeklyGainPrefix": "+"
+  },
   "storyCard": {
     "infoLabel": "Маалымат",
     "ongoing": "Жарыяланууда",
     "completed": "Аяктады",
     "authorLabel": "Автор",
-    "chaptersSuffix": "бөлүм"
+    "chaptersSuffix": "бөлүм",
+    "pagesSuffix": "барак"
+  },
+  "storyList": {
+    "readButton": "Окуу"
   },
   "auth": {
     "login": {
@@ -99,6 +110,10 @@
       "alternateAction": "Кирүү"
     },
     "fields": {
+      "firstName": "Ат",
+      "lastName": "Фамилия",
+      "firstNamePlaceholder": "Асан",
+      "lastNamePlaceholder": "Усупов",
       "username": "Колдонуучу аты",
       "email": "Электрондук почта",
       "usernameOrEmail": "Колдонуучу аты же почта",
