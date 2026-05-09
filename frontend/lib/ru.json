@@ -98,14 +98,16 @@
       "alternateAction": "Войти"
     },
     "fields": {
-      "name": "Имя",
+      "username": "Имя пользователя",
       "email": "Электронная почта",
       "usernameOrEmail": "Имя пользователя или почта",
       "password": "Пароль",
-      "namePlaceholder": "Иван Иванов",
+      "confirmPassword": "Подтверждение пароля",
+      "usernamePlaceholder": "johndoe",
       "emailPlaceholder": "name@example.com",
       "usernameOrEmailPlaceholder": "Имя пользователя или email",
-      "passwordPlaceholder": "Введите пароль"
+      "passwordPlaceholder": "Введите пароль",
+      "confirmPasswordPlaceholder": "Повторите пароль"
     }
   }
 }

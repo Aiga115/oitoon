@@ -98,14 +98,16 @@
       "alternateAction": "Кирүү"
     },
     "fields": {
-      "name": "Аты",
+      "username": "Колдонуучу аты",
       "email": "Электрондук почта",
       "usernameOrEmail": "Колдонуучу аты же почта",
       "password": "Сырсөз",
-      "namePlaceholder": "Айбек Дооронов",
+      "confirmPassword": "Сырсөздү ырастоо",
+      "usernamePlaceholder": "johndoe",
       "emailPlaceholder": "name@example.com",
       "usernameOrEmailPlaceholder": "Колдонуучу аты же email",
-      "passwordPlaceholder": "Сырсөзүңүздү киргизиңиз"
+      "passwordPlaceholder": "Сырсөзүңүздү киргизиңиз",
+      "confirmPasswordPlaceholder": "Сырсөздү кайра киргизиңиз"
     }
   }
 }

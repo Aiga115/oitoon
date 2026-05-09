@@ -34,14 +34,16 @@ export default function AuthFormTemplate({ mode }: AuthFormTemplateProps) {
     alternateAction: t(`auth.${mode}.alternateAction`),
   };
   const fields = {
-    name: t("auth.fields.name"),
+    username: t("auth.fields.username"),
     email: t("auth.fields.email"),
     usernameOrEmail: t("auth.fields.usernameOrEmail"),
     password: t("auth.fields.password"),
-    namePlaceholder: t("auth.fields.namePlaceholder"),
+    confirmPassword: t("auth.fields.confirmPassword"),
+    usernamePlaceholder: t("auth.fields.usernamePlaceholder"),
     emailPlaceholder: t("auth.fields.emailPlaceholder"),
     usernameOrEmailPlaceholder: t("auth.fields.usernameOrEmailPlaceholder"),
     passwordPlaceholder: t("auth.fields.passwordPlaceholder"),
+    confirmPasswordPlaceholder: t("auth.fields.confirmPasswordPlaceholder"),
   };
 
   return (
@@ -78,14 +80,15 @@ export default function AuthFormTemplate({ mode }: AuthFormTemplateProps) {
           <div className={styles.fieldGroup}>
             {mode === "register" && (
               <div className={styles.field}>
-                <label htmlFor="name" className={styles.label}>
-                  {fields.name}
+                <label htmlFor="username" className={styles.label}>
+                  {fields.username}
                 </label>
                 <input
-                  id="name"
-                  name="name"
+                  id="username"
+                  name="username"
                   type="text"
-                  placeholder={fields.namePlaceholder}
+                  autoComplete="username"
+                  placeholder={fields.usernamePlaceholder}
                   className={styles.input}
                 />
               </div>
@@ -113,10 +116,27 @@ export default function AuthFormTemplate({ mode }: AuthFormTemplateProps) {
                 id="password"
                 name="password"
                 type="password"
+                autoComplete={mode === "register" ? "new-password" : "current-password"}
                 placeholder={fields.passwordPlaceholder}
                 className={styles.input}
               />
             </div>
+
+            {mode === "register" && (
+              <div className={styles.field}>
+                <label htmlFor="confirmPassword" className={styles.label}>
+                  {fields.confirmPassword}
+                </label>
+                <input
+                  id="confirmPassword"
+                  name="confirmPassword"
+                  type="password"
+                  autoComplete="new-password"
+                  placeholder={fields.confirmPasswordPlaceholder}
+                  className={styles.input}
+                />
+              </div>
+            )}
           </div>
 
           <button type="submit" className={styles.submitBtn}>

@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import {
   BookOpen,
   Sparkles,
@@ -30,14 +31,10 @@ function changeLanguage (code: string) {
 
 export default function Header () {
   const { t, i18n: currentI18n } = useTranslation()
+  const pathname = usePathname()
 
   const NAV_ITEMS = [
-    {
-      label: t('nav.stories'),
-      href: '/stories',
-      icon: <BookOpen size={14} />,
-      active: true
-    },
+    { label: t('nav.stories'), href: '/stories', icon: <BookOpen size={14} /> },
     { label: t('nav.fanfics'), href: '/fanfics', icon: <Sparkles size={14} /> },
     { label: t('nav.comics'), href: '/comics', icon: <Palette size={14} /> },
     { label: t('nav.authors'), href: '/authors', icon: <PenLine size={14} /> },
@@ -96,7 +93,7 @@ export default function Header () {
           <Link
             key={item.href}
             href={item.href}
-            className={`${styles.navLink} ${item.active ? styles.navLinkActive : ''}`}
+            className={`${styles.navLink} ${pathname === item.href ? styles.navLinkActive : ''}`}
           >
             {item.icon}
             {item.label}

@@ -98,14 +98,16 @@
       "alternateAction": "Log in"
     },
     "fields": {
-      "name": "Name",
+      "username": "Username",
       "email": "Email",
       "usernameOrEmail": "Username or Email",
       "password": "Password",
-      "namePlaceholder": "John Doe",
+      "confirmPassword": "Confirm Password",
+      "usernamePlaceholder": "johndoe",
       "emailPlaceholder": "name@example.com",
       "usernameOrEmailPlaceholder": "Username or email address",
-      "passwordPlaceholder": "Enter password"
+      "passwordPlaceholder": "Enter password",
+      "confirmPasswordPlaceholder": "Re-enter password"
     }
   }
 }
