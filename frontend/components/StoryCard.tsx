@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { BookOpen, Info } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import { GENRE_STYLES, DEFAULT_GENRE_STYLE } from "@/lib/genreStyles";
+import { GENRE_STYLES, DEFAULT_GENRE_STYLE, STATUS_STYLES, DEFAULT_STATUS_STYLE } from "@/lib/genreStyles";
 import StoryTooltip from "@/components/StoryTooltip";
 
 export type StoryItem = {
@@ -14,7 +14,7 @@ export type StoryItem = {
   language: string[];
   year: number;
   country: string;
-  status: "ongoing" | "completed";
+  status: "ongoing" | "completed" | "upcoming" | "hiatus";
   pages: number;
   chapters: number;
   rating: number;
@@ -63,11 +63,11 @@ export default function StoryCard({ story }: { story: StoryItem }) {
           className="absolute top-2 left-2"
           style={{
             fontSize: "9px",
-            fontWeight: 600,
-            letterSpacing: "0.04em",
+            fontWeight: 700,
+            letterSpacing: "0.05em",
             textTransform: "uppercase" as const,
-            padding: "3px 7px",
-            borderRadius: "4px",
+            padding: "3px 8px",
+            borderRadius: "999px",
             backgroundColor: gs.badgeBg,
             color: gs.badgeColor,
             border: `0.5px solid ${gs.badgeBorder}`,
@@ -93,20 +93,27 @@ export default function StoryCard({ story }: { story: StoryItem }) {
         </button>
 
         {/* Status badge — bottom right */}
-        <span
-          className="absolute bottom-2 right-2"
-          style={{
-            fontSize: "9px",
-            fontWeight: 500,
-            padding: "2px 7px",
-            borderRadius: "3px",
-            ...(story.status === "ongoing"
-              ? { backgroundColor: "rgba(45,212,191,0.15)", color: "#2dd4bf" }
-              : { backgroundColor: "rgba(167,139,250,0.15)", color: "#a78bfa" }),
-          }}
-        >
-          {story.status === "ongoing" ? t("storyCard.ongoing") : t("storyCard.completed")}
-        </span>
+        {(() => {
+          const ss = STATUS_STYLES[story.status ?? ""] ?? DEFAULT_STATUS_STYLE;
+          return (
+            <span
+              className="absolute bottom-2 right-2"
+              style={{
+                fontSize: "9px",
+                fontWeight: 700,
+                letterSpacing: "0.05em",
+                textTransform: "uppercase" as const,
+                padding: "3px 8px",
+                borderRadius: "999px",
+                backgroundColor: ss.badgeBg,
+                color: ss.badgeColor,
+                border: `0.5px solid ${ss.badgeBorder}`,
+              }}
+            >
+              {t(`storyCard.${story.status}`, { defaultValue: story.status })}
+            </span>
+          );
+        })()}
       </div>
 
       {tooltipVisible && (
