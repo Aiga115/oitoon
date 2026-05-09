@@ -23,6 +23,7 @@
     "explore": "Все истории",
     "ratingLabel": "рейтинг",
     "storiesCountSuffix": "историй",
+    "fanficsCountSuffix": "фанфиков",
     "emptyFilter": "Ничего не найдено. Попробуйте изменить фильтры."
   },
   "filters": {

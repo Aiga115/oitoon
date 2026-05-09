@@ -23,6 +23,7 @@
     "explore": "Explore",
     "ratingLabel": "rating",
     "storiesCountSuffix": "stories",
+    "fanficsCountSuffix": "fanfics",
     "emptyFilter": "Nothing found. Try changing the filters."
   },
   "filters": {
