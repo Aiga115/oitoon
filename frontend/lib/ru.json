@@ -24,6 +24,7 @@
     "ratingLabel": "рейтинг",
     "storiesCountSuffix": "историй",
     "fanficsCountSuffix": "фанфиков",
+    "comicsCountSuffix": "комиксов",
     "emptyFilter": "Ничего не найдено. Попробуйте изменить фильтры."
   },
   "filters": {
@@ -66,20 +67,30 @@
     "comedy": "Комедия",
     "poetry": "Поэзия"
   },
-  "countries": [
-    "Россия",
-    "Казахстан",
-    "Узбекистан",
-    "Кыргызстан",
-    "Таджикистан",
-    "Туркменистан"
-  ],
+  "countries": {
+    "Russia": "Россия",
+    "Kazakhstan": "Казахстан",
+    "Uzbekistan": "Узбекистан",
+    "Kyrgyzstan": "Кыргызстан",
+    "Tajikistan": "Таджикистан",
+    "Turkmenistan": "Туркменистан"
+  },
+  "authors": {
+    "popular": "Популярные",
+    "thisWeek": "На этой неделе",
+    "subscribersSuffix": "подписчиков",
+    "weeklyGainPrefix": "+"
+  },
   "storyCard": {
     "infoLabel": "Информация",
     "ongoing": "Выходит",
     "completed": "Завершено",
     "authorLabel": "Автор",
-    "chaptersSuffix": "глав"
+    "chaptersSuffix": "глав",
+    "pagesSuffix": "страниц"
+  },
+  "storyList": {
+    "readButton": "Читать"
   },
   "auth": {
     "login": {
@@ -99,6 +110,10 @@
       "alternateAction": "Войти"
     },
     "fields": {
+      "firstName": "Имя",
+      "lastName": "Фамилия",
+      "firstNamePlaceholder": "Иван",
+      "lastNamePlaceholder": "Иванов",
       "username": "Имя пользователя",
       "email": "Электронная почта",
       "usernameOrEmail": "Имя пользователя или почта",

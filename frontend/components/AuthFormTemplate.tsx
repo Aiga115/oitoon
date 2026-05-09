@@ -34,6 +34,10 @@ export default function AuthFormTemplate({ mode }: AuthFormTemplateProps) {
     alternateAction: t(`auth.${mode}.alternateAction`),
   };
   const fields = {
+    firstName: t("auth.fields.firstName"),
+    lastName: t("auth.fields.lastName"),
+    firstNamePlaceholder: t("auth.fields.firstNamePlaceholder"),
+    lastNamePlaceholder: t("auth.fields.lastNamePlaceholder"),
     username: t("auth.fields.username"),
     email: t("auth.fields.email"),
     usernameOrEmail: t("auth.fields.usernameOrEmail"),
@@ -78,6 +82,37 @@ export default function AuthFormTemplate({ mode }: AuthFormTemplateProps) {
 
         <form>
           <div className={styles.fieldGroup}>
+            {mode === "register" && (
+              <div className={styles.fieldRow}>
+                <div className={styles.field}>
+                  <label htmlFor="firstName" className={styles.label}>
+                    {fields.firstName}
+                  </label>
+                  <input
+                    id="firstName"
+                    name="firstName"
+                    type="text"
+                    autoComplete="given-name"
+                    placeholder={fields.firstNamePlaceholder}
+                    className={styles.input}
+                  />
+                </div>
+                <div className={styles.field}>
+                  <label htmlFor="lastName" className={styles.label}>
+                    {fields.lastName}
+                  </label>
+                  <input
+                    id="lastName"
+                    name="lastName"
+                    type="text"
+                    autoComplete="family-name"
+                    placeholder={fields.lastNamePlaceholder}
+                    className={styles.input}
+                  />
+                </div>
+              </div>
+            )}
+
             {mode === "register" && (
               <div className={styles.field}>
                 <label htmlFor="username" className={styles.label}>

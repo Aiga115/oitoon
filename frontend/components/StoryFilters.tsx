@@ -228,9 +228,8 @@ export default function StoryFilters({
     { label: t("filters.status.completed"), value: "completed" },
   ];
 
-  const translatedCountries = t("countries", { returnObjects: true }) as string[];
-  const COUNTRY_OPTIONS = COUNTRY_KEYS.map((key, i) => ({
-    label: translatedCountries[i] ?? key,
+  const COUNTRY_OPTIONS = COUNTRY_KEYS.map((key) => ({
+    label: t(`countries.${key}`, { defaultValue: key }),
     value: key,
   }));
 

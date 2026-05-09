@@ -1,0 +1,133 @@
+export type AuthorItem = {
+  id: number;
+  username: string;
+  displayName: string;
+  subscribers: number;
+  country: string;
+  genres: string[];
+  avatarColor: string;
+  weeklyGain: number;
+};
+
+export const MOCK_AUTHORS: AuthorItem[] = [
+  {
+    id: 1,
+    username: "artem_belov",
+    displayName: "Артём Белов",
+    subscribers: 14820,
+    country: "Russia",
+    genres: ["fantasy", "adventure"],
+    avatarColor: "#7c3aed",
+    weeklyGain: 340,
+  },
+  {
+    id: 2,
+    username: "maria_sokolova",
+    displayName: "Мария Соколова",
+    subscribers: 11540,
+    country: "Kazakhstan",
+    genres: ["mystery", "thriller"],
+    avatarColor: "#db2777",
+    weeklyGain: 510,
+  },
+  {
+    id: 3,
+    username: "dmitry_orlov",
+    displayName: "Дмитрий Орлов",
+    subscribers: 9870,
+    country: "Russia",
+    genres: ["steampunk", "scifi"],
+    avatarColor: "#0891b2",
+    weeklyGain: 190,
+  },
+  {
+    id: 4,
+    username: "natalya_kim",
+    displayName: "Наталья Ким",
+    subscribers: 8300,
+    country: "Kyrgyzstan",
+    genres: ["romance", "fantasy"],
+    avatarColor: "#d97706",
+    weeklyGain: 620,
+  },
+  {
+    id: 5,
+    username: "igor_zaitsev",
+    displayName: "Игорь Зайцев",
+    subscribers: 22100,
+    country: "Russia",
+    genres: ["scifi", "adventure"],
+    avatarColor: "#059669",
+    weeklyGain: 280,
+  },
+  {
+    id: 6,
+    username: "aydana_bekova",
+    displayName: "Айдана Бекова",
+    subscribers: 7650,
+    country: "Kyrgyzstan",
+    genres: ["fantasy", "adventure"],
+    avatarColor: "#e11d48",
+    weeklyGain: 870,
+  },
+  {
+    id: 7,
+    username: "karim_yusupov",
+    displayName: "Карим Юсупов",
+    subscribers: 6200,
+    country: "Uzbekistan",
+    genres: ["mystery", "comedy"],
+    avatarColor: "#7c3aed",
+    weeklyGain: 150,
+  },
+  {
+    id: 8,
+    username: "dina_seitkali",
+    displayName: "Дина Сейткали",
+    subscribers: 18900,
+    country: "Kazakhstan",
+    genres: ["drama", "historical"],
+    avatarColor: "#0369a1",
+    weeklyGain: 440,
+  },
+  {
+    id: 9,
+    username: "zhansaya_omarova",
+    displayName: "Жансая Омарова",
+    subscribers: 13400,
+    country: "Kazakhstan",
+    genres: ["scifi", "thriller"],
+    avatarColor: "#be185d",
+    weeklyGain: 760,
+  },
+  {
+    id: 10,
+    username: "nurbek_toktogul",
+    displayName: "Нурбек Токтогулов",
+    subscribers: 5900,
+    country: "Kyrgyzstan",
+    genres: ["fantasy", "horror"],
+    avatarColor: "#065f46",
+    weeklyGain: 95,
+  },
+  {
+    id: 11,
+    username: "anton_krylov",
+    displayName: "Антон Крылов",
+    subscribers: 17200,
+    country: "Russia",
+    genres: ["action", "dystopia"],
+    avatarColor: "#92400e",
+    weeklyGain: 530,
+  },
+  {
+    id: 12,
+    username: "firuza_nazarova",
+    displayName: "Фируза Назарова",
+    subscribers: 4100,
+    country: "Tajikistan",
+    genres: ["adventure", "romance"],
+    avatarColor: "#6d28d9",
+    weeklyGain: 210,
+  },
+];

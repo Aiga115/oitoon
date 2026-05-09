@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import Header from "@/components/Header";
-import StoryCard from "@/components/StoryCard";
+import StoryListItem from "@/components/StoryListItem";
 import StoryFilters, { type Filters, DEFAULT_FILTERS } from "@/components/StoryFilters";
 import { MOCK_STORIES } from "@/lib/mockStories";
 import styles from "./page.module.css";
@@ -72,9 +72,9 @@ export default function StoriesPage() {
           />
 
           {filtered.length > 0 ? (
-            <div className="flex flex-wrap gap-5">
+            <div className="flex flex-col gap-4">
               {filtered.map((story) => (
-                <StoryCard key={story.id} story={story} />
+                <StoryListItem key={story.id} story={story} />
               ))}
             </div>
           ) : (
