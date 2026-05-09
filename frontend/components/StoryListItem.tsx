@@ -1,7 +1,6 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { BookOpen, BookMarked, Layers } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { GENRE_STYLES, DEFAULT_GENRE_STYLE, STATUS_STYLES, DEFAULT_STATUS_STYLE } from "@/lib/genreStyles";
@@ -10,36 +9,19 @@ import styles from "./StoryListItem.module.css";
 
 export default function StoryListItem({ story }: { story: StoryItem }) {
   const { t } = useTranslation();
-  const router = useRouter();
-  const [hovered, setHovered] = useState(false);
 
   const primaryGenre = story.genres[0] ?? "";
   const gs = GENRE_STYLES[primaryGenre] ?? DEFAULT_GENRE_STYLE;
   const ss = STATUS_STYLES[story.status] ?? DEFAULT_STATUS_STYLE;
-
-  const handleClick = () => router.push(`/stories/${story.id}`);
-  const handleRead = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    router.push(`/stories/${story.id}`);
-  };
 
   const languageList = story.language
     .map((l) => t(`languageNames.${l}`, { defaultValue: l }))
     .join(", ");
 
   return (
-    <div
+    <Link
+      href={`/stories/${story.id}`}
       className={styles.item}
-      style={{
-        borderColor: hovered
-          ? "rgba(167,139,250,0.35)"
-          : "rgba(255,255,255,0.07)",
-        transform: hovered ? "translateY(-2px)" : "translateY(0)",
-        boxShadow: hovered ? "0 8px 28px rgba(0,0,0,0.45)" : "none",
-      }}
-      onClick={handleClick}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
     >
       {/* ── Cover ── */}
       <div className={styles.cover} style={{ background: gs.gradient }}>
@@ -116,16 +98,15 @@ export default function StoryListItem({ story }: { story: StoryItem }) {
             </span>
           </div>
 
-          <button
+          <span
             className={styles.readButton}
             style={{ background: gs.badgeBg, color: gs.badgeColor }}
-            onClick={handleRead}
           >
             {t("storyList.readButton")}
-          </button>
+          </span>
         </div>
 
       </div>
-    </div>
+    </Link>
   );
 }
