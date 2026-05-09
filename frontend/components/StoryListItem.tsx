@@ -12,6 +12,7 @@ export default function StoryListItem({ story }: { story: StoryItem }) {
   const [hovered, setHovered] = useState(false);
   const primaryGenre = story.genres[0] ?? "";
   const gs = GENRE_STYLES[primaryGenre] ?? DEFAULT_GENRE_STYLE;
+  const ss = STATUS_STYLES[story.status] ?? DEFAULT_STATUS_STYLE;
 
   return (
     <div
@@ -46,21 +47,16 @@ export default function StoryListItem({ story }: { story: StoryItem }) {
         </span>
 
         {/* Status badge */}
-        {(() => {
-          const ss = STATUS_STYLES[story.status ?? ""] ?? DEFAULT_STATUS_STYLE;
-          return (
-            <span
-              className={styles.statusBadge}
-              style={{
-                backgroundColor: ss.badgeBg,
-                color: ss.badgeColor,
-                border: `0.5px solid ${ss.badgeBorder}`,
-              }}
-            >
-              {t(`storyCard.${story.status}`, { defaultValue: story.status })}
-            </span>
-          );
-        })()}
+        <span
+          className={styles.statusBadge}
+          style={{
+            backgroundColor: ss.badgeBg,
+            color: ss.badgeColor,
+            border: `0.5px solid ${ss.badgeBorder}`,
+          }}
+        >
+          {t(`storyCard.${story.status}`, { defaultValue: story.status })}
+        </span>
       </div>
 
       {/* ── Content ────────────────────────────────────────────────── */}
