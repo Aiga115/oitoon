@@ -123,6 +123,6 @@ export function generateChapters(count: number): Chapter[] {
   return Array.from({ length: count }, (_, i) => ({
     id: i + 1,
     number: i + 1,
-    title: i === 0 ? "prologue" : i === count - 1 && count > 2 ? "epilogue" : `chapter_n`,
+    title: i === 0 ? "prologue" : i === count - 1 && count > 2 ? "epilogue" : `chapter_${i + 1}`,
   }));
 }
