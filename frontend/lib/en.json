@@ -85,6 +85,8 @@
     "infoLabel": "Information",
     "ongoing": "Ongoing",
     "completed": "Completed",
+    "upcoming": "Upcoming",
+    "hiatus": "Hiatus",
     "authorLabel": "Author",
     "chaptersSuffix": "chapters",
     "pagesSuffix": "pages"

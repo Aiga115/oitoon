@@ -85,6 +85,8 @@
     "infoLabel": "Информация",
     "ongoing": "Выходит",
     "completed": "Завершено",
+    "upcoming": "Скоро",
+    "hiatus": "Пауза",
     "authorLabel": "Автор",
     "chaptersSuffix": "глав",
     "pagesSuffix": "страниц"
