@@ -96,6 +96,31 @@
   "storyList": {
     "readButton": "Read"
   },
+  "storyDetail": {
+    "by": "by",
+    "readNow": "Read now",
+    "addToLibrary": "Add to library",
+    "inLibrary": "In library",
+    "backToStories": "Back to stories",
+    "description": "Description",
+    "aboutAuthor": "About the Author",
+    "rateStory": "Rate this story",
+    "year": "Year",
+    "languages": "Languages",
+    "comments": "Comments",
+    "shareThoughts": "Share your thoughts",
+    "commentPlaceholder": "Share your thoughts…",
+    "submitComment": "Post comment",
+    "sortBest": "Best",
+    "sortNewest": "Newest",
+    "reply": "Reply",
+    "chapters": "Chapters",
+    "chapter": "Chapter",
+    "prologue": "Prologue",
+    "epilogue": "Epilogue",
+    "you": "You",
+    "notFound": "Story not found."
+  },
   "auth": {
     "login": {
       "title": "Log in",
@@ -129,5 +154,9 @@
       "passwordPlaceholder": "Enter password",
       "confirmPasswordPlaceholder": "Re-enter password"
     }
+  },
+  "notFound": {
+    "title": "Page not found",
+    "goHome": "Go home"
   }
 }

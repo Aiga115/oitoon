@@ -1,0 +1,50 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  gap: 12px;
+  background: var(--background, #0d0b1e);
+  text-align: center;
+  padding: 32px;
+}
+
+.icon {
+  color: #4b4870;
+  margin-bottom: 4px;
+}
+
+.code {
+  font-size: 80px;
+  font-weight: 800;
+  color: #f0eeff;
+  line-height: 1;
+  margin: 0;
+  letter-spacing: -2px;
+}
+
+.message {
+  font-size: 16px;
+  color: #9490b5;
+  margin: 0;
+}
+
+.back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #a78bfa;
+  text-decoration: none;
+  padding: 8px 18px;
+  border-radius: 20px;
+  border: 0.5px solid rgba(167, 139, 250, 0.35);
+  transition: background 0.15s;
+}
+
+.back:hover {
+  background: rgba(167, 139, 250, 0.1);
+}

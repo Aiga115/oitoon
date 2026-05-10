@@ -96,6 +96,31 @@
   "storyList": {
     "readButton": "Окуу"
   },
+  "storyDetail": {
+    "by": "автор:",
+    "readNow": "Азыр окуу",
+    "addToLibrary": "Китепканага кошуу",
+    "inLibrary": "Китепканада",
+    "backToStories": "Аңгемелерге кайтуу",
+    "description": "Аңгеме жөнүндө",
+    "aboutAuthor": "Автор жөнүндө",
+    "rateStory": "Аңгемени баалоо",
+    "year": "Жыл",
+    "languages": "Тилдер",
+    "comments": "Комментарийлер",
+    "shareThoughts": "Пикириңизди бөлүшүңүз",
+    "commentPlaceholder": "Пикириңизди жазыңыз…",
+    "submitComment": "Жөнөтүү",
+    "sortBest": "Эң жакшы",
+    "sortNewest": "Жаңылар",
+    "reply": "Жооп берүү",
+    "chapters": "Бөлүмдөр",
+    "chapter": "Бөлүм",
+    "prologue": "Пролог",
+    "epilogue": "Эпилог",
+    "you": "Сиз",
+    "notFound": "Аңгеме табылган жок."
+  },
   "auth": {
     "login": {
       "title": "Кирүү",
@@ -129,5 +154,9 @@
       "passwordPlaceholder": "Сырсөзүңүздү киргизиңиз",
       "confirmPasswordPlaceholder": "Сырсөздү кайра киргизиңиз"
     }
+  },
+  "notFound": {
+    "title": "Барак табылган жок",
+    "goHome": "Башкы бетке"
   }
 }

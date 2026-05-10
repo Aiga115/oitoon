@@ -74,7 +74,7 @@ export default function StoriesPage() {
           {filtered.length > 0 ? (
             <div className="flex flex-col gap-4">
               {filtered.map((story) => (
-                <StoryListItem key={story.id} story={story} />
+                <StoryListItem key={story.id} story={story} basePath="/stories" />
               ))}
             </div>
           ) : (
