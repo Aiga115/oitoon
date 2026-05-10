@@ -144,5 +144,9 @@
       "passwordPlaceholder": "Enter password",
       "confirmPasswordPlaceholder": "Re-enter password"
     }
+  },
+  "notFound": {
+    "title": "Page not found",
+    "goHome": "Go home"
   }
 }

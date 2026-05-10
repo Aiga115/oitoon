@@ -144,5 +144,9 @@
       "passwordPlaceholder": "Сырсөзүңүздү киргизиңиз",
       "confirmPasswordPlaceholder": "Сырсөздү кайра киргизиңиз"
     }
+  },
+  "notFound": {
+    "title": "Барак табылган жок",
+    "goHome": "Башкы бетке"
   }
 }

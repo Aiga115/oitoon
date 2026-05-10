@@ -144,5 +144,9 @@
       "passwordPlaceholder": "Введите пароль",
       "confirmPasswordPlaceholder": "Повторите пароль"
     }
+  },
+  "notFound": {
+    "title": "Страница не найдена",
+    "goHome": "На главную"
   }
 }
