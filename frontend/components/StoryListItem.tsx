@@ -7,7 +7,13 @@ import { GENRE_STYLES, DEFAULT_GENRE_STYLE, STATUS_STYLES, DEFAULT_STATUS_STYLE 
 import type { StoryItem } from "@/components/StoryCard";
 import styles from "./StoryListItem.module.css";
 
-export default function StoryListItem({ story }: { story: StoryItem }) {
+export default function StoryListItem({
+  story,
+  basePath = "/stories",
+}: {
+  story: StoryItem;
+  basePath?: string;
+}) {
   const { t } = useTranslation();
 
   const primaryGenre = story.genres[0] ?? "";
@@ -20,7 +26,7 @@ export default function StoryListItem({ story }: { story: StoryItem }) {
 
   return (
     <Link
-      href={`/stories/${story.id}`}
+      href={`${basePath}/${story.id}`}
       className={styles.item}
     >
       {/* ── Cover ── */}
