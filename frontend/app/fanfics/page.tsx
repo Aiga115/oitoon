@@ -74,7 +74,7 @@ export default function FanficsPage() {
           {filtered.length > 0 ? (
             <div className="flex flex-col gap-4">
               {filtered.map((fanfic) => (
-                <StoryListItem key={fanfic.id} story={fanfic} basePath="/fanfics" />
+                <StoryListItem key={fanfic.id} story={fanfic} />
               ))}
             </div>
           ) : (

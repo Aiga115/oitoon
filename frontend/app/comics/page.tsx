@@ -74,7 +74,7 @@ export default function ComicsPage() {
           {filtered.length > 0 ? (
             <div className="flex flex-col gap-4">
               {filtered.map((comic) => (
-                <StoryListItem key={comic.id} story={comic} basePath="/comics" />
+                <StoryListItem key={comic.id} story={comic} />
               ))}
             </div>
           ) : (

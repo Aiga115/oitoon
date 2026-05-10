@@ -5,7 +5,7 @@ import { useParams } from "next/navigation";
 import Link from "next/link";
 import {
   BookOpen, ThumbsUp, ThumbsDown, Star,
-  Layers, BookMarked, ArrowLeft, Send,
+  BookMarked, ArrowLeft, Send,
   Camera, MessageCircle, Play, ExternalLink,
   Hash, Heart, BookmarkPlus, BookmarkCheck,
 } from "lucide-react";
@@ -200,7 +200,7 @@ export default function StoryDetailPage() {
 
             <h1 className={styles.bannerTitle}>{story.title}</h1>
             <p className={styles.bannerAuthor}>
-              {t("storyCard.authorLabel", { defaultValue: "by" })}{" "}
+              {t("storyDetail.by", { defaultValue: "by" })}{" "}
               {story.author}
             </p>
 
@@ -226,10 +226,12 @@ export default function StoryDetailPage() {
             </div>
 
             <div className={styles.bannerActions}>
-              <Link href={`/stories/${story.id}/chapter/1`}
-                className={styles.btnPrimary}>
+              <button
+                className={styles.btnPrimary}
+                disabled
+              >
                 {t("storyDetail.readNow", { defaultValue: "Read now" })}
-              </Link>
+              </button>
               <button
                 className={styles.btnGhost}
                 onClick={() => setInLibrary(v => !v)}
@@ -369,14 +371,13 @@ export default function StoryDetailPage() {
             </h2>
             <div className={styles.chapterGrid}>
               {chapters.map((ch, idx) => (
-                <Link key={ch.id}
-                  href={`/stories/${story.id}/chapter/${ch.number}`}
+                <div key={ch.id}
                   className={styles.chapterItem}>
                   <span className={styles.chapterNum}>{ch.number}</span>
                   <span className={styles.chapterName}>
                     {chapterTitle(idx, chapters.length)}
                   </span>
-                </Link>
+                </div>
               ))}
             </div>
           </section>
@@ -389,10 +390,11 @@ export default function StoryDetailPage() {
 
             {/* Input */}
             <div className={styles.commentInputWrap}>
-              <label className={styles.commentLabel}>
+              <label htmlFor="comment-input" className={styles.commentLabel}>
                 {t("storyDetail.shareThoughts", { defaultValue: "Share your thoughts" })}
               </label>
               <textarea
+                id="comment-input"
                 className={styles.commentTextarea}
                 value={commentText}
                 onChange={(e) => setCommentText(e.target.value)}
@@ -454,14 +456,16 @@ export default function StoryDetailPage() {
                         </button>
                         <div className={styles.voteGroup}>
                           <button
+                            aria-label="Dislike comment"
                             className={`${styles.heartBtn} ${comment.userVote === "down" ? styles.heartBtnDislikeActive : ""}`}
                             onClick={() => handleCommentVote(comment.id, "down")}>
-                            <Heart size={15} />
+                            <ThumbsDown size={15} />
                           </button>
                           <span className={styles.voteScore}>
                             {comment.score > 0 ? `+${comment.score}` : comment.score}
                           </span>
                           <button
+                            aria-label="Like comment"
                             className={`${styles.heartBtn} ${comment.userVote === "up" ? styles.heartBtnLikeActive : ""}`}
                             onClick={() => handleCommentVote(comment.id, "up")}>
                             <Heart size={15} />
