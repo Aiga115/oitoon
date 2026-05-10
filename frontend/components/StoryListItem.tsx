@@ -12,7 +12,7 @@ export default function StoryListItem({
   basePath = "/stories",
 }: {
   story: StoryItem;
-  basePath?: string;
+  basePath: string;
 }) {
   const { t } = useTranslation();
 

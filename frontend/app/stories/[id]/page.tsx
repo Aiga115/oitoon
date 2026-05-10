@@ -82,7 +82,7 @@ export default function StoryDetailPage() {
   const [comments, setComments] = useState<CommentItem[]>(() =>
     extra.comments.map((c, i) => ({
       ...c,
-      score:    MOCK_SCORES[i] ?? Math.floor(Math.random() * 40) + 5,
+      score:    MOCK_SCORES[i] ?? (((c.id * 17) % 36) + 5),
       userVote: null,
     }))
   );

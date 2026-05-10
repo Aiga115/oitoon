@@ -11,7 +11,7 @@ export type Chapter = {
   title: string;
 };
 
-export type Comment = {
+export type StoryComment = {
   id: number;
   user: string;
   text: string;
@@ -21,7 +21,7 @@ export type Comment = {
 export type StoryExtra = {
   authorNote: string;
   authorLinks: AuthorLink[];
-  comments: Comment[];
+  comments: StoryComment[];
   likes: number;
   dislikes: number;
 };
