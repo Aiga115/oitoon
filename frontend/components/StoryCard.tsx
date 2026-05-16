@@ -97,15 +97,15 @@ export default function StoryCard({ story }: { story: StoryItem }) {
         <span
           className="absolute bottom-2 right-2"
           style={{
-            fontSize: "9px",
+            fontSize: "8px",
             fontWeight: 700,
-            letterSpacing: "0.05em",
+            letterSpacing: "0.08em",
             textTransform: "uppercase" as const,
-            padding: "3px 8px",
-            borderRadius: "999px",
+            padding: "2px 6px",
+            borderRadius: "3px",
             backgroundColor: ss.badgeBg,
             color: ss.badgeColor,
-            border: `0.5px solid ${ss.badgeBorder}`,
+            border: `1px solid ${ss.badgeBorder}`,
           }}
         >
           {t(`storyCard.${story.status}`, { defaultValue: story.status })}

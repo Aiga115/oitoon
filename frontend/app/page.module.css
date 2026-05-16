@@ -105,19 +105,24 @@
 }
 
 .heroReadBtn {
-  font-size: 12px;
-  font-weight: 600;
-  padding: 8px 18px;
-  border-radius: 8px;
-  background-color: #a78bfa;
-  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 20px;
+  border-radius: 20px;
   border: none;
+  background: #f97316;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
   cursor: pointer;
-  transition: background-color 0.15s;
+  transition: opacity 0.15s;
 }
 
 .heroReadBtn:hover {
-  background-color: #9172f7;
+  opacity: 0.88;
 }
 
 .heroRating {

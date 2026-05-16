@@ -56,31 +56,31 @@
 /* ── Status pills ────────────────────────────────── */
 .statusGroup {
   display: flex;
-  gap: 2px;
-  background-color: #252145;
-  border-radius: 8px;
-  padding: 3px;
+  gap: 4px;
+  background-color: rgba(255, 255, 255, 0.04);
+  border-radius: 10px;
+  padding: 4px;
   border: 0.5px solid rgba(255, 255, 255, 0.07);
 }
 
 .statusPill {
-  padding: 5px 14px;
-  border-radius: 6px;
-  font-size: 12px;
+  padding: 7px 18px;
+  border-radius: 7px;
+  font-size: 13px;
   font-weight: 500;
   cursor: pointer;
   background-color: transparent;
   color: #6b6887;
+  border: none;
   transition: background-color 0.15s, color 0.15s;
 }
 
 .statusPillActive {
-  background-color: #a78bfa;
-  color: #fff;
+  background-color: #252145;
+  color: #f1f0fa;
 }
 
 .statusPill:not(.statusPillActive):hover {
-  background-color: rgba(167, 139, 250, 0.08);
   color: #c4b5fd;
 }
 

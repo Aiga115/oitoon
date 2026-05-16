@@ -1,8 +1,11 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useTranslation } from "react-i18next";
 import i18n from "@/lib/i18n";
+import { useAuth } from "@/lib/auth";
 import GB from "country-flag-icons/react/3x2/GB";
 import RU from "country-flag-icons/react/3x2/RU";
 import KG from "country-flag-icons/react/3x2/KG";
@@ -25,6 +28,23 @@ type AuthFormTemplateProps = {
 
 export default function AuthFormTemplate({ mode }: AuthFormTemplateProps) {
   const { t } = useTranslation();
+  const router = useRouter();
+  const { login } = useAuth();
+
+  const [identifier, setIdentifier] = useState("");
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (mode === "login") {
+      login({ username: identifier, email: "" });
+    } else {
+      login({ username, email });
+    }
+    router.push("/");
+  };
   const content = {
     title: t(`auth.${mode}.title`),
     description: t(`auth.${mode}.description`),
@@ -80,7 +100,7 @@ export default function AuthFormTemplate({ mode }: AuthFormTemplateProps) {
         <h1 className={styles.heading}>{content.title}</h1>
         <p className={styles.subheading}>{content.description}</p>
 
-        <form>
+        <form onSubmit={handleSubmit}>
           <div className={styles.fieldGroup}>
             {mode === "register" && (
               <div className={styles.fieldRow}>
@@ -125,6 +145,9 @@ export default function AuthFormTemplate({ mode }: AuthFormTemplateProps) {
                   autoComplete="username"
                   placeholder={fields.usernamePlaceholder}
                   className={styles.input}
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  required
                 />
               </div>
             )}
@@ -140,6 +163,9 @@ export default function AuthFormTemplate({ mode }: AuthFormTemplateProps) {
                 autoComplete={mode === "login" ? "username" : "email"}
                 placeholder={mode === "login" ? fields.usernameOrEmailPlaceholder : fields.emailPlaceholder}
                 className={styles.input}
+                value={mode === "login" ? identifier : email}
+                onChange={(e) => mode === "login" ? setIdentifier(e.target.value) : setEmail(e.target.value)}
+                required
               />
             </div>
 
@@ -154,6 +180,9 @@ export default function AuthFormTemplate({ mode }: AuthFormTemplateProps) {
                 autoComplete={mode === "register" ? "new-password" : "current-password"}
                 placeholder={fields.passwordPlaceholder}
                 className={styles.input}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
               />
             </div>
 

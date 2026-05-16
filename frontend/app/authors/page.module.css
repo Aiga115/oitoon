@@ -78,6 +78,8 @@
   border-radius: 14px;
   transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
   cursor: pointer;
+  text-decoration: none;
+  color: inherit;
 }
 
 .card:hover {

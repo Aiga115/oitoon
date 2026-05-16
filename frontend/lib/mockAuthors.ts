@@ -7,6 +7,8 @@ export type AuthorItem = {
   genres: string[];
   avatarColor: string;
   weeklyGain: number;
+  totalReads: number;
+  memberSince: string;
 };
 
 export const MOCK_AUTHORS: AuthorItem[] = [
@@ -19,6 +21,8 @@ export const MOCK_AUTHORS: AuthorItem[] = [
     genres: ["fantasy", "adventure"],
     avatarColor: "#7c3aed",
     weeklyGain: 340,
+    totalReads: 98400,
+    memberSince: "Mar 2022",
   },
   {
     id: 2,
@@ -29,6 +33,8 @@ export const MOCK_AUTHORS: AuthorItem[] = [
     genres: ["mystery", "thriller"],
     avatarColor: "#db2777",
     weeklyGain: 510,
+    totalReads: 74200,
+    memberSince: "Jun 2021",
   },
   {
     id: 3,
@@ -39,6 +45,8 @@ export const MOCK_AUTHORS: AuthorItem[] = [
     genres: ["steampunk", "scifi"],
     avatarColor: "#0891b2",
     weeklyGain: 190,
+    totalReads: 61500,
+    memberSince: "Jan 2023",
   },
   {
     id: 4,
@@ -49,6 +57,8 @@ export const MOCK_AUTHORS: AuthorItem[] = [
     genres: ["romance", "fantasy"],
     avatarColor: "#d97706",
     weeklyGain: 620,
+    totalReads: 53800,
+    memberSince: "Sep 2022",
   },
   {
     id: 5,
@@ -59,6 +69,8 @@ export const MOCK_AUTHORS: AuthorItem[] = [
     genres: ["scifi", "adventure"],
     avatarColor: "#059669",
     weeklyGain: 280,
+    totalReads: 142000,
+    memberSince: "Nov 2020",
   },
   {
     id: 6,
@@ -69,6 +81,8 @@ export const MOCK_AUTHORS: AuthorItem[] = [
     genres: ["fantasy", "adventure"],
     avatarColor: "#e11d48",
     weeklyGain: 870,
+    totalReads: 48300,
+    memberSince: "Apr 2023",
   },
   {
     id: 7,
@@ -79,6 +93,8 @@ export const MOCK_AUTHORS: AuthorItem[] = [
     genres: ["mystery", "comedy"],
     avatarColor: "#7c3aed",
     weeklyGain: 150,
+    totalReads: 39100,
+    memberSince: "Jul 2023",
   },
   {
     id: 8,
@@ -89,6 +105,8 @@ export const MOCK_AUTHORS: AuthorItem[] = [
     genres: ["drama", "historical"],
     avatarColor: "#0369a1",
     weeklyGain: 440,
+    totalReads: 121600,
+    memberSince: "Feb 2021",
   },
   {
     id: 9,
@@ -99,6 +117,8 @@ export const MOCK_AUTHORS: AuthorItem[] = [
     genres: ["scifi", "thriller"],
     avatarColor: "#be185d",
     weeklyGain: 760,
+    totalReads: 87900,
+    memberSince: "Aug 2022",
   },
   {
     id: 10,
@@ -109,6 +129,8 @@ export const MOCK_AUTHORS: AuthorItem[] = [
     genres: ["fantasy", "horror"],
     avatarColor: "#065f46",
     weeklyGain: 95,
+    totalReads: 34700,
+    memberSince: "Oct 2023",
   },
   {
     id: 11,
@@ -119,6 +141,8 @@ export const MOCK_AUTHORS: AuthorItem[] = [
     genres: ["action", "dystopia"],
     avatarColor: "#92400e",
     weeklyGain: 530,
+    totalReads: 109400,
+    memberSince: "May 2021",
   },
   {
     id: 12,
@@ -129,5 +153,7 @@ export const MOCK_AUTHORS: AuthorItem[] = [
     genres: ["adventure", "romance"],
     avatarColor: "#6d28d9",
     weeklyGain: 210,
+    totalReads: 24800,
+    memberSince: "Dec 2023",
   },
 ];

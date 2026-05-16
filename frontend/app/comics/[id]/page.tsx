@@ -4,7 +4,7 @@ import { useState, useMemo } from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
 import {
-  BookOpen, ThumbsUp, ThumbsDown, Star,
+  ImageIcon, ThumbsUp, ThumbsDown, Star,
   BookMarked, ArrowLeft, Send,
   Camera, MessageCircle, Play, ExternalLink,
   Hash, Heart, BookmarkPlus, BookmarkCheck,
@@ -13,8 +13,8 @@ import { useTranslation } from "react-i18next";
 import Header from "@/components/Header";
 import AuthRequiredModal from "@/components/AuthRequiredModal";
 import { useAuth } from "@/lib/auth";
-import { MOCK_STORIES } from "@/lib/mockStories";
-import { getStoryExtra, generateChapters, hasChapterContent } from "@/lib/mockStoryDetails";
+import { MOCK_COMICS } from "@/lib/mockComics";
+import { getComicExtra, hasComicChapterContent } from "@/lib/mockComicDetails";
 import {
   GENRE_STYLES, DEFAULT_GENRE_STYLE,
   STATUS_STYLES, DEFAULT_STATUS_STYLE,
@@ -60,27 +60,26 @@ function platformLabel(p: string) {
             twitter:"Twitter", youtube:"YouTube", website:"Website" }[p] ?? p);
 }
 
-const MOCK_SCORES = [71, 48, 38];
+const MOCK_SCORES = [84, 61, 43];
 
 /* ─────────────────────────────────────────────── */
-export default function StoryDetailPage() {
+export default function ComicDetailPage() {
   const { id } = useParams<{ id: string }>();
   const { t }  = useTranslation();
   const { isLoggedIn } = useAuth();
 
-  const storyId       = parseInt(id, 10);
-  const story          = MOCK_STORIES.find((s) => s.id === storyId);
-  const extra          = getStoryExtra(storyId);
-  const chapters       = generateChapters(story?.chapters ?? 0);
-  const chaptersLinked = hasChapterContent(storyId);
+  const comicId        = parseInt(id, 10);
+  const comic          = MOCK_COMICS.find((c) => c.id === comicId);
+  const extra          = getComicExtra(comicId);
+  const chaptersLinked = hasComicChapterContent(comicId);
 
   /* auth gate modal */
   const [authModalOpen, setAuthModalOpen] = useState(false);
 
-  /* story rating */
-  const [likes,     setLikes]     = useState(extra.likes);
-  const [dislikes,  setDislikes]  = useState(extra.dislikes);
-  const [userVote,  setUserVote]  = useState<"like" | "dislike" | null>(null);
+  /* comic rating */
+  const [likes,    setLikes]    = useState(extra.likes);
+  const [dislikes, setDislikes] = useState(extra.dislikes);
+  const [userVote, setUserVote] = useState<"like" | "dislike" | null>(null);
 
   /* favourites */
   const [inFavourites, setInFavourites] = useState(false);
@@ -103,27 +102,27 @@ export default function StoryDetailPage() {
         : new Date(b.date).getTime() - new Date(a.date).getTime()
     ), [comments, sortOrder]);
 
-  if (!story) {
+  if (!comic) {
     return (
       <div className="flex flex-col min-h-screen">
         <Header />
         <main className={styles.notFound}>
-          <BookOpen size={48} style={{ color: "#4b4870", marginBottom: 16 }} />
-          <p>{t("storyDetail.notFound", { defaultValue: "Story not found." })}</p>
-          <Link href="/stories" className={styles.backLink}>
+          <ImageIcon size={48} style={{ color: "#4b4870", marginBottom: 16 }} />
+          <p>{t("comicDetail.notFound", { defaultValue: "Comic not found." })}</p>
+          <Link href="/comics" className={styles.backLink}>
             <ArrowLeft size={14} />
-            {t("storyDetail.backToStories", { defaultValue: "Back to stories" })}
+            {t("comicDetail.backToComics", { defaultValue: "Back to comics" })}
           </Link>
         </main>
       </div>
     );
   }
 
-  const primaryGenre = story.genres[0] ?? "";
+  const primaryGenre = comic.genres[0] ?? "";
   const gs = GENRE_STYLES[primaryGenre] ?? DEFAULT_GENRE_STYLE;
-  const ss = STATUS_STYLES[story.status]  ?? DEFAULT_STATUS_STYLE;
+  const ss = STATUS_STYLES[comic.status]  ?? DEFAULT_STATUS_STYLE;
 
-  /* story rating handlers */
+  /* rating handlers */
   function handleLike() {
     if (!isLoggedIn) { setAuthModalOpen(true); return; }
     if (userVote === "like") { setLikes(l => l - 1); setUserVote(null); return; }
@@ -138,10 +137,10 @@ export default function StoryDetailPage() {
   }
 
   /* comment vote handler */
-  function handleCommentVote(id: number, vote: "up" | "down") {
+  function handleCommentVote(commentId: number, vote: "up" | "down") {
     if (!isLoggedIn) { setAuthModalOpen(true); return; }
     setComments(prev => prev.map(c => {
-      if (c.id !== id) return c;
+      if (c.id !== commentId) return c;
       const undo   = c.userVote === vote;
       const change = vote === "up" ? 1 : -1;
       const revert = c.userVote ? (c.userVote === "up" ? -1 : 1) : 0;
@@ -167,13 +166,6 @@ export default function StoryDetailPage() {
     setCommentText("");
   }
 
-  function chapterTitle(idx: number, total: number) {
-    if (idx === 0)              return t("storyDetail.prologue", { defaultValue: "Prologue" });
-    if (idx === total - 1 && total > 2)
-                                return t("storyDetail.epilogue", { defaultValue: "Epilogue" });
-    return `${t("storyDetail.chapter", { defaultValue: "Chapter" })} ${idx + 1}`;
-  }
-
   return (
     <div className="flex flex-col min-h-screen">
       {authModalOpen && <AuthRequiredModal onClose={() => setAuthModalOpen(false)} />}
@@ -181,21 +173,21 @@ export default function StoryDetailPage() {
       <main className={styles.main}>
         <div className={styles.container}>
 
-          <Link href="/stories" className={styles.backLink}>
+          <Link href="/comics" className={styles.backLink}>
             <ArrowLeft size={15} />
-            {t("storyDetail.backToStories", { defaultValue: "Back to stories" })}
+            {t("comicDetail.backToComics", { defaultValue: "Back to comics" })}
           </Link>
 
           {/* ── Banner ── */}
           <div className={styles.banner} style={{ background: gs.gradient }}>
-            <BookOpen
+            <ImageIcon
               size={180}
               className={styles.bannerBgIcon}
               style={{ color: gs.iconColor }}
             />
 
             <div className={styles.bannerBadges}>
-              {story.genres.map((genre) => {
+              {comic.genres.map((genre) => {
                 const s = GENRE_STYLES[genre] ?? DEFAULT_GENRE_STYLE;
                 return (
                   <span key={genre} className={styles.genreBadge}
@@ -206,50 +198,56 @@ export default function StoryDetailPage() {
               })}
               <span className={styles.statusBadge}
                 style={{ background: ss.badgeBg, color: ss.badgeColor }}>
-                {t(`storyCard.${story.status}`, { defaultValue: story.status })}
+                {t(`storyCard.${comic.status}`, { defaultValue: comic.status })}
               </span>
             </div>
 
-            <h1 className={styles.bannerTitle}>{story.title}</h1>
+            <h1 className={styles.bannerTitle}>{comic.title}</h1>
             <p className={styles.bannerAuthor}>
               {t("storyDetail.by", { defaultValue: "by" })}{" "}
-              {story.author}
+              {comic.author}
             </p>
 
             <div className={styles.bannerStats}>
               <span className={styles.bannerStat}>
                 <Star size={13} style={{ color: "#fcd34d" }} />
-                <strong>{story.rating.toFixed(1)}</strong>
+                <strong>{comic.rating.toFixed(1)}</strong>
               </span>
               <span className={styles.bannerSep}>·</span>
               <span className={styles.bannerStat}>
-                <strong>{story.chapters}</strong>{" "}
+                <strong>{comic.chapters}</strong>{" "}
                 {t("storyCard.chaptersSuffix", { defaultValue: "ch." })}
               </span>
               <span className={styles.bannerSep}>·</span>
               <span className={styles.bannerStat}>
-                <strong>{story.pages}</strong>{" "}
+                <strong>{comic.pages}</strong>{" "}
                 {t("storyCard.pagesSuffix", { defaultValue: "pp." })}
               </span>
               <span className={styles.bannerSep}>·</span>
               <span className={styles.bannerStat}>
-                {story.year} · {t(`countries.${story.country}`, { defaultValue: story.country })}
+                {comic.year} · {t(`countries.${comic.country}`, { defaultValue: comic.country })}
               </span>
             </div>
 
             <div className={styles.bannerActions}>
-              <button
-                className={styles.btnPrimary}
-                disabled
-              >
-                {t("storyDetail.readNow", { defaultValue: "Read now" })}
-              </button>
+              {chaptersLinked ? (
+                <Link
+                  href={`/comics/${comicId}/chapters/1`}
+                  className={styles.btnPrimary}
+                >
+                  {t("comicDetail.readChapter1", { defaultValue: "Read Ch. 1" })}
+                </Link>
+              ) : (
+                <button className={styles.btnPrimary} disabled>
+                  {t("comicDetail.comingSoon", { defaultValue: "Coming soon" })}
+                </button>
+              )}
               <button
                 className={styles.btnGhost}
                 onClick={() => isLoggedIn ? setInFavourites(v => !v) : setAuthModalOpen(true)}
               >
                 {inFavourites
-                  ? <><BookmarkCheck size={14} /> {t("storyDetail.inFavourites", { defaultValue: "In favourites" })}</>  
+                  ? <><BookmarkCheck size={14} /> {t("storyDetail.inFavourites", { defaultValue: "In favourites" })}</>
                   : <><BookmarkPlus  size={14} /> {t("storyDetail.addToFavourites", { defaultValue: "Add to my favourites" })}</>
                 }
               </button>
@@ -266,7 +264,7 @@ export default function StoryDetailPage() {
                 <h2 className={styles.sectionTitle}>
                   {t("storyDetail.description", { defaultValue: "Description" })}
                 </h2>
-                <p className={styles.descText}>{story.description}</p>
+                <p className={styles.descText}>{comic.description}</p>
               </section>
 
               <section className={styles.section}>
@@ -275,20 +273,20 @@ export default function StoryDetailPage() {
                 </h2>
                 <div className={styles.authorCard}>
                   {(() => {
-                    const av = avatarStyle(story.author);
+                    const av = avatarStyle(comic.author);
                     return (
                       <div className={styles.authorAvatar}
                         style={{ background: av.bg }}>
                         <div className={styles.avatarStripes} />
                         <span className={styles.avatarLetter}
                           style={{ color: av.color }}>
-                          {story.author.charAt(0)}
+                          {comic.author.charAt(0)}
                         </span>
                       </div>
                     );
                   })()}
                   <div className={styles.authorDetails}>
-                    <p className={styles.authorName}>{story.author}</p>
+                    <p className={styles.authorName}>{comic.author}</p>
                     {extra.authorNote && (
                       <p className={styles.authorNote}>{extra.authorNote}</p>
                     )}
@@ -310,7 +308,7 @@ export default function StoryDetailPage() {
 
               <section className={styles.section}>
                 <h2 className={styles.sectionTitle}>
-                  {t("storyDetail.rateStory", { defaultValue: "Rate this story" })}
+                  {t("comicDetail.rateComic", { defaultValue: "Rate this comic" })}
                 </h2>
                 <div className={styles.voteRow}>
                   <button
@@ -334,26 +332,26 @@ export default function StoryDetailPage() {
               <div className={styles.statBoxes}>
                 <div className={styles.statBox}>
                   <div className={styles.statBoxValue} style={{ color: "#fcd34d" }}>
-                    {story.rating.toFixed(1)}
+                    {comic.rating.toFixed(1)}
                   </div>
                   <div className={styles.statBoxLabel}>
                     {t("home.ratingLabel", { defaultValue: "Rating" })}
                   </div>
                 </div>
                 <div className={styles.statBox}>
-                  <div className={styles.statBoxValue}>{story.chapters}</div>
+                  <div className={styles.statBoxValue}>{comic.chapters}</div>
                   <div className={styles.statBoxLabel}>
                     {t("storyCard.chaptersSuffix", { defaultValue: "Chapters" })}
                   </div>
                 </div>
                 <div className={styles.statBox}>
-                  <div className={styles.statBoxValue}>{story.pages}</div>
+                  <div className={styles.statBoxValue}>{comic.pages}</div>
                   <div className={styles.statBoxLabel}>
                     {t("storyCard.pagesSuffix", { defaultValue: "Pages" })}
                   </div>
                 </div>
                 <div className={styles.statBox}>
-                  <div className={styles.statBoxValue}>{story.year}</div>
+                  <div className={styles.statBoxValue}>{comic.year}</div>
                   <div className={styles.statBoxLabel}>
                     {t("storyDetail.year", { defaultValue: "Year" })}
                   </div>
@@ -367,7 +365,7 @@ export default function StoryDetailPage() {
                   {t("storyDetail.languages", { defaultValue: "Languages" })}
                 </h2>
                 <p className={styles.langText}>
-                  {story.language
+                  {comic.language
                     .map((l) => t(`languageNames.${l}`, { defaultValue: l }))
                     .join(", ")}
                 </p>
@@ -375,36 +373,37 @@ export default function StoryDetailPage() {
             </aside>
           </div>
 
-          {/* ── Chapters ── */}
-          <section className={styles.fullSection}>
-            <h2 className={styles.sectionTitle}>
-              <BookMarked size={14} />
-              {t("storyDetail.chapters", { defaultValue: "Chapters" })} ({story.chapters})
-            </h2>
-            <div className={styles.chapterGrid}>
-              {chapters.map((ch, idx) => {
-                const title = extra.chapters?.[idx] ?? chapterTitle(idx, chapters.length);
-                if (chaptersLinked) {
+          {/* ── Chapters (only if this comic has chapter content) ── */}
+          {extra.chapters.length > 0 && (
+            <section className={styles.fullSection}>
+              <h2 className={styles.sectionTitle}>
+                <BookMarked size={14} />
+                {t("storyDetail.chapters", { defaultValue: "Chapters" })} ({comic.chapters})
+              </h2>
+              <div className={styles.chapterGrid}>
+                {extra.chapters.map((title, idx) => {
+                  if (chaptersLinked) {
+                    return (
+                      <Link
+                        key={idx}
+                        href={`/comics/${comicId}/chapters/${idx + 1}`}
+                        className={`${styles.chapterItem} ${styles.chapterItemLink}`}
+                      >
+                        <span className={styles.chapterNum}>{idx + 1}</span>
+                        <span className={styles.chapterName}>{title}</span>
+                      </Link>
+                    );
+                  }
                   return (
-                    <Link
-                      key={ch.id}
-                      href={`/stories/${storyId}/chapters/${ch.number}`}
-                      className={`${styles.chapterItem} ${styles.chapterItemLink}`}
-                    >
-                      <span className={styles.chapterNum}>{ch.number}</span>
+                    <div key={idx} className={styles.chapterItem}>
+                      <span className={styles.chapterNum}>{idx + 1}</span>
                       <span className={styles.chapterName}>{title}</span>
-                    </Link>
+                    </div>
                   );
-                }
-                return (
-                  <div key={ch.id} className={styles.chapterItem}>
-                    <span className={styles.chapterNum}>{ch.number}</span>
-                    <span className={styles.chapterName}>{title}</span>
-                  </div>
-                );
-              })}
-            </div>
-          </section>
+                })}
+              </div>
+            </section>
+          )}
 
           {/* ── Comments ── */}
           <section className={styles.fullSection}>
@@ -424,8 +423,8 @@ export default function StoryDetailPage() {
                     className={styles.commentTextarea}
                     value={commentText}
                     onChange={(e) => setCommentText(e.target.value)}
-                    placeholder={t("storyDetail.commentPlaceholder",
-                      { defaultValue: "What did you think of this story?" })}
+                    placeholder={t("comicDetail.commentPlaceholder",
+                      { defaultValue: "What did you think of this comic?" })}
                     rows={3}
                     onKeyDown={(e) => {
                       if (e.key === "Enter" && (e.ctrlKey || e.metaKey))
