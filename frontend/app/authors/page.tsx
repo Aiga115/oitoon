@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { useTranslation } from "react-i18next";
 import Header from "@/components/Header";
 import { MOCK_AUTHORS, type AuthorItem } from "@/lib/mockAuthors";
@@ -33,7 +34,7 @@ function AuthorRow({
   const { t } = useTranslation();
 
   return (
-    <div className={styles.card}>
+    <Link href={`/authors/${author.id}`} className={styles.card}>
       <span className={`${styles.rank} ${rank <= 3 ? styles.rankTop : ""}`}>
         {rank}
       </span>
@@ -61,7 +62,7 @@ function AuthorRow({
           </span>
         )}
       </div>
-    </div>
+    </Link>
   );
 }
 

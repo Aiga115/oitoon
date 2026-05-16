@@ -5,12 +5,14 @@
     "comics": "Comics",
     "authors": "Authors",
     "ratings": "Ratings",
+    "favourites": "Favourites",
     "becomeAuthor": "I want to become an author"
   },
   "header": {
     "searchPlaceholder": "Search stories, authors...",
     "login": "Log in",
-    "register": "Register"
+    "register": "Register",
+    "logout": "Log out"
   },
   "hero": {
     "recommended": "⭐ Recommended today",
@@ -83,6 +85,19 @@
     "subscribersSuffix": "subscribers",
     "weeklyGainPrefix": "+"
   },
+  "authorProfile": {
+    "memberSince": "Member since",
+    "stories": "Stories",
+    "followers": "Followers",
+    "totalReads": "Total reads",
+    "follow": "Follow",
+    "following": "Following",
+    "message": "Message",
+    "allStories": "All stories",
+    "inProgress": "In progress",
+    "completed": "Completed",
+    "noStories": "No stories yet."
+  },
   "storyCard": {
     "infoLabel": "Information",
     "ongoing": "Ongoing",
@@ -99,8 +114,8 @@
   "storyDetail": {
     "by": "by",
     "readNow": "Read now",
-    "addToLibrary": "Add to library",
-    "inLibrary": "In library",
+    "addToFavourites": "Add to my favourites",
+    "inFavourites": "In favourites",
     "backToStories": "Back to stories",
     "description": "Description",
     "aboutAuthor": "About the Author",
@@ -110,6 +125,7 @@
     "comments": "Comments",
     "shareThoughts": "Share your thoughts",
     "commentPlaceholder": "Share your thoughts…",
+    "commentGuestPrompt": "Sign in to leave a comment",
     "submitComment": "Post comment",
     "sortBest": "Best",
     "sortNewest": "Newest",
@@ -158,5 +174,59 @@
   "notFound": {
     "title": "Page not found",
     "goHome": "Go home"
+  },
+  "becomeAuthorModal": {
+    "close": "Close",
+    "step1": {
+      "stepLabel": "Step 1 of 3",
+      "title": "Welcome, future author!",
+      "subtitle": "Here's what authorship means on Oitoon",
+      "point1": "Share your stories with thousands of readers across Central Asia",
+      "point2": "Build your own author page and grow a loyal following",
+      "point3": "Publish stories, fanfics, and comics in any language",
+      "next": "Get started"
+    },
+    "step2": {
+      "stepLabel": "Step 2 of 3",
+      "title": "Set up your profile",
+      "subtitle": "Tell readers who you are. You can update this later.",
+      "penName": "Pen name",
+      "penNamePlaceholder": "e.g. Aiken Bekova",
+      "bio": "Bio",
+      "bioPlaceholder": "A short description about yourself…",
+      "website": "Website",
+      "websitePlaceholder": "https://yoursite.com",
+      "instagram": "Instagram",
+      "instagramPlaceholder": "@yourhandle",
+      "back": "Back",
+      "next": "Continue"
+    },
+    "step3": {
+      "stepLabel": "Step 3 of 3",
+      "title": "Start your first story",
+      "subtitle": "Every great author began with a single idea. What's yours?",
+      "promptPlaceholder": "A young girl discovers she can speak to the dead…",
+      "back": "Back",
+      "skip": "I'll do this later",
+      "next": "Create story"
+    },
+    "step4": {
+      "title": "You're an author now!",
+      "subtitle": "Your author profile is live. Start publishing and build your readership.",
+      "cta": "Create your first story",
+      "dismiss": "Go to my dashboard"
+    }
+  },
+  "favourites": {
+    "title": "My Favourites",
+    "empty": "You haven't added any stories to your favourites yet.",
+    "signInPrompt": "Sign in to access your favourites."
+  },
+  "authRequired": {
+    "close": "Close",
+    "title": "Sign in to continue",
+    "subtitle": "Add stories to your favourites and pick up right where you left off. Create a free account to get started.",
+    "login": "Log in",
+    "register": "Create an account"
   }
 }

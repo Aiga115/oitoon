@@ -57,43 +57,6 @@ export default function Home() {
       <main className={`flex-1 px-6 py-10 ${styles.main}`}>
         <div className="max-w-6xl mx-auto">
 
-          {/* Hero Banner */}
-          <div className={styles.heroBanner}>
-            {/* Decorative orbs */}
-            <div className={styles.heroOrb1} />
-            <div className={styles.heroOrb2} />
-            <div className={styles.heroOrb3} />
-            {/* Grid lines overlay */}
-            <div className={styles.heroGrid} />
-
-            {/* Content */}
-            <div className={styles.heroContent}>
-              <p className={styles.heroSubtitle}>
-                {t("hero.recommended")}
-              </p>
-              <h1 className={styles.heroTitle}>
-                {t("hero.title")}
-              </h1>
-              <div className={styles.heroTags}>
-                {["Фэнтези", "Стимпанк", "Романтика"].map((tag) => (
-                  <span key={tag} className={styles.heroTag}>
-                    {tag}
-                  </span>
-                ))}
-              </div>
-              <button className={styles.heroReadBtn}>
-                {t("hero.readNow")}
-              </button>
-            </div>
-
-            {/* Rating display */}
-            <div className={styles.heroRating}>
-              <div className={styles.heroRatingScore}>4.8</div>
-              <div className={styles.heroRatingStars}>★★★★★</div>
-              <div className={styles.heroRatingLabel}>{t("home.ratingLabel")}</div>
-            </div>
-          </div>
-
           {/* Top 10 Section */}
           <div className={styles.sectionHeading}>
             <h2 className={styles.sectionTitle}>

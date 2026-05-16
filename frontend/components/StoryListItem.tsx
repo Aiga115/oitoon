@@ -42,7 +42,7 @@ export default function StoryListItem({
         <div className={styles.coverBadges}>
           <span
             className={styles.statusBadge}
-            style={{ background: ss.badgeBg, color: ss.badgeColor }}
+            style={{ background: ss.badgeBg, color: ss.badgeColor, borderColor: ss.badgeBorder }}
           >
             {t(`storyCard.${story.status}`, { defaultValue: story.status })}
           </span>
@@ -106,7 +106,6 @@ export default function StoryListItem({
 
           <span
             className={styles.readButton}
-            style={{ background: gs.badgeBg, color: gs.badgeColor }}
           >
             {t("storyList.readButton")}
           </span>

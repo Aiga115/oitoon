@@ -1,0 +1,359 @@
+.main {
+  background-color: #0b0917;
+  min-height: calc(100vh - 60px);
+  padding: 40px 24px 60px;
+}
+
+.container {
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+/* ── Profile ─────────────────────────────── */
+.profile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  padding-bottom: 32px;
+}
+
+.avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30px;
+  font-weight: 700;
+  color: #fff;
+  flex-shrink: 0;
+  letter-spacing: -1px;
+}
+
+.profileText {
+  text-align: center;
+}
+
+.profileName {
+  font-size: 22px;
+  font-weight: 700;
+  color: #f0eeff;
+  letter-spacing: -0.3px;
+}
+
+.profileHandle {
+  font-size: 13px;
+  color: #6b6887;
+  margin-top: 4px;
+}
+
+/* Stats row */
+.statsRow {
+  display: flex;
+  border: 0.5px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.pstat {
+  padding: 14px 28px;
+  text-align: center;
+  border-right: 0.5px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.pstat:last-child {
+  border-right: none;
+}
+
+.pstatVal {
+  font-size: 20px;
+  font-weight: 700;
+  color: #f0eeff;
+}
+
+.pstatLbl {
+  font-size: 11px;
+  color: #6b6887;
+}
+
+/* Action buttons */
+.profileActions {
+  display: flex;
+  gap: 10px;
+}
+
+.btnFollow {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 9px 20px;
+  border-radius: 20px;
+  border: none;
+  background: #f97316;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: opacity 0.15s, background 0.15s, color 0.15s;
+}
+
+.btnFollow:hover {
+  opacity: 0.88;
+}
+
+.btnFollowActive {
+  background: rgba(249, 115, 22, 0.15) !important;
+  color: #f97316 !important;
+  border: 0.5px solid rgba(249, 115, 22, 0.4);
+  opacity: 1 !important;
+}
+
+.btnMessage {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 9px 20px;
+  border-radius: 20px;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.65);
+  border: 1.5px solid rgba(255, 255, 255, 0.2);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s;
+}
+
+.btnMessage:hover {
+  border-color: rgba(255, 255, 255, 0.5);
+  color: #f0eeff;
+}
+
+/* ── Tabs ─────────────────────────────────── */
+.tabs {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 28px;
+  background-color: rgba(255, 255, 255, 0.04);
+  border: 0.5px solid rgba(255, 255, 255, 0.07);
+  border-radius: 10px;
+  padding: 4px;
+  width: fit-content;
+}
+
+.tab {
+  padding: 7px 18px;
+  border-radius: 7px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #6b6887;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: color 0.15s, background-color 0.15s;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.tab:hover:not(.tabOn) {
+  color: #c4b5fd;
+}
+
+.tabOn {
+  background-color: #252145;
+  color: #f1f0fa;
+}
+
+.tabCount {
+  font-size: 10px;
+  font-weight: 700;
+  background: rgba(255, 255, 255, 0.08);
+  color: #9490b5;
+  padding: 1px 7px;
+  border-radius: 20px;
+}
+
+.tabCountOn {
+  background: rgba(167, 139, 250, 0.15);
+  color: #c4b5fd;
+}
+
+/* ── Story list ───────────────────────────── */
+.stories {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.empty {
+  text-align: center;
+  color: #6b6887;
+  padding: 48px 0;
+  font-size: 14px;
+}
+
+/* ── Story card ───────────────────────────── */
+.storyCard {
+  display: flex;
+  background: #12101f;
+  border: 0.5px solid rgba(255, 255, 255, 0.07);
+  border-radius: 14px;
+  overflow: hidden;
+  text-decoration: none;
+  cursor: pointer;
+  transition: border-color 0.15s, transform 0.15s, box-shadow 0.15s;
+}
+
+.storyCard:hover {
+  border-color: rgba(249, 115, 22, 0.3);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.45);
+}
+
+.cardCover {
+  width: 100px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 12px 10px;
+  position: relative;
+}
+
+.cardCoverOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to right, transparent 50%, #12101f 100%);
+  pointer-events: none;
+}
+
+.cardCoverIcon {
+  position: relative;
+  z-index: 1;
+  opacity: 0.4;
+}
+
+.cardBadge {
+  position: relative;
+  z-index: 1;
+  display: inline-block;
+  padding: 3px 9px;
+  border-radius: 20px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.cardBody {
+  flex: 1;
+  min-width: 0;
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.cardTop {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.cardTopLeft {
+  min-width: 0;
+}
+
+.cardTitle {
+  font-size: 15px;
+  font-weight: 700;
+  color: #f0eeff;
+}
+
+.cardPills {
+  display: flex;
+  gap: 5px;
+  margin-top: 4px;
+  flex-wrap: wrap;
+}
+
+.cardPill {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 20px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.cardRating {
+  font-size: 15px;
+  font-weight: 700;
+  color: #fcd34d;
+  flex-shrink: 0;
+}
+
+.cardDesc {
+  font-size: 12px;
+  color: #7b7899;
+  line-height: 1.6;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.cardFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 10px;
+  border-top: 0.5px solid rgba(255, 255, 255, 0.05);
+}
+
+.cardStats {
+  display: flex;
+  gap: 12px;
+}
+
+.cardStat {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  color: #6b6887;
+}
+
+.cardReadBtn {
+  display: inline-flex;
+  align-items: center;
+  padding: 5px 14px;
+  border-radius: 20px;
+  background: transparent;
+  color: #9490b5;
+  border: 0.5px solid rgba(255, 255, 255, 0.13);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  transition: border-color 0.15s, color 0.15s;
+}
+
+.storyCard:hover .cardReadBtn {
+  border-color: rgba(249, 115, 22, 0.4);
+  color: #f97316;
+}

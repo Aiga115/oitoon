@@ -1,0 +1,191 @@
+/* ── Root: full dark immersive shell ── */
+.root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: #0a0a0f;
+  color: #f0eeff;
+}
+
+/* ── Top bar ── */
+.topBar {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 0 16px;
+  height: 48px;
+  background: rgba(10, 10, 15, 0.92);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.topBackLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: #6b6887;
+  text-decoration: none;
+  transition: color 0.15s;
+  min-width: 0;
+  flex-shrink: 0;
+  max-width: 200px;
+}
+.topBackLink:hover { color: #f0eeff; }
+
+.topBackTitle {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.topCenter {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 0;
+}
+
+.topChapter {
+  font-size: 10px;
+  font-weight: 700;
+  color: #f97316;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.topChapterTitle {
+  font-size: 12px;
+  color: #9490b5;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 280px;
+}
+
+.topChaptersLink {
+  color: #6b6887;
+  display: flex;
+  align-items: center;
+  transition: color 0.15s;
+  flex-shrink: 0;
+}
+.topChaptersLink:hover { color: #f0eeff; }
+
+/* ── Progress bar ── */
+.progressBar {
+  height: 2px;
+  background: rgba(255, 255, 255, 0.05);
+  width: 100%;
+  flex-shrink: 0;
+}
+
+.progressFill {
+  height: 100%;
+  background: linear-gradient(90deg, #f97316, #ea580c);
+  transition: width 0.4s ease;
+}
+
+/* ── Reader area ── */
+.reader {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 60px;
+}
+
+/* ── Vertical panel strip ── */
+.strip {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 800px;
+}
+
+/* ── Single panel ── */
+.panel {
+  width: 100%;
+  line-height: 0; /* removes inline-block gap */
+}
+
+.panelImg {
+  width: 100%;
+  height: auto;
+  display: block;
+  /* no gap between panels — seamless vertical flow */
+  user-select: none;
+}
+
+/* ── Chapter navigation ── */
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+  max-width: 800px;
+  padding: 32px 16px 16px;
+}
+
+.navBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 20px;
+  border-radius: 24px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #f0eeff;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  text-decoration: none;
+  transition: all 0.15s;
+}
+.navBtn:hover {
+  background: rgba(249, 115, 22, 0.15);
+  border-color: rgba(249, 115, 22, 0.3);
+  color: #f97316;
+}
+
+.navHome {
+  font-size: 12px;
+  color: #6b6887;
+  text-decoration: none;
+  transition: color 0.15s;
+  white-space: nowrap;
+}
+.navHome:hover { color: #f0eeff; }
+
+.navPlaceholder {
+  min-width: 120px;
+}
+
+/* ── Not found ── */
+.notFound {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  color: #9490b5;
+  padding: 80px 0;
+  gap: 14px;
+}
+
+.backLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: #6b6887;
+  text-decoration: none;
+  transition: color 0.15s;
+}
+.backLink:hover { color: #f0eeff; }
