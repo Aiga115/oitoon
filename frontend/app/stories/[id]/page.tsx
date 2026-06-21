@@ -17,7 +17,7 @@ import { MOCK_STORIES } from "@/lib/mockStories";
 import { getStoryExtra, generateChapters, hasChapterContent } from "@/lib/mockStoryDetails";
 import {
   GENRE_STYLES, DEFAULT_GENRE_STYLE,
-  STATUS_STYLES, DEFAULT_STATUS_STYLE,
+  STATUS_STYLES, DEFAULT_STATUS_STYLE, GENRE_BADGE,
 } from "@/lib/genreStyles";
 import styles from "./page.module.css";
 
@@ -196,10 +196,9 @@ export default function StoryDetailPage() {
 
             <div className={styles.bannerBadges}>
               {story.genres.map((genre) => {
-                const s = GENRE_STYLES[genre] ?? DEFAULT_GENRE_STYLE;
                 return (
                   <span key={genre} className={styles.genreBadge}
-                    style={{ background: s.badgeBg, color: s.badgeColor }}>
+                    style={{ background: GENRE_BADGE.bg, color: GENRE_BADGE.color, borderColor: GENRE_BADGE.border }}>
                     {t(`genreNames.${genre}`, { defaultValue: genre })}
                   </span>
                 );

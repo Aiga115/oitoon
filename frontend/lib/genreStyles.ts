@@ -45,3 +45,9 @@ export const DEFAULT_STATUS_STYLE: StatusStyle = {
   badgeColor: "#9ca3af",
   badgeBorder: "#374151",
 };
+
+export const GENRE_BADGE = {
+  bg:     "rgba(249,115,22,0.10)",
+  color:  "#f97316",
+  border: "rgba(249,115,22,0.22)",
+};

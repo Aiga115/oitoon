@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { BookOpen, BookMarked, Layers } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import { GENRE_STYLES, DEFAULT_GENRE_STYLE, STATUS_STYLES, DEFAULT_STATUS_STYLE } from "@/lib/genreStyles";
+import { GENRE_STYLES, DEFAULT_GENRE_STYLE, STATUS_STYLES, DEFAULT_STATUS_STYLE, GENRE_BADGE } from "@/lib/genreStyles";
 import type { StoryItem } from "@/components/StoryCard";
 import styles from "./StoryListItem.module.css";
 
@@ -70,12 +70,11 @@ export default function StoryListItem({
         {/* Genre tags */}
         <div className={styles.genreTags}>
           {story.genres.map((genre) => {
-            const s = GENRE_STYLES[genre] ?? DEFAULT_GENRE_STYLE;
             return (
               <span
                 key={genre}
                 className={styles.genreTag}
-                style={{ background: s.badgeBg, color: s.badgeColor }}
+                style={{ background: GENRE_BADGE.bg, color: GENRE_BADGE.color, borderColor: GENRE_BADGE.border }}
               >
                 {t(`genreNames.${genre}`, { defaultValue: genre })}
               </span>

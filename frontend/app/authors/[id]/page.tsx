@@ -14,6 +14,7 @@ import {
   DEFAULT_GENRE_STYLE,
   STATUS_STYLES,
   DEFAULT_STATUS_STYLE,
+  GENRE_BADGE,
 } from "@/lib/genreStyles";
 import type { StoryItem } from "@/components/StoryCard";
 import styles from "./page.module.css";
@@ -65,12 +66,11 @@ function AuthorStoryCard({ story }: { story: StoryItem }) {
             <h3 className={styles.cardTitle}>{story.title}</h3>
             <div className={styles.cardPills}>
               {story.genres.map((g) => {
-                const s = GENRE_STYLES[g] ?? DEFAULT_GENRE_STYLE;
                 return (
                   <span
                     key={g}
                     className={styles.cardPill}
-                    style={{ background: s.badgeBg, color: s.badgeColor }}
+                    style={{ background: GENRE_BADGE.bg, color: GENRE_BADGE.color, borderColor: GENRE_BADGE.border }}
                   >
                     {t(`genreNames.${g}`, { defaultValue: g })}
                   </span>

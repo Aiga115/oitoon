@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { BookOpen, Info } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import { GENRE_STYLES, DEFAULT_GENRE_STYLE, STATUS_STYLES, DEFAULT_STATUS_STYLE } from "@/lib/genreStyles";
+import { STATUS_STYLES, DEFAULT_STATUS_STYLE, GENRE_BADGE } from "@/lib/genreStyles";
 import StoryTooltip from "@/components/StoryTooltip";
 
 export type StoryItem = {
@@ -28,7 +28,6 @@ export default function StoryCard({ story }: { story: StoryItem }) {
   const [tooltipVisible, setTooltipVisible] = useState(false);
   const [hovered, setHovered] = useState(false);
   const primaryGenre = story.genres[0] ?? "";
-  const gs = GENRE_STYLES[primaryGenre] ?? DEFAULT_GENRE_STYLE;
   const ss = STATUS_STYLES[story.status] ?? DEFAULT_STATUS_STYLE;
 
   return (
@@ -49,7 +48,7 @@ export default function StoryCard({ story }: { story: StoryItem }) {
       {/* Cover */}
       <div
         className="relative flex items-center justify-center rounded-t-2xl overflow-hidden"
-        style={{ height: "240px", background: gs.gradient }}
+        style={{ height: "240px", background: "linear-gradient(160deg,#1f1b3d 0%,#2a2550 50%,#1a1733 100%)" }}
       >
         {/* Bottom gradient overlay */}
         <div
@@ -57,7 +56,7 @@ export default function StoryCard({ story }: { story: StoryItem }) {
           style={{ background: "linear-gradient(180deg,transparent 50%,rgba(0,0,0,0.6) 100%)" }}
         />
 
-        <BookOpen size={52} style={{ color: gs.iconColor, opacity: 0.5, position: "relative", zIndex: 1 }} />
+        <BookOpen size={52} style={{ color: "#c4b5fd", opacity: 0.5, position: "relative", zIndex: 1 }} />
 
         {/* Genre badge — top left */}
         <span
@@ -69,9 +68,9 @@ export default function StoryCard({ story }: { story: StoryItem }) {
             textTransform: "uppercase" as const,
             padding: "3px 8px",
             borderRadius: "999px",
-            backgroundColor: gs.badgeBg,
-            color: gs.badgeColor,
-            border: `0.5px solid ${gs.badgeBorder}`,
+            backgroundColor: GENRE_BADGE.bg,
+            color: GENRE_BADGE.color,
+            border: `0.5px solid ${GENRE_BADGE.border}`,
           }}
         >
           {t(`genreNames.${primaryGenre}`, { defaultValue: primaryGenre })}

@@ -2,7 +2,7 @@
 
 import { Star } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import { GENRE_STYLES, DEFAULT_GENRE_STYLE } from "@/lib/genreStyles";
+import { GENRE_STYLES, DEFAULT_GENRE_STYLE, GENRE_BADGE } from "@/lib/genreStyles";
 import type { StoryItem } from "@/components/StoryCard";
 import styles from "./StoryTooltip.module.css";
 
@@ -43,15 +43,14 @@ export default function StoryTooltip({
       {/* Genre badges */}
       <div className="flex flex-wrap gap-1 mb-2">
         {story.genres.map((g) => {
-          const gStyle = GENRE_STYLES[g] ?? DEFAULT_GENRE_STYLE;
           return (
             <span
               key={g}
               className={styles.genreBadge}
               style={{
-                backgroundColor: gStyle.badgeBg,
-                color: gStyle.badgeColor,
-                border: `0.5px solid ${gStyle.badgeBorder}`,
+                backgroundColor: GENRE_BADGE.bg,
+                color: GENRE_BADGE.color,
+                border: `0.5px solid ${GENRE_BADGE.border}`,
               }}
             >
               {t(`genreNames.${g}`, { defaultValue: g })}
