@@ -1,8 +1,12 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useTranslation } from "react-i18next";
 import i18n from "@/lib/i18n";
+import { useAuth } from "@/lib/auth";
+import { getOrCreateAuthorByUsername } from "@/lib/mockAuthors";
 import GB from "country-flag-icons/react/3x2/GB";
 import RU from "country-flag-icons/react/3x2/RU";
 import KG from "country-flag-icons/react/3x2/KG";
@@ -25,12 +29,65 @@ type AuthFormTemplateProps = {
 
 export default function AuthFormTemplate({ mode }: AuthFormTemplateProps) {
   const { t } = useTranslation();
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const redirect = searchParams.get("redirect");
+  const { login } = useAuth();
+
+  const [identifier, setIdentifier] = useState("");
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const API = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000";
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError("");
+    setLoading(true);
+    try {
+      const res = await fetch(
+        `${API}/auth/${mode === "login" ? "login" : "register"}`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(
+            mode === "login"
+              ? { identifier, password }
+              : { username, email, password, first_name: firstName || null, last_name: lastName || null }
+          ),
+        }
+      );
+      const data = await res.json();
+      if (!res.ok) {
+        setError(data.detail ?? "Something went wrong");
+        return;
+      }
+      login(data.user, data.access_token);
+      if (redirect === "become-author") {
+        const author = getOrCreateAuthorByUsername(data.user.username);
+        router.push(`/authors/${author.id}/dashboard`);
+      } else {
+        router.push("/");
+      }
+    } catch {
+      setError("Could not reach the server");
+    } finally {
+      setLoading(false);
+    }
+  };
   const content = {
     title: t(`auth.${mode}.title`),
     description: t(`auth.${mode}.description`),
     buttonLabel: t(`auth.${mode}.buttonLabel`),
     alternateLabel: t(`auth.${mode}.alternateLabel`),
-    alternateHref: mode === "login" ? "/register" : "/login",
+    alternateHref:
+      (mode === "login" ? "/register" : "/login") +
+      (redirect ? `?redirect=${redirect}` : ""),
     alternateAction: t(`auth.${mode}.alternateAction`),
   };
   const fields = {
@@ -80,7 +137,7 @@ export default function AuthFormTemplate({ mode }: AuthFormTemplateProps) {
         <h1 className={styles.heading}>{content.title}</h1>
         <p className={styles.subheading}>{content.description}</p>
 
-        <form>
+        <form onSubmit={handleSubmit}>
           <div className={styles.fieldGroup}>
             {mode === "register" && (
               <div className={styles.fieldRow}>
@@ -95,6 +152,8 @@ export default function AuthFormTemplate({ mode }: AuthFormTemplateProps) {
                     autoComplete="given-name"
                     placeholder={fields.firstNamePlaceholder}
                     className={styles.input}
+                    value={firstName}
+                    onChange={(e) => setFirstName(e.target.value)}
                   />
                 </div>
                 <div className={styles.field}>
@@ -108,6 +167,8 @@ export default function AuthFormTemplate({ mode }: AuthFormTemplateProps) {
                     autoComplete="family-name"
                     placeholder={fields.lastNamePlaceholder}
                     className={styles.input}
+                    value={lastName}
+                    onChange={(e) => setLastName(e.target.value)}
                   />
                 </div>
               </div>
@@ -125,6 +186,9 @@ export default function AuthFormTemplate({ mode }: AuthFormTemplateProps) {
                   autoComplete="username"
                   placeholder={fields.usernamePlaceholder}
                   className={styles.input}
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  required
                 />
               </div>
             )}
@@ -140,6 +204,9 @@ export default function AuthFormTemplate({ mode }: AuthFormTemplateProps) {
                 autoComplete={mode === "login" ? "username" : "email"}
                 placeholder={mode === "login" ? fields.usernameOrEmailPlaceholder : fields.emailPlaceholder}
                 className={styles.input}
+                value={mode === "login" ? identifier : email}
+                onChange={(e) => mode === "login" ? setIdentifier(e.target.value) : setEmail(e.target.value)}
+                required
               />
             </div>
 
@@ -154,6 +221,9 @@ export default function AuthFormTemplate({ mode }: AuthFormTemplateProps) {
                 autoComplete={mode === "register" ? "new-password" : "current-password"}
                 placeholder={fields.passwordPlaceholder}
                 className={styles.input}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
               />
             </div>
 
@@ -174,8 +244,9 @@ export default function AuthFormTemplate({ mode }: AuthFormTemplateProps) {
             )}
           </div>
 
-          <button type="submit" className={styles.submitBtn}>
-            {content.buttonLabel}
+          {error && <p style={{ color: "#f87171", fontSize: "0.875rem", marginBottom: "0.5rem" }}>{error}</p>}
+          <button type="submit" className={styles.submitBtn} disabled={loading}>
+            {loading ? "..." : content.buttonLabel}
           </button>
         </form>
 

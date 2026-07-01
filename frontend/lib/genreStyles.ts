@@ -34,14 +34,20 @@ export const DEFAULT_GENRE_STYLE: GenreStyle = {
 };
 
 export const STATUS_STYLES: Record<string, StatusStyle> = {
-  "completed": { badgeBg: "#4ADE80", badgeColor: "#052E16", badgeBorder: "#4ADE80" },
-  "ongoing":   { badgeBg: "#FCD34D", badgeColor: "#451A03", badgeBorder: "#FCD34D" },
-  "upcoming":  { badgeBg: "#60A5FA", badgeColor: "#172554", badgeBorder: "#60A5FA" },
-  "hiatus":    { badgeBg: "#D1D5DB", badgeColor: "#1F2937", badgeBorder: "#D1D5DB" },
+  "completed": { badgeBg: "#14532d", badgeColor: "#86efac", badgeBorder: "#166534" },
+  "ongoing":   { badgeBg: "#78350f", badgeColor: "#fde68a", badgeBorder: "#92400e" },
+  "upcoming":  { badgeBg: "#1e3a5f", badgeColor: "#93c5fd", badgeBorder: "#1e40af" },
+  "hiatus":    { badgeBg: "#1f2937", badgeColor: "#9ca3af", badgeBorder: "#374151" },
 };
 
 export const DEFAULT_STATUS_STYLE: StatusStyle = {
-  badgeBg: "#D1D5DB",
-  badgeColor: "#1F2937",
-  badgeBorder: "#D1D5DB",
+  badgeBg: "#1f2937",
+  badgeColor: "#9ca3af",
+  badgeBorder: "#374151",
+};
+
+export const GENRE_BADGE = {
+  bg:     "rgba(249,115,22,0.10)",
+  color:  "#f97316",
+  border: "rgba(249,115,22,0.22)",
 };

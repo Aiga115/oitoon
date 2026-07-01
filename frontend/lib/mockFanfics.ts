@@ -1,4 +1,4 @@
-import type { StoryItem } from "@/components/StoryCard";
+import type { StoryItem } from "@/components/StoryListItem";
 
 export const MOCK_FANFICS: StoryItem[] = [
   {
@@ -8,7 +8,6 @@ export const MOCK_FANFICS: StoryItem[] = [
     genres: ["fantasy", "adventure"],
     language: ["ru"],
     year: 2023,
-    country: "Russia",
     status: "ongoing",
     pages: 95,
     chapters: 22,
@@ -23,7 +22,6 @@ export const MOCK_FANFICS: StoryItem[] = [
     genres: ["action", "drama"],
     language: ["ru"],
     year: 2022,
-    country: "Kazakhstan",
     status: "completed",
     pages: 60,
     chapters: 15,
@@ -38,7 +36,6 @@ export const MOCK_FANFICS: StoryItem[] = [
     genres: ["romance", "adventure"],
     language: ["ky"],
     year: 2024,
-    country: "Kyrgyzstan",
     status: "ongoing",
     pages: 45,
     chapters: 11,
@@ -53,7 +50,6 @@ export const MOCK_FANFICS: StoryItem[] = [
     genres: ["mystery", "thriller"],
     language: ["ru"],
     year: 2023,
-    country: "Russia",
     status: "completed",
     pages: 130,
     chapters: 30,
@@ -68,7 +64,6 @@ export const MOCK_FANFICS: StoryItem[] = [
     genres: ["drama", "romance"],
     language: ["ru"],
     year: 2024,
-    country: "Uzbekistan",
     status: "ongoing",
     pages: 75,
     chapters: 18,
@@ -83,7 +78,6 @@ export const MOCK_FANFICS: StoryItem[] = [
     genres: ["scifi", "adventure"],
     language: ["ru"],
     year: 2022,
-    country: "Uzbekistan",
     status: "completed",
     pages: 110,
     chapters: 25,
@@ -98,7 +92,6 @@ export const MOCK_FANFICS: StoryItem[] = [
     genres: ["historical", "drama"],
     language: ["ky"],
     year: 2023,
-    country: "Kyrgyzstan",
     status: "ongoing",
     pages: 88,
     chapters: 20,
@@ -113,12 +106,25 @@ export const MOCK_FANFICS: StoryItem[] = [
     genres: ["fantasy", "horror"],
     language: ["ru"],
     year: 2024,
-    country: "Russia",
     status: "ongoing",
     pages: 165,
     chapters: 38,
     rating: 4.9,
     description:
       "Мрачный AU, в котором второстепенный злодей оригинального произведения становится протагонистом и ищет путь к искуплению.",
+  },
+  {
+    id: 109,
+    title: "Echoes of the Forgotten",
+    author: "Emily Carter",
+    genres: ["fantasy", "adventure"],
+    language: ["en"],
+    year: 2024,
+    status: "ongoing",
+    pages: 142,
+    chapters: 28,
+    rating: 4.6,
+    description:
+      "A retelling of a beloved epic from the perspective of a side character who witnessed every turning point in silence.",
   },
 ];

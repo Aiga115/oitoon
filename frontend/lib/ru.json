@@ -5,12 +5,14 @@
     "comics": "Комиксы",
     "authors": "Авторы",
     "ratings": "Рейтинги",
+    "favourites": "Избранное",
     "becomeAuthor": "Я хочу стать автором"
   },
   "header": {
     "searchPlaceholder": "Поиск историй, авторов...",
     "login": "Войти",
-    "register": "Регистрация"
+    "register": "Регистрация",
+    "logout": "Выйти"
   },
   "hero": {
     "recommended": "⭐ Рекомендуем сегодня",
@@ -30,7 +32,6 @@
   "filters": {
     "genres": "Жанры",
     "year": "Год",
-    "country": "Страна",
     "pages": "Страниц",
     "reset": "Сбросить",
     "language": "Язык",
@@ -51,7 +52,8 @@
   },
   "languageNames": {
     "ru": "Русский",
-    "ky": "Кыргызский"
+    "ky": "Кыргызский",
+    "en": "Английский"
   },
   "genreNames": {
     "fantasy": "Фэнтези",
@@ -69,19 +71,51 @@
     "comedy": "Комедия",
     "poetry": "Поэзия"
   },
-  "countries": {
-    "Russia": "Россия",
-    "Kazakhstan": "Казахстан",
-    "Uzbekistan": "Узбекистан",
-    "Kyrgyzstan": "Кыргызстан",
-    "Tajikistan": "Таджикистан",
-    "Turkmenistan": "Туркменистан"
-  },
   "authors": {
     "popular": "Популярные",
     "thisWeek": "На этой неделе",
     "subscribersSuffix": "подписчиков",
-    "weeklyGainPrefix": "+"
+    "weeklyGainPrefix": "+",
+    "tabAll": "Все",
+    "tabSubscribed": "Подписки",
+    "noSubscriptions": "Вы пока не подписаны ни на одного автора."
+  },
+  "authorProfile": {
+    "memberSince": "Участник с",
+    "stories": "Истории",
+    "followers": "Подписчики",
+    "totalReads": "Всего читали",
+    "follow": "Подписаться",
+    "following": "Подписан",
+    "message": "Написать",
+    "allStories": "Все истории",
+    "inProgress": "В процессе",
+    "completed": "Завершено",
+    "noStories": "Историй пока нет."
+  },
+  "authorDashboard": {
+    "manageStories": "Управлять историями",
+    "addStory": "Добавить историю",
+    "cancelAdd": "Отмена",
+    "viewPublicProfile": "Посмотреть публичный профиль",
+    "noStories": "Вы пока не опубликовали ни одной истории.",
+    "formTitle": "Новая история",
+    "titleLabel": "Название",
+    "titlePlaceholder": "Дайте название вашей истории",
+    "descriptionLabel": "Описание",
+    "descriptionPlaceholder": "О чём ваша история?",
+    "genresLabel": "Жанры",
+    "languagesLabel": "Языки",
+    "submit": "Опубликовать",
+    "saveDraft": "Сохранить как черновик",
+    "manageChapters": "Главы",
+    "noChapters": "Глав пока нет.",
+    "chapterTitleLabel": "Название главы",
+    "chapterTitlePlaceholder": "Введите название главы",
+    "chapterContentLabel": "Текст",
+    "chapterContentPlaceholder": "Напишите текст главы…",
+    "addChapterSubmit": "Добавить главу",
+    "cancelChapters": "Закрыть"
   },
   "storyCard": {
     "infoLabel": "Информация",
@@ -89,12 +123,45 @@
     "completed": "Завершено",
     "upcoming": "Скоро",
     "hiatus": "Пауза",
+    "draft": "Черновик",
     "authorLabel": "Автор",
     "chaptersSuffix": "глав",
     "pagesSuffix": "страниц"
   },
   "storyList": {
     "readButton": "Читать"
+  },
+  "storyDetail": {
+    "by": "автор:",
+    "readNow": "Читать сейчас",
+    "addToFavourites": "В избранное",
+    "inFavourites": "В избранном",
+    "backToStories": "Назад к историям",
+    "description": "Описание",
+    "aboutAuthor": "Об авторе",
+    "rateStory": "Оцените историю",
+    "year": "Год",
+    "languages": "Языки",
+    "comments": "Комментарии",
+    "shareThoughts": "Поделитесь мыслями",
+    "commentPlaceholder": "Поделитесь впечатлениями…",
+    "commentGuestPrompt": "Войдите, чтобы оставить комментарий",
+    "submitComment": "Отправить",
+    "sortBest": "Лучшие",
+    "sortNewest": "Новые",
+    "reply": "Ответить",
+    "chapters": "Главы",
+    "chapter": "Глава",
+    "prologue": "Пролог",
+    "epilogue": "Эпилог",
+    "you": "Вы",
+    "notFound": "История не найдена.",
+    "draftNotice": "Это черновик — только вы видите эту историю.",
+    "titleLabel": "Название",
+    "descriptionLabel": "Описание",
+    "publishOngoing": "Опубликовать как «Выходит»",
+    "publishCompleted": "Опубликовать как «Завершено»",
+    "saveDraft": "Сохранить черновик"
   },
   "auth": {
     "login": {
@@ -129,5 +196,17 @@
       "passwordPlaceholder": "Введите пароль",
       "confirmPasswordPlaceholder": "Повторите пароль"
     }
+  },
+  "favourites": {
+    "title": "Моё избранное",
+    "empty": "Вы ещё не добавили ни одной истории в избранное.",
+    "signInPrompt": "Войдите, чтобы получить доступ к избранному."
+  },
+  "authRequired": {
+    "close": "Закрыть",
+    "title": "Войдите, чтобы продолжить",
+    "subtitle": "Добавляйте истории в избранное и продолжайте читать с того места, где остановились. Создайте бесплатный аккаунт.",
+    "login": "Войти",
+    "register": "Создать аккаунт"
   }
 }

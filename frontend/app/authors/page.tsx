@@ -1,12 +1,13 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { useTranslation } from "react-i18next";
-import Header from "@/components/Header";
+import { useSubscriptions } from "@/lib/subscriptions";
 import { MOCK_AUTHORS, type AuthorItem } from "@/lib/mockAuthors";
 import styles from "./page.module.css";
 
-type Tab = "popular" | "thisWeek";
+type AuthorsTab = "all" | "subscribed";
 
 function formatCount(n: number): string {
   if (n >= 1000) return (n / 1000).toFixed(1).replace(/\.0$/, "") + "K";
@@ -24,16 +25,14 @@ function getInitials(name: string): string {
 function AuthorRow({
   author,
   rank,
-  showWeeklyGain,
 }: {
   author: AuthorItem;
   rank: number;
-  showWeeklyGain: boolean;
 }) {
   const { t } = useTranslation();
 
   return (
-    <div className={styles.card}>
+    <Link href={`/authors/${author.id}`} className={styles.card}>
       <span className={`${styles.rank} ${rank <= 3 ? styles.rankTop : ""}`}>
         {rank}
       </span>
@@ -54,30 +53,23 @@ function AuthorRow({
         <span className={styles.subscribers}>
           {formatCount(author.subscribers)} {t("authors.subscribersSuffix")}
         </span>
-        {showWeeklyGain && (
-          <span className={styles.weeklyGain}>
-            {t("authors.weeklyGainPrefix")}
-            {formatCount(author.weeklyGain)} {t("authors.subscribersSuffix")}
-          </span>
-        )}
       </div>
-    </div>
+    </Link>
   );
 }
 
 export default function AuthorsPage() {
   const { t } = useTranslation();
-  const [tab, setTab] = useState<Tab>("popular");
+  const { isSubscribed } = useSubscriptions();
+  const [tab, setTab] = useState<AuthorsTab>("all");
 
-  const sorted: AuthorItem[] =
-    tab === "popular"
-      ? [...MOCK_AUTHORS].sort((a, b) => b.subscribers - a.subscribers)
-      : [...MOCK_AUTHORS].sort((a, b) => b.weeklyGain - a.weeklyGain);
+  const authors =
+    tab === "subscribed"
+      ? MOCK_AUTHORS.filter((author) => isSubscribed(author.id))
+      : MOCK_AUTHORS;
 
   return (
-    <div className="flex flex-col min-h-screen">
-      <Header />
-      <main className={`flex-1 px-6 py-10 ${styles.main}`}>
+    <div className={`px-6 py-10 ${styles.main}`}>
         <div className="max-w-2xl mx-auto">
           {/* Heading */}
           <div className={styles.pageHeading}>
@@ -88,32 +80,30 @@ export default function AuthorsPage() {
           {/* Tabs */}
           <div className={styles.tabs}>
             <button
-              className={`${styles.tab} ${tab === "popular" ? styles.tabActive : ""}`}
-              onClick={() => setTab("popular")}
+              className={`${styles.tab} ${tab === "all" ? styles.tabActive : ""}`}
+              onClick={() => setTab("all")}
             >
-              {t("authors.popular")}
+              {t("authors.tabAll")}
             </button>
             <button
-              className={`${styles.tab} ${tab === "thisWeek" ? styles.tabActive : ""}`}
-              onClick={() => setTab("thisWeek")}
+              className={`${styles.tab} ${tab === "subscribed" ? styles.tabActive : ""}`}
+              onClick={() => setTab("subscribed")}
             >
-              {t("authors.thisWeek")}
+              {t("authors.tabSubscribed")}
             </button>
           </div>
 
           {/* List */}
-          <div className={styles.list}>
-            {sorted.map((author, i) => (
-              <AuthorRow
-                key={author.id}
-                author={author}
-                rank={i + 1}
-                showWeeklyGain={tab === "thisWeek"}
-              />
-            ))}
-          </div>
+          {authors.length === 0 ? (
+            <p className={styles.empty}>{t("authors.noSubscriptions")}</p>
+          ) : (
+            <div className={styles.list}>
+              {authors.map((author, i) => (
+                <AuthorRow key={author.id} author={author} rank={i + 1} />
+              ))}
+            </div>
+          )}
         </div>
-      </main>
     </div>
   );
 }

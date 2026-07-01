@@ -5,12 +5,14 @@
     "comics": "Комикстер",
     "authors": "Авторлор",
     "ratings": "Рейтингдер",
+    "favourites": "Тандалмалар",
     "becomeAuthor": "Мен автор болгум келет"
   },
   "header": {
     "searchPlaceholder": "Аңгеме, авторлорду издөө...",
     "login": "Кирүү",
-    "register": "Катталуу"
+    "register": "Катталуу",
+    "logout": "Чыгуу"
   },
   "hero": {
     "recommended": "⭐ Бүгүн сунушталат",
@@ -30,7 +32,6 @@
   "filters": {
     "genres": "Жанрлар",
     "year": "Жыл",
-    "country": "Өлкө",
     "pages": "Барактар",
     "reset": "Баштапкы абалга келтирүү",
     "language": "Тил",
@@ -69,19 +70,48 @@
     "comedy": "Комедия",
     "poetry": "Поэзия"
   },
-  "countries": {
-    "Russia": "Россия",
-    "Kazakhstan": "Казакстан",
-    "Uzbekistan": "Өзбекстан",
-    "Kyrgyzstan": "Кыргызстан",
-    "Tajikistan": "Тажикстан",
-    "Turkmenistan": "Түркмөнстан"
-  },
   "authors": {
     "popular": "Популярдуу",
     "thisWeek": "Бул аптада",
     "subscribersSuffix": "жазылуучу",
     "weeklyGainPrefix": "+"
+  },
+  "authorProfile": {
+    "memberSince": "Мүчө болгондон бери",
+    "stories": "Аңгемелер",
+    "followers": "Жазылуучулар",
+    "totalReads": "Жалпы окулган",
+    "follow": "Жазылуу",
+    "following": "Жазылган",
+    "message": "Кат жазуу",
+    "allStories": "Бардык аңгемелер",
+    "inProgress": "Жүрүп жатат",
+    "completed": "Аяктады",
+    "noStories": "Азырынча аңгеме жок."
+  },
+  "authorDashboard": {
+    "manageStories": "Аңгемелерди башкаруу",
+    "addStory": "Аңгеме кошуу",
+    "cancelAdd": "Жокко чыгаруу",
+    "viewPublicProfile": "Ачык профилди көрүү",
+    "noStories": "Сиз азырынча бир да аңгеме жарыялаган жоксуз.",
+    "formTitle": "Жаңы аңгеме",
+    "titleLabel": "Аталышы",
+    "titlePlaceholder": "Аңгемеңизге аталыш бериңиз",
+    "descriptionLabel": "Сүрөттөмө",
+    "descriptionPlaceholder": "Аңгемеңиз эмне жөнүндө?",
+    "genresLabel": "Жанрлар",
+    "languagesLabel": "Тилдер",
+    "submit": "Жарыялоо",
+    "saveDraft": "Черновик катары сактоо",
+    "manageChapters": "Бөлүмдөр",
+    "noChapters": "Бөлүмдөр азырынча жок.",
+    "chapterTitleLabel": "Бөлүмдүн аталышы",
+    "chapterTitlePlaceholder": "Бөлүмдүн аталышын жазыңыз",
+    "chapterContentLabel": "Мазмун",
+    "chapterContentPlaceholder": "Бөлүмдүн текстин жазыңыз…",
+    "addChapterSubmit": "Бөлүм кошуу",
+    "cancelChapters": "Жабуу"
   },
   "storyCard": {
     "infoLabel": "Маалымат",
@@ -89,12 +119,45 @@
     "completed": "Аяктады",
     "upcoming": "Жакында",
     "hiatus": "Үзгүлтүк",
+    "draft": "Черновик",
     "authorLabel": "Автор",
     "chaptersSuffix": "бөлүм",
     "pagesSuffix": "барак"
   },
   "storyList": {
     "readButton": "Окуу"
+  },
+  "storyDetail": {
+    "by": "автор:",
+    "readNow": "Азыр окуу",
+    "addToFavourites": "Тандалмаларга кошуу",
+    "inFavourites": "Тандалмаларда",
+    "backToStories": "Аңгемелерге кайтуу",
+    "description": "Аңгеме жөнүндө",
+    "aboutAuthor": "Автор жөнүндө",
+    "rateStory": "Аңгемени баалоо",
+    "year": "Жыл",
+    "languages": "Тилдер",
+    "comments": "Комментарийлер",
+    "shareThoughts": "Пикириңизди бөлүшүңүз",
+    "commentPlaceholder": "Пикириңизди жазыңыз…",
+    "commentGuestPrompt": "Комментарий калдыруу үчүн кириңиз",
+    "submitComment": "Жөнөтүү",
+    "sortBest": "Эң жакшы",
+    "sortNewest": "Жаңылар",
+    "reply": "Жооп берүү",
+    "chapters": "Бөлүмдөр",
+    "chapter": "Бөлүм",
+    "prologue": "Пролог",
+    "epilogue": "Эпилог",
+    "you": "Сиз",
+    "notFound": "Аңгеме табылган жок.",
+    "draftNotice": "Бул черновик — аны сиз гана көрө аласыз.",
+    "titleLabel": "Аталышы",
+    "descriptionLabel": "Сүрөттөмө",
+    "publishOngoing": "«Жарыяланууда» деп жарыялоо",
+    "publishCompleted": "«Аяктады» деп жарыялоо",
+    "saveDraft": "Черновикти сактоо"
   },
   "auth": {
     "login": {
@@ -129,5 +192,17 @@
       "passwordPlaceholder": "Сырсөзүңүздү киргизиңиз",
       "confirmPasswordPlaceholder": "Сырсөздү кайра киргизиңиз"
     }
+  },
+  "favourites": {
+    "title": "Менин тандалмаларым",
+    "empty": "Сиз али бир да аңгеме тандалмаларга кошкон жоксуз.",
+    "signInPrompt": "Тандалмаларыңызга кирүү үчүн кириңиз."
+  },
+  "authRequired": {
+    "close": "Жабуу",
+    "title": "Улантуу үчүн кириңиз",
+    "subtitle": "Аңгемелерди тандалмаларга кошуңуз жана токтогон жериңизден улантыңыз. Акысыз аккаунт түзүңүз.",
+    "login": "Кирүү",
+    "register": "Аккаунт түзүү"
   }
 }

@@ -1,0 +1,25 @@
+.main {
+  min-height: calc(100vh - 88px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 24px;
+}
+
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  text-align: center;
+}
+
+.emptyIcon {
+  color: #3d3d3d;
+}
+
+.emptyText {
+  font-size: 0.9375rem;
+  color: #666666;
+  margin: 0;
+}
