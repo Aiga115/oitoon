@@ -9,7 +9,6 @@ class RegisterRequest(BaseModel):
     password: str
     first_name: Optional[str] = None
     last_name: Optional[str] = None
-    country: Optional[str] = None
 
 
 class LoginRequest(BaseModel):
@@ -25,7 +24,6 @@ class UserResponse(BaseModel):
     last_name: Optional[str]
     role: str
     avatar_url: Optional[str]
-    country: Optional[str]
     member_since: datetime
 
     model_config = ConfigDict(from_attributes=True)

@@ -3,7 +3,6 @@ export type AuthorItem = {
   username: string;
   displayName: string;
   subscribers: number;
-  country: string;
   genres: string[];
   avatarColor: string;
   weeklyGain: number;
@@ -17,7 +16,6 @@ export const MOCK_AUTHORS: AuthorItem[] = [
     username: "artem_belov",
     displayName: "Артём Белов",
     subscribers: 14820,
-    country: "Russia",
     genres: ["fantasy", "adventure"],
     avatarColor: "#7c3aed",
     weeklyGain: 340,
@@ -29,7 +27,6 @@ export const MOCK_AUTHORS: AuthorItem[] = [
     username: "maria_sokolova",
     displayName: "Мария Соколова",
     subscribers: 11540,
-    country: "Kazakhstan",
     genres: ["mystery", "thriller"],
     avatarColor: "#db2777",
     weeklyGain: 510,
@@ -41,7 +38,6 @@ export const MOCK_AUTHORS: AuthorItem[] = [
     username: "dmitry_orlov",
     displayName: "Дмитрий Орлов",
     subscribers: 9870,
-    country: "Russia",
     genres: ["steampunk", "scifi"],
     avatarColor: "#0891b2",
     weeklyGain: 190,
@@ -53,7 +49,6 @@ export const MOCK_AUTHORS: AuthorItem[] = [
     username: "natalya_kim",
     displayName: "Наталья Ким",
     subscribers: 8300,
-    country: "Kyrgyzstan",
     genres: ["romance", "fantasy"],
     avatarColor: "#d97706",
     weeklyGain: 620,
@@ -65,7 +60,6 @@ export const MOCK_AUTHORS: AuthorItem[] = [
     username: "igor_zaitsev",
     displayName: "Игорь Зайцев",
     subscribers: 22100,
-    country: "Russia",
     genres: ["scifi", "adventure"],
     avatarColor: "#059669",
     weeklyGain: 280,
@@ -77,7 +71,6 @@ export const MOCK_AUTHORS: AuthorItem[] = [
     username: "aydana_bekova",
     displayName: "Айдана Бекова",
     subscribers: 7650,
-    country: "Kyrgyzstan",
     genres: ["fantasy", "adventure"],
     avatarColor: "#e11d48",
     weeklyGain: 870,
@@ -89,7 +82,6 @@ export const MOCK_AUTHORS: AuthorItem[] = [
     username: "karim_yusupov",
     displayName: "Карим Юсупов",
     subscribers: 6200,
-    country: "Uzbekistan",
     genres: ["mystery", "comedy"],
     avatarColor: "#7c3aed",
     weeklyGain: 150,
@@ -101,7 +93,6 @@ export const MOCK_AUTHORS: AuthorItem[] = [
     username: "dina_seitkali",
     displayName: "Дина Сейткали",
     subscribers: 18900,
-    country: "Kazakhstan",
     genres: ["drama", "historical"],
     avatarColor: "#0369a1",
     weeklyGain: 440,
@@ -113,7 +104,6 @@ export const MOCK_AUTHORS: AuthorItem[] = [
     username: "zhansaya_omarova",
     displayName: "Жансая Омарова",
     subscribers: 13400,
-    country: "Kazakhstan",
     genres: ["scifi", "thriller"],
     avatarColor: "#be185d",
     weeklyGain: 760,
@@ -125,7 +115,6 @@ export const MOCK_AUTHORS: AuthorItem[] = [
     username: "nurbek_toktogul",
     displayName: "Нурбек Токтогулов",
     subscribers: 5900,
-    country: "Kyrgyzstan",
     genres: ["fantasy", "horror"],
     avatarColor: "#065f46",
     weeklyGain: 95,
@@ -137,7 +126,6 @@ export const MOCK_AUTHORS: AuthorItem[] = [
     username: "anton_krylov",
     displayName: "Антон Крылов",
     subscribers: 17200,
-    country: "Russia",
     genres: ["action", "dystopia"],
     avatarColor: "#92400e",
     weeklyGain: 530,
@@ -149,7 +137,6 @@ export const MOCK_AUTHORS: AuthorItem[] = [
     username: "firuza_nazarova",
     displayName: "Фируза Назарова",
     subscribers: 4100,
-    country: "Tajikistan",
     genres: ["adventure", "romance"],
     avatarColor: "#6d28d9",
     weeklyGain: 210,
@@ -157,3 +144,34 @@ export const MOCK_AUTHORS: AuthorItem[] = [
     memberSince: "Dec 2023",
   },
 ];
+
+const AUTHOR_AVATAR_COLORS = [
+  "#7c3aed", "#db2777", "#0891b2", "#d97706",
+  "#059669", "#e11d48", "#0369a1", "#be185d",
+];
+
+function formatMemberSince(date: Date): string {
+  return date.toLocaleDateString("en-US", { month: "short", year: "numeric" });
+}
+
+// Returns the author profile for the given username, creating one
+// (pseudonym = username) if it doesn't exist yet.
+export function getOrCreateAuthorByUsername(username: string): AuthorItem {
+  const existing = MOCK_AUTHORS.find((a) => a.username === username);
+  if (existing) return existing;
+
+  const nextId = MOCK_AUTHORS.reduce((max, a) => Math.max(max, a.id), 0) + 1;
+  const author: AuthorItem = {
+    id: nextId,
+    username,
+    displayName: username,
+    subscribers: 0,
+    genres: [],
+    avatarColor: AUTHOR_AVATAR_COLORS[nextId % AUTHOR_AVATAR_COLORS.length],
+    weeklyGain: 0,
+    totalReads: 0,
+    memberSince: formatMemberSince(new Date()),
+  };
+  MOCK_AUTHORS.push(author);
+  return author;
+}

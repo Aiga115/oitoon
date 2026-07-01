@@ -3,7 +3,6 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { BookMarked } from 'lucide-react'
-import Header from '@/components/Header'
 import AuthRequiredModal from '@/components/AuthRequiredModal'
 import { useAuth } from '@/lib/auth'
 import styles from './page.module.css'
@@ -15,7 +14,6 @@ export default function FavouritesPage () {
 
   return (
     <>
-      <Header />
       <main className={styles.main}>
         {isLoggedIn ? (
           <div className={styles.empty}>

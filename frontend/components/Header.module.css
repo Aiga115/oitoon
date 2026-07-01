@@ -1,12 +1,9 @@
-.wrapper {
+/* ── Top bar ──────────────────────────────────────── */
+.topBar {
   position: sticky;
   top: 0;
   z-index: 100;
-}
-
-/* ── Top bar ──────────────────────────────────────── */
-.topBar {
-  background-color: #13102b;
+  background-color: #181818;
   border-bottom: 0.5px solid rgba(255, 255, 255, 0.07);
   padding: 0 28px;
   height: 58px;
@@ -41,7 +38,7 @@
   left: 10px;
   top: 50%;
   transform: translateY(-50%);
-  color: #6b6887;
+  color: #888888;
   pointer-events: none;
 }
 
@@ -52,7 +49,7 @@
   border-radius: 8px;
   padding: 7px 12px 7px 30px;
   font-size: 12px;
-  color: #f1f0fa;
+  color: #e8e8e8;
   outline: none;
   font-family: var(--font-roboto-mono);
 }
@@ -77,8 +74,8 @@
 }
 
 .langBtnActive {
-  border-color: rgba(167, 139, 250, 0.5);
-  background-color: rgba(167, 139, 250, 0.15);
+  border-color: rgba(249, 115, 22, 0.5);
+  background-color: rgba(249, 115, 22, 0.15);
   opacity: 1;
 }
 
@@ -111,7 +108,10 @@
   font-weight: 600;
   color: rgba(255, 255, 255, 0.75);
   letter-spacing: 0.04em;
+  text-decoration: none;
+  transition: color 0.15s;
 }
+.userGreeting:hover { color: #e8e8e8; }
 
 .btnLogin {
   display: inline-flex;
@@ -132,7 +132,7 @@
 
 .btnLogin:hover {
   border-color: rgba(255, 255, 255, 0.5);
-  color: #f0eeff;
+  color: #e8e8e8;
 }
 
 .btnRegister {
@@ -156,68 +156,3 @@
   opacity: 0.88;
 }
 
-/* ── Subnav ───────────────────────────────────────── */
-.subnav {
-  background-color: #13102b;
-  border-bottom: 0.5px solid rgba(255, 255, 255, 0.07);
-  padding: 0 28px;
-  height: 46px;
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
-
-.navLink {
-  font-size: 13px;
-  color: #6b6887;
-  padding: 6px 12px;
-  border-radius: 6px;
-  text-decoration: none;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  white-space: nowrap;
-  transition: color 0.15s, background-color 0.15s;
-}
-
-.navLink:hover {
-  color: #c4b5fd;
-  background-color: rgba(167, 139, 250, 0.08);
-}
-
-.navLinkActive {
-  color: #a78bfa;
-}
-
-.navLinkDisabled {
-  opacity: 0.3;
-  cursor: not-allowed;
-}
-
-.subnavRight {
-  margin-left: auto;
-}
-
-.btnBecomeAuthor {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 6px 14px;
-  border-radius: 20px;
-  background-color: rgba(249, 115, 22, 0.12);
-  border: 1.5px solid rgba(249, 115, 22, 0.35);
-  color: #f97316;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  text-decoration: none;
-  cursor: pointer;
-  font-family: inherit;
-  transition: background-color 0.15s, border-color 0.15s;
-}
-
-.btnBecomeAuthor:hover {
-  background-color: rgba(249, 115, 22, 0.22);
-  border-color: rgba(249, 115, 22, 0.65);
-}

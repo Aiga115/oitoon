@@ -1,5 +1,5 @@
 .main {
-  background-color: #0b0917;
+  background-color: #131313;
   min-height: calc(100vh - 60px);
   padding: 40px 24px 60px;
 }
@@ -39,13 +39,13 @@
 .profileName {
   font-size: 22px;
   font-weight: 700;
-  color: #f0eeff;
+  color: #e8e8e8;
   letter-spacing: -0.3px;
 }
 
 .profileHandle {
   font-size: 13px;
-  color: #6b6887;
+  color: #888888;
   margin-top: 4px;
 }
 
@@ -73,12 +73,12 @@
 .pstatVal {
   font-size: 20px;
   font-weight: 700;
-  color: #f0eeff;
+  color: #e8e8e8;
 }
 
 .pstatLbl {
   font-size: 11px;
-  color: #6b6887;
+  color: #888888;
 }
 
 /* Action buttons */
@@ -134,7 +134,7 @@
 
 .btnMessage:hover {
   border-color: rgba(255, 255, 255, 0.5);
-  color: #f0eeff;
+  color: #e8e8e8;
 }
 
 /* ── Tabs ─────────────────────────────────── */
@@ -154,7 +154,7 @@
   border-radius: 7px;
   font-size: 13px;
   font-weight: 500;
-  color: #6b6887;
+  color: #888888;
   background: transparent;
   border: none;
   cursor: pointer;
@@ -165,26 +165,26 @@
 }
 
 .tab:hover:not(.tabOn) {
-  color: #c4b5fd;
+  color: #fb923c;
 }
 
 .tabOn {
-  background-color: #252145;
-  color: #f1f0fa;
+  background-color: #242424;
+  color: #f97316;
 }
 
 .tabCount {
   font-size: 10px;
   font-weight: 700;
   background: rgba(255, 255, 255, 0.08);
-  color: #9490b5;
+  color: #888888;
   padding: 1px 7px;
   border-radius: 20px;
 }
 
 .tabCountOn {
-  background: rgba(167, 139, 250, 0.15);
-  color: #c4b5fd;
+  background: rgba(249, 115, 22, 0.15);
+  color: #fb923c;
 }
 
 /* ── Story list ───────────────────────────── */
@@ -196,7 +196,7 @@
 
 .empty {
   text-align: center;
-  color: #6b6887;
+  color: #888888;
   padding: 48px 0;
   font-size: 14px;
 }
@@ -204,7 +204,7 @@
 /* ── Story card ───────────────────────────── */
 .storyCard {
   display: flex;
-  background: #12101f;
+  background: #1c1c1c;
   border: 0.5px solid rgba(255, 255, 255, 0.07);
   border-radius: 14px;
   overflow: hidden;
@@ -220,72 +220,101 @@
 }
 
 .cardCover {
-  width: 100px;
+  width: 130px;
   flex-shrink: 0;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   justify-content: space-between;
-  padding: 12px 10px;
+  padding: 12px;
   position: relative;
+  background: linear-gradient(160deg, #1a0a40 0%, #2d1b69 50%, #1a1035 100%);
 }
 
 .cardCoverOverlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to right, transparent 50%, #12101f 100%);
+  background: linear-gradient(to right, transparent 50%, #1c1c1c 100%);
   pointer-events: none;
 }
 
 .cardCoverIcon {
   position: relative;
   z-index: 1;
-  opacity: 0.4;
+  opacity: 0.45;
+  color: #c4b5fd;
+}
+
+.cardBadges {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
 }
 
 .cardBadge {
-  position: relative;
-  z-index: 1;
   display: inline-block;
-  padding: 3px 9px;
-  border-radius: 20px;
-  font-size: 10px;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-size: 9px;
   font-weight: 700;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   white-space: nowrap;
+  border: 1px solid #374151;
+  background: #1f2937;
+  color: #9ca3af;
 }
 
 .cardBody {
   flex: 1;
   min-width: 0;
-  padding: 14px 16px;
+  padding: 13px 16px 12px;
   display: flex;
   flex-direction: column;
-  gap: 7px;
+  gap: 6px;
 }
 
-.cardTop {
+.cardTitleRow {
   display: flex;
-  align-items: flex-start;
+  align-items: baseline;
   justify-content: space-between;
-  gap: 10px;
-}
-
-.cardTopLeft {
-  min-width: 0;
+  gap: 12px;
 }
 
 .cardTitle {
-  font-size: 15px;
+  font-size: 17px;
   font-weight: 700;
-  color: #f0eeff;
+  color: #e8e8e8;
+  line-height: 1.3;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0;
+}
+
+.cardMeta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  font-size: 12px;
+  color: #888888;
+  font-weight: 500;
+}
+
+.cardMetaDot {
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: #444444;
+  flex-shrink: 0;
 }
 
 .cardPills {
   display: flex;
   gap: 5px;
-  margin-top: 4px;
   flex-wrap: wrap;
 }
 
@@ -301,16 +330,24 @@
 }
 
 .cardRating {
-  font-size: 15px;
-  font-weight: 700;
+  font-size: 13px;
+  font-weight: 600;
   color: #fcd34d;
   flex-shrink: 0;
 }
 
+.cardLanguages {
+  font-size: 11px;
+  color: #888888;
+  margin: 0;
+  line-height: 1.4;
+}
+
 .cardDesc {
   font-size: 12px;
-  color: #7b7899;
-  line-height: 1.6;
+  color: #888888;
+  line-height: 1.65;
+  margin: 0;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
@@ -335,7 +372,7 @@
   align-items: center;
   gap: 4px;
   font-size: 11px;
-  color: #6b6887;
+  color: #888888;
 }
 
 .cardReadBtn {
@@ -344,7 +381,7 @@
   padding: 5px 14px;
   border-radius: 20px;
   background: transparent;
-  color: #9490b5;
+  color: #888888;
   border: 0.5px solid rgba(255, 255, 255, 0.13);
   font-size: 11px;
   font-weight: 600;

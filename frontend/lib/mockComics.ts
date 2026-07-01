@@ -1,4 +1,4 @@
-import type { StoryItem } from "@/components/StoryCard";
+import type { StoryItem } from "@/components/StoryListItem";
 
 export const MOCK_COMICS: StoryItem[] = [
   {
@@ -8,7 +8,6 @@ export const MOCK_COMICS: StoryItem[] = [
     genres: ["action", "scifi"],
     language: ["ru"],
     year: 2023,
-    country: "Russia",
     status: "ongoing",
     pages: 180,
     chapters: 24,
@@ -23,7 +22,6 @@ export const MOCK_COMICS: StoryItem[] = [
     genres: ["fantasy", "adventure"],
     language: ["ky"],
     year: 2024,
-    country: "Kyrgyzstan",
     status: "ongoing",
     pages: 96,
     chapters: 12,
@@ -38,7 +36,6 @@ export const MOCK_COMICS: StoryItem[] = [
     genres: ["mystery", "comedy"],
     language: ["ru"],
     year: 2022,
-    country: "Uzbekistan",
     status: "completed",
     pages: 120,
     chapters: 16,
@@ -53,7 +50,6 @@ export const MOCK_COMICS: StoryItem[] = [
     genres: ["drama", "historical"],
     language: ["ru"],
     year: 2023,
-    country: "Kazakhstan",
     status: "completed",
     pages: 200,
     chapters: 28,
@@ -68,7 +64,6 @@ export const MOCK_COMICS: StoryItem[] = [
     genres: ["scifi", "thriller"],
     language: ["ru"],
     year: 2024,
-    country: "Kazakhstan",
     status: "ongoing",
     pages: 140,
     chapters: 18,
@@ -83,7 +78,6 @@ export const MOCK_COMICS: StoryItem[] = [
     genres: ["fantasy", "horror"],
     language: ["ky"],
     year: 2023,
-    country: "Kyrgyzstan",
     status: "ongoing",
     pages: 88,
     chapters: 11,
@@ -98,7 +92,6 @@ export const MOCK_COMICS: StoryItem[] = [
     genres: ["adventure", "romance"],
     language: ["ru"],
     year: 2022,
-    country: "Tajikistan",
     status: "completed",
     pages: 160,
     chapters: 20,
@@ -113,12 +106,25 @@ export const MOCK_COMICS: StoryItem[] = [
     genres: ["action", "dystopia"],
     language: ["ru"],
     year: 2024,
-    country: "Russia",
     status: "ongoing",
     pages: 220,
     chapters: 30,
     rating: 4.7,
     description:
       "Одиночка-курьер в тоталитарном мегаполисе случайно становится лицом подпольного сопротивления.",
+  },
+  {
+    id: 209,
+    title: "Iron Skies",
+    author: "James Novak",
+    genres: ["action", "sci-fi"],
+    language: ["en"],
+    year: 2025,
+    status: "ongoing",
+    pages: 195,
+    chapters: 22,
+    rating: 4.5,
+    description:
+      "A lone pilot uncovers a corporate conspiracy that reaches beyond the stratosphere, drawn in a gritty noir style.",
   },
 ];

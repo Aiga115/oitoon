@@ -2,10 +2,11 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useTranslation } from "react-i18next";
 import i18n from "@/lib/i18n";
 import { useAuth } from "@/lib/auth";
+import { getOrCreateAuthorByUsername } from "@/lib/mockAuthors";
 import GB from "country-flag-icons/react/3x2/GB";
 import RU from "country-flag-icons/react/3x2/RU";
 import KG from "country-flag-icons/react/3x2/KG";
@@ -29,6 +30,8 @@ type AuthFormTemplateProps = {
 export default function AuthFormTemplate({ mode }: AuthFormTemplateProps) {
   const { t } = useTranslation();
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const redirect = searchParams.get("redirect");
   const { login } = useAuth();
 
   const [identifier, setIdentifier] = useState("");
@@ -65,7 +68,12 @@ export default function AuthFormTemplate({ mode }: AuthFormTemplateProps) {
         return;
       }
       login(data.user, data.access_token);
-      router.push("/");
+      if (redirect === "become-author") {
+        const author = getOrCreateAuthorByUsername(data.user.username);
+        router.push(`/authors/${author.id}/dashboard`);
+      } else {
+        router.push("/");
+      }
     } catch {
       setError("Could not reach the server");
     } finally {
@@ -77,7 +85,9 @@ export default function AuthFormTemplate({ mode }: AuthFormTemplateProps) {
     description: t(`auth.${mode}.description`),
     buttonLabel: t(`auth.${mode}.buttonLabel`),
     alternateLabel: t(`auth.${mode}.alternateLabel`),
-    alternateHref: mode === "login" ? "/register" : "/login",
+    alternateHref:
+      (mode === "login" ? "/register" : "/login") +
+      (redirect ? `?redirect=${redirect}` : ""),
     alternateAction: t(`auth.${mode}.alternateAction`),
   };
   const fields = {

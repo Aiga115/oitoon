@@ -15,11 +15,11 @@
 }
 
 .emptyIcon {
-  color: rgba(167, 139, 250, 0.35);
+  color: #3d3d3d;
 }
 
 .emptyText {
   font-size: 0.9375rem;
-  color: #5a5470;
+  color: #666666;
   margin: 0;
 }

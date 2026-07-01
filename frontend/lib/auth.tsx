@@ -16,7 +16,6 @@ export interface AuthUser {
   first_name: string | null
   last_name: string | null
   avatar_url: string | null
-  country: string | null
   member_since: string
 }
 
@@ -25,6 +24,7 @@ interface AuthContextValue {
   token: string | null
   login: (user: AuthUser, token: string) => void
   logout: () => void
+  updateUser: (changes: Partial<Pick<AuthUser, 'first_name' | 'last_name' | 'username' | 'email'>>) => void
   isLoggedIn: boolean
 }
 
@@ -33,6 +33,7 @@ const AuthContext = createContext<AuthContextValue>({
   token: null,
   login: () => {},
   logout: () => {},
+  updateUser: () => {},
   isLoggedIn: false,
 })
 
@@ -68,8 +69,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     localStorage.removeItem('oitoon-token')
   }
 
+  const updateUser = (changes: Partial<Pick<AuthUser, 'first_name' | 'last_name' | 'username' | 'email'>>) => {
+    if (!user) return
+    const updated = { ...user, ...changes }
+    setUser(updated)
+    localStorage.setItem('oitoon-user', JSON.stringify(updated))
+  }
+
   return (
-    <AuthContext.Provider value={{ user, token, login, logout, isLoggedIn: user !== null }}>
+    <AuthContext.Provider value={{ user, token, login, logout, updateUser, isLoggedIn: user !== null }}>
       {children}
     </AuthContext.Provider>
   )

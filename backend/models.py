@@ -13,5 +13,4 @@ class User(Base):
     last_name = Column(String(50), nullable=True)
     role = Column(Enum("reader", "author", "admin"), nullable=False, default="reader")
     avatar_url = Column(String(500), nullable=True)
-    country = Column(String(60), nullable=True)
     member_since = Column(DateTime, server_default=func.now())

@@ -3,8 +3,20 @@
 import Link from "next/link";
 import { BookOpen, BookMarked, Layers } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import { GENRE_STYLES, DEFAULT_GENRE_STYLE, STATUS_STYLES, DEFAULT_STATUS_STYLE, GENRE_BADGE } from "@/lib/genreStyles";
-import type { StoryItem } from "@/components/StoryCard";
+import { GENRE_BADGE } from "@/lib/genreStyles";
+export type StoryItem = {
+  id: number;
+  title: string;
+  author: string;
+  genres: string[];
+  language: string[];
+  year: number;
+  status: "ongoing" | "completed" | "upcoming" | "hiatus" | "draft";
+  pages: number;
+  chapters: number;
+  rating: number;
+  description: string;
+};
 import styles from "./StoryListItem.module.css";
 
 export default function StoryListItem({
@@ -16,10 +28,6 @@ export default function StoryListItem({
 }) {
   const { t } = useTranslation();
 
-  const primaryGenre = story.genres[0] ?? "";
-  const gs = GENRE_STYLES[primaryGenre] ?? DEFAULT_GENRE_STYLE;
-  const ss = STATUS_STYLES[story.status] ?? DEFAULT_STATUS_STYLE;
-
   const languageList = story.language
     .map((l) => t(`languageNames.${l}`, { defaultValue: l }))
     .join(", ");
@@ -30,20 +38,16 @@ export default function StoryListItem({
       className={styles.item}
     >
       {/* ── Cover ── */}
-      <div className={styles.cover} style={{ background: gs.gradient }}>
+      <div className={styles.cover}>
         <div className={styles.coverOverlay} />
 
         <BookOpen
           size={32}
           className={styles.coverIcon}
-          style={{ color: gs.iconColor }}
         />
 
         <div className={styles.coverBadges}>
-          <span
-            className={styles.statusBadge}
-            style={{ background: ss.badgeBg, color: ss.badgeColor, borderColor: ss.badgeBorder }}
-          >
+          <span className={styles.statusBadge}>
             {t(`storyCard.${story.status}`, { defaultValue: story.status })}
           </span>
         </div>
@@ -58,13 +62,11 @@ export default function StoryListItem({
           <span className={styles.rating}>★ {story.rating.toFixed(1)}</span>
         </div>
 
-        {/* Author / year / country */}
+        {/* Author / year */}
         <div className={styles.meta}>
           <span>{story.author}</span>
           <span className={styles.metaDot} />
           <span>{story.year}</span>
-          <span className={styles.metaDot} />
-          <span>{t(`countries.${story.country}`, { defaultValue: story.country })}</span>
         </div>
 
         {/* Genre tags */}
