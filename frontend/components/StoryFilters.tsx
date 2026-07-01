@@ -9,18 +9,14 @@ export type Filters = {
   genres: string[];
   languages: string[];
   year: string;
-  country: string;
-  status: "all" | "ongoing" | "completed" | "upcoming" | "hiatus";
-  pages: "all" | "0-50" | "51-200" | "201-500" | "500+";
+  status: "all" | "ongoing" | "completed";
 };
 
 export const DEFAULT_FILTERS: Filters = {
   genres: [],
   languages: [],
   year: "all",
-  country: "all",
   status: "all",
-  pages: "all",
 };
 
 type Props = {
@@ -30,8 +26,6 @@ type Props = {
   availableYears: number[];
   onChange: (filters: Filters) => void;
 };
-
-const COUNTRY_KEYS = ["Russia", "Kazakhstan", "Uzbekistan", "Kyrgyzstan", "Tajikistan", "Turkmenistan"];
 
 // ── Generic multi-select dropdown ────────────────────────────────────────────
 function MultiSelectDropdown({
@@ -96,7 +90,7 @@ function MultiSelectDropdown({
         <ChevronDown
           size={13}
           style={{
-            color: "#6b6887",
+            color: "#888888",
             transform: open ? "rotate(180deg)" : "rotate(0deg)",
             transition: "transform 0.15s",
           }}
@@ -128,7 +122,6 @@ function MultiSelectDropdown({
   );
 }
 
-// ── Styled single-select dropdown ────────────────────────────────────────────
 function FilterSelect({
   value,
   onChange,
@@ -177,7 +170,7 @@ function FilterSelect({
         <ChevronDown
           size={13}
           style={{
-            color: "#6b6887",
+            color: "#888888",
             transform: open ? "rotate(180deg)" : "rotate(0deg)",
             transition: "transform 0.15s",
           }}
@@ -204,7 +197,6 @@ function FilterSelect({
   );
 }
 
-// ── Main component ────────────────────────────────────────────────────────────
 export default function StoryFilters({
   filters,
   availableGenres,
@@ -214,88 +206,50 @@ export default function StoryFilters({
 }: Props) {
   const { t } = useTranslation();
 
-  const PAGE_BUCKETS: { label: string; value: Filters["pages"] }[] = [
-    { label: t("filters.pageBuckets.all"), value: "all" },
-    { label: t("filters.pageBuckets.upTo50"), value: "0-50" },
-    { label: t("filters.pageBuckets.from50to200"), value: "51-200" },
-    { label: t("filters.pageBuckets.from200to500"), value: "201-500" },
-    { label: t("filters.pageBuckets.moreThan500"), value: "500+" },
-  ];
-
   const STATUS_OPTIONS: { label: string; value: Filters["status"] }[] = [
     { label: t("filters.status.all"), value: "all" },
     { label: t("filters.status.ongoing"), value: "ongoing" },
     { label: t("filters.status.completed"), value: "completed" },
-    { label: t("filters.status.upcoming"), value: "upcoming" },
-    { label: t("filters.status.hiatus"), value: "hiatus" },
   ];
-
-  const COUNTRY_OPTIONS = COUNTRY_KEYS.map((key) => ({
-    label: t(`countries.${key}`, { defaultValue: key }),
-    value: key,
-  }));
 
   const hasAnyFilter =
     filters.genres.length > 0 ||
     filters.languages.length > 0 ||
     filters.year !== "all" ||
-    filters.country !== "all" ||
-    filters.status !== "all" ||
-    filters.pages !== "all";
+    filters.status !== "all";
 
   return (
-    <div className="flex flex-wrap items-center gap-2 mb-6">
-      {/* Genre multi-select */}
-      <MultiSelectDropdown
-        selected={filters.genres}
-        options={availableGenres}
-        onChange={(genres) => onChange({ ...filters, genres })}
-        placeholder={t("filters.genres")}
-        getOptionLabel={(g) => t(`genreNames.${g}`, { defaultValue: g })}
-      />
+    <div className="flex flex-wrap items-center justify-between gap-2 mb-6">
+      <div className="flex flex-wrap items-center gap-2">
+        {/* Genre multi-select */}
+        <MultiSelectDropdown
+          selected={filters.genres}
+          options={availableGenres}
+          onChange={(genres) => onChange({ ...filters, genres })}
+          placeholder={t("filters.genres")}
+          getOptionLabel={(g) => t(`genreNames.${g}`, { defaultValue: g })}
+        />
 
-      {/* Language multi-select */}
-      <MultiSelectDropdown
-        selected={filters.languages}
-        options={availableLanguages}
-        onChange={(languages) => onChange({ ...filters, languages })}
-        placeholder={t("filters.language")}
-        getOptionLabel={(l) => t(`languageNames.${l}`, { defaultValue: l })}
-      />
+        {/* Language multi-select */}
+        <MultiSelectDropdown
+          selected={filters.languages}
+          options={availableLanguages}
+          onChange={(languages) => onChange({ ...filters, languages })}
+          placeholder={t("filters.language")}
+          getOptionLabel={(l) => t(`languageNames.${l}`, { defaultValue: l })}
+        />
 
-      {/* Year */}
-      <FilterSelect
-        value={filters.year}
-        placeholder={t("filters.year")}
-        options={availableYears
-          .sort((a, b) => b - a)
-          .map((y) => ({ label: String(y), value: String(y) }))}
-        onChange={(year) => onChange({ ...filters, year })}
-      />
+        {/* Year */}
+        <FilterSelect
+          value={filters.year}
+          placeholder={t("filters.year")}
+          options={availableYears
+            .sort((a, b) => b - a)
+            .map((y) => ({ label: String(y), value: String(y) }))}
+          onChange={(year) => onChange({ ...filters, year })}
+        />
 
-      {/* Country */}
-      <FilterSelect
-        value={filters.country}
-        placeholder={t("filters.country")}
-        options={COUNTRY_OPTIONS}
-        onChange={(country) => onChange({ ...filters, country })}
-      />
-
-      {/* Pages */}
-      <FilterSelect
-        value={filters.pages}
-        placeholder={t("filters.pages")}
-        options={PAGE_BUCKETS.filter((b) => b.value !== "all").map((b) => ({
-          label: b.label,
-          value: b.value,
-        }))}
-        onChange={(pages) =>
-          onChange({ ...filters, pages: pages as Filters["pages"] })
-        }
-      />
-
-      {/* Divider */}
-      <div className={styles.divider} />
+      </div>
 
       {/* Status pills */}
       <div className={styles.statusGroup}>

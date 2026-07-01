@@ -17,12 +17,12 @@
   align-items: center;
   gap: 6px;
   font-size: 12px;
-  color: #6b6887;
+  color: #888888;
   text-decoration: none;
   margin-bottom: 32px;
   transition: color 0.15s;
 }
-.backLink:hover { color: #f0eeff; }
+.backLink:hover { color: #e8e8e8; }
 
 /* ── Chapter header ── */
 .chapterHeader {
@@ -65,7 +65,7 @@
 .chapterTitle {
   font-size: 28px;
   font-weight: 800;
-  color: #f0eeff;
+  color: #e8e8e8;
   line-height: 1.25;
   margin: 0 0 6px;
 }
@@ -87,7 +87,7 @@
 .paragraph {
   font-size: 16.5px;
   line-height: 1.9;
-  color: #c9c4e0;
+  color: #cccccc;
   margin: 0 0 1.6em;
   text-indent: 1.5em;
 }
@@ -138,7 +138,7 @@
   align-items: center;
   justify-content: center;
   flex: 1;
-  color: #9490b5;
+  color: #888888;
   padding: 80px 0;
   gap: 12px;
 }

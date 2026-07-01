@@ -32,7 +32,6 @@
   "filters": {
     "genres": "Genres",
     "year": "Year",
-    "country": "Country",
     "pages": "Pages",
     "reset": "Reset",
     "language": "Language",
@@ -53,7 +52,8 @@
   },
   "languageNames": {
     "ru": "Russian",
-    "ky": "Kyrgyz"
+    "ky": "Kyrgyz",
+    "en": "English"
   },
   "genreNames": {
     "fantasy": "Fantasy",
@@ -71,19 +71,14 @@
     "comedy": "Comedy",
     "poetry": "Poetry"
   },
-  "countries": {
-    "Russia": "Russia",
-    "Kazakhstan": "Kazakhstan",
-    "Uzbekistan": "Uzbekistan",
-    "Kyrgyzstan": "Kyrgyzstan",
-    "Tajikistan": "Tajikistan",
-    "Turkmenistan": "Turkmenistan"
-  },
   "authors": {
     "popular": "Popular",
     "thisWeek": "This week",
     "subscribersSuffix": "subscribers",
-    "weeklyGainPrefix": "+"
+    "weeklyGainPrefix": "+",
+    "tabAll": "All",
+    "tabSubscribed": "Subscribed",
+    "noSubscriptions": "You haven't subscribed to any authors yet."
   },
   "authorProfile": {
     "memberSince": "Member since",
@@ -98,12 +93,37 @@
     "completed": "Completed",
     "noStories": "No stories yet."
   },
+  "authorDashboard": {
+    "manageStories": "Manage my stories",
+    "addStory": "Add story",
+    "cancelAdd": "Cancel",
+    "viewPublicProfile": "View public profile",
+    "noStories": "You haven't published any stories yet.",
+    "formTitle": "New story",
+    "titleLabel": "Title",
+    "titlePlaceholder": "Give your story a title",
+    "descriptionLabel": "Description",
+    "descriptionPlaceholder": "What's your story about?",
+    "genresLabel": "Genres",
+    "languagesLabel": "Languages",
+    "submit": "Publish",
+    "saveDraft": "Save as draft",
+    "manageChapters": "Chapters",
+    "noChapters": "No chapters yet.",
+    "chapterTitleLabel": "Chapter title",
+    "chapterTitlePlaceholder": "Enter chapter title",
+    "chapterContentLabel": "Content",
+    "chapterContentPlaceholder": "Write your chapter here…",
+    "addChapterSubmit": "Add chapter",
+    "cancelChapters": "Close"
+  },
   "storyCard": {
     "infoLabel": "Information",
     "ongoing": "Ongoing",
     "completed": "Completed",
     "upcoming": "Upcoming",
     "hiatus": "Hiatus",
+    "draft": "Draft",
     "authorLabel": "Author",
     "chaptersSuffix": "chapters",
     "pagesSuffix": "pages"
@@ -135,7 +155,13 @@
     "prologue": "Prologue",
     "epilogue": "Epilogue",
     "you": "You",
-    "notFound": "Story not found."
+    "notFound": "Story not found.",
+    "draftNotice": "This is a draft — only you can see this story.",
+    "titleLabel": "Title",
+    "descriptionLabel": "Description",
+    "publishOngoing": "Publish as Ongoing",
+    "publishCompleted": "Publish as Completed",
+    "saveDraft": "Save draft"
   },
   "auth": {
     "login": {
@@ -174,48 +200,6 @@
   "notFound": {
     "title": "Page not found",
     "goHome": "Go home"
-  },
-  "becomeAuthorModal": {
-    "close": "Close",
-    "step1": {
-      "stepLabel": "Step 1 of 3",
-      "title": "Welcome, future author!",
-      "subtitle": "Here's what authorship means on Oitoon",
-      "point1": "Share your stories with thousands of readers across Central Asia",
-      "point2": "Build your own author page and grow a loyal following",
-      "point3": "Publish stories, fanfics, and comics in any language",
-      "next": "Get started"
-    },
-    "step2": {
-      "stepLabel": "Step 2 of 3",
-      "title": "Set up your profile",
-      "subtitle": "Tell readers who you are. You can update this later.",
-      "penName": "Pen name",
-      "penNamePlaceholder": "e.g. Aiken Bekova",
-      "bio": "Bio",
-      "bioPlaceholder": "A short description about yourself…",
-      "website": "Website",
-      "websitePlaceholder": "https://yoursite.com",
-      "instagram": "Instagram",
-      "instagramPlaceholder": "@yourhandle",
-      "back": "Back",
-      "next": "Continue"
-    },
-    "step3": {
-      "stepLabel": "Step 3 of 3",
-      "title": "Start your first story",
-      "subtitle": "Every great author began with a single idea. What's yours?",
-      "promptPlaceholder": "A young girl discovers she can speak to the dead…",
-      "back": "Back",
-      "skip": "I'll do this later",
-      "next": "Create story"
-    },
-    "step4": {
-      "title": "You're an author now!",
-      "subtitle": "Your author profile is live. Start publishing and build your readership.",
-      "cta": "Create your first story",
-      "dismiss": "Go to my dashboard"
-    }
   },
   "favourites": {
     "title": "My Favourites",

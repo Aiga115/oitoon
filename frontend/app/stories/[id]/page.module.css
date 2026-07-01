@@ -18,7 +18,7 @@
   align-items: center;
   justify-content: center;
   flex: 1;
-  color: #9490b5;
+  color: #888888;
   padding: 80px 0;
 }
 
@@ -28,12 +28,12 @@
   align-items: center;
   gap: 6px;
   font-size: 12px;
-  color: #6b6887;
+  color: #888888;
   text-decoration: none;
   margin-bottom: 20px;
   transition: color 0.15s;
 }
-.backLink:hover { color: #f0eeff; }
+.backLink:hover { color: #e8e8e8; }
 
 /* ── Banner ── */
 .banner {
@@ -80,7 +80,7 @@
 .bannerTitle {
   font-size: 26px;
   font-weight: 800;
-  color: #f0eeff;
+  color: #e8e8e8;
   line-height: 1.2;
   margin: 0;
   position: relative;
@@ -113,7 +113,7 @@
 }
 
 .bannerStat strong {
-  color: #f0eeff;
+  color: #e8e8e8;
   font-weight: 600;
 }
 
@@ -165,7 +165,7 @@
   border: 1.5px solid rgba(255, 255, 255, 0.2);
   transition: border-color 0.15s, color 0.15s;
 }
-.btnGhost:hover { border-color: rgba(255,255,255,0.5); color: #f0eeff; }
+.btnGhost:hover { border-color: rgba(255,255,255,0.5); color: #e8e8e8; }
 
 /* ── Two-column body ── */
 .body {
@@ -173,7 +173,7 @@
   grid-template-columns: 1fr 210px;
   border-top: none;
   border-radius: 0 0 0 0;
-  background: #12101f;
+  background: #1c1c1c;
   border-bottom: .5px solid #ffffff0f;
 }
 
@@ -205,7 +205,7 @@
   gap: 6px;
   font-size: 10px;
   font-weight: 700;
-  color: #6b6887;
+  color: #888888;
   letter-spacing: 0.09em;
   text-transform: uppercase;
   margin: 0;
@@ -213,7 +213,7 @@
 
 .descText {
   font-size: 13px;
-  color: #9490b5;
+  color: #888888;
   line-height: 1.75;
   margin: 0;
 }
@@ -268,13 +268,13 @@
 .authorName {
   font-size: 14px;
   font-weight: 700;
-  color: #f0eeff;
+  color: #e8e8e8;
   margin: 0 0 5px;
 }
 
 .authorNote {
   font-size: 12px;
-  color: #7b7899;
+  color: #888888;
   line-height: 1.65;
   margin: 0;
 }
@@ -351,12 +351,12 @@
 .statBoxValue {
   font-size: 18px;
   font-weight: 700;
-  color: #f0eeff;
+  color: #e8e8e8;
 }
 
 .statBoxLabel {
   font-size: 10px;
-  color: #6b6887;
+  color: #888888;
   margin-top: 2px;
 }
 
@@ -367,7 +367,7 @@
 
 .langText {
   font-size: 12px;
-  color: #9490b5;
+  color: #888888;
   line-height: 1.9;
   margin: 0;
 }
@@ -376,7 +376,7 @@
 .fullSection {
   padding: 26px;
   border-top: none;
-  background: #12101f;
+  background: #1c1c1c;
   display: flex;
   flex-direction: column;
   gap: 14px;
@@ -417,7 +417,7 @@
   color: #fb923c;
 }
 .chapterItemLink:hover .chapterName {
-  color: #f0eeff;
+  color: #e8e8e8;
 }
 
 .chapterNum {
@@ -430,7 +430,7 @@
 
 .chapterName {
   font-size: 12px;
-  color: #c4bfde;
+  color: #cccccc;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -446,7 +446,7 @@
 .commentLabel {
   font-size: 13px;
   font-weight: 600;
-  color: #c4bfde;
+  color: #cccccc;
   margin-bottom: 8px;
 }
 
@@ -455,7 +455,7 @@
   background: rgba(249, 115, 22, 0.06);
   border: 1px solid rgba(249, 115, 22, 0.25);
   border-radius: 12px;
-  color: #f0eeff;
+  color: #e8e8e8;
   font-size: 13px;
   padding: 12px 14px;
   resize: none;
@@ -465,7 +465,7 @@
   transition: border-color 0.2s, background 0.2s;
   box-sizing: border-box;
 }
-.commentTextarea::placeholder { color: #5a5478; }
+.commentTextarea::placeholder { color: #666666; }
 .commentTextarea:focus {
   border-color: rgba(249, 115, 22, 0.55);
   background: rgba(249, 115, 22, 0.09);
@@ -529,7 +529,7 @@
   padding: 7px 18px;
   font-size: 13px;
   font-weight: 500;
-  color: #6b6887;
+  color: #888888;
   border-radius: 7px;
   cursor: pointer;
   background: transparent;
@@ -538,12 +538,12 @@
 }
 
 .sortTab:hover:not(.sortTabActive) {
-  color: #c4b5fd;
+  color: #fb923c;
 }
 
 .sortTabActive {
-  background-color: #252145;
-  color: #f1f0fa;
+  background-color: #242424;
+  color: #f97316;
 }
 
 /* Comment list */
@@ -587,18 +587,18 @@
 .commentUser {
   font-size: 13px;
   font-weight: 700;
-  color: #f0eeff;
+  color: #e8e8e8;
 }
 
 .commentDate {
   font-size: 11px;
-  color: #4a4570;
+  color: #444444;
   flex-shrink: 0;
 }
 
 .commentText {
   font-size: 13px;
-  color: #c4bfde;
+  color: #cccccc;
   line-height: 1.7;
   margin: 0 0 10px;
 }
@@ -612,7 +612,7 @@
 .replyBtn {
   font-size: 12px;
   font-weight: 600;
-  color: #6b6887;
+  color: #888888;
   cursor: pointer;
   background: none;
   border: none;
@@ -642,7 +642,7 @@
   background: none;
   border: none;
   cursor: pointer;
-  color: #4a4570;
+  color: #444444;
   display: flex;
   align-items: center;
   padding: 4px;
@@ -653,4 +653,80 @@
 
 .heartBtnLikeActive { color: #f97316; }
 .heartBtnDislikeActive { color: #f87171; }
+
+/* ── Draft owner view ── */
+.draftNotice {
+  background: rgba(251, 191, 36, 0.1);
+  border: 1px solid rgba(251, 191, 36, 0.25);
+  border-radius: 8px;
+  padding: 9px 14px;
+  font-size: 12px;
+  color: #fbbf24;
+  margin: 0;
+  position: relative;
+  z-index: 1;
+}
+
+.draftTitleInput {
+  font-size: 26px;
+  font-weight: 800;
+  color: #e8e8e8;
+  line-height: 1.2;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1.5px solid rgba(255, 255, 255, 0.18);
+  border-radius: 8px;
+  padding: 6px 12px;
+  outline: none;
+  width: 100%;
+  position: relative;
+  z-index: 1;
+  font-family: inherit;
+  box-sizing: border-box;
+  transition: border-color 0.15s, background 0.15s;
+}
+.draftTitleInput::placeholder { color: rgba(255,255,255,0.3); }
+.draftTitleInput:focus {
+  border-color: rgba(251, 191, 36, 0.5);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.draftDescTextarea {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  color: #888888;
+  font-size: 13px;
+  padding: 12px 14px;
+  resize: vertical;
+  outline: none;
+  font-family: inherit;
+  line-height: 1.75;
+  transition: border-color 0.2s, background 0.2s;
+  box-sizing: border-box;
+  min-height: 100px;
+}
+.draftDescTextarea::placeholder { color: #555555; }
+.draftDescTextarea:focus {
+  border-color: rgba(251, 191, 36, 0.4);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.btnSuccess {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 18px;
+  border-radius: 20px;
+  border: none;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  background: #16a34a;
+  color: #fff;
+  transition: opacity 0.15s;
+}
+.btnSuccess:hover { opacity: 0.88; }
 

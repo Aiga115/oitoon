@@ -1,3 +1,14 @@
+const RUNTIME_CHAPTERS: Record<number, Array<{ title: string; content: string }>> = {};
+
+export function addChapterToStory(storyId: number, title: string, content: string): void {
+  if (!RUNTIME_CHAPTERS[storyId]) RUNTIME_CHAPTERS[storyId] = [];
+  RUNTIME_CHAPTERS[storyId].push({ title, content });
+}
+
+export function getStoryRuntimeChapters(storyId: number): Array<{ title: string; content: string }> {
+  return RUNTIME_CHAPTERS[storyId] ?? [];
+}
+
 export type AuthorLinkPlatform = "twitter" | "instagram" | "vk" | "telegram" | "website" | "youtube";
 
 export type AuthorLink = {
@@ -610,7 +621,10 @@ const DEFAULT_EXTRA: StoryExtra = {
 };
 
 export function getStoryExtra(id: number): StoryExtra {
-  return EXTRAS[id] ?? DEFAULT_EXTRA;
+  const base = EXTRAS[id] ?? DEFAULT_EXTRA;
+  const runtimeTitles = (RUNTIME_CHAPTERS[id] ?? []).map((c) => c.title);
+  if (runtimeTitles.length === 0) return base;
+  return { ...base, chapters: [...(base.chapters ?? []), ...runtimeTitles] };
 }
 
 export function generateChapters(count: number): Chapter[] {
@@ -670,7 +684,22 @@ const ALL_CHAPTER_CONTENT: Record<number, Record<number, string[]>> = {
 };
 
 export function getChapterContent(storyId: number, chapterNum: number): string[] | null {
-  return ALL_CHAPTER_CONTENT[storyId]?.[chapterNum] ?? null;
+  const staticContent = ALL_CHAPTER_CONTENT[storyId]?.[chapterNum] ?? null;
+  if (staticContent) return staticContent;
+
+  const runtimeChapters = RUNTIME_CHAPTERS[storyId];
+  if (runtimeChapters) {
+    const baseCount = EXTRAS[storyId]?.chapters?.length ?? 0;
+    const idx = chapterNum - baseCount - 1;
+    if (idx >= 0 && idx < runtimeChapters.length) {
+      const paragraphs = runtimeChapters[idx].content
+        .split(/\n\n+/)
+        .map((p) => p.trim())
+        .filter(Boolean);
+      return paragraphs.length > 0 ? paragraphs : [runtimeChapters[idx].content || " "];
+    }
+  }
+  return null;
 }
 
 export function hasChapterContent(storyId: number): boolean {

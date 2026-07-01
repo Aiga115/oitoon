@@ -1,0 +1,234 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  background: #1c1c1c;
+  border: 0.5px solid rgba(255, 255, 255, 0.07);
+  border-radius: 14px;
+  padding: 20px;
+  margin-bottom: 24px;
+}
+
+.formTitle {
+  font-size: 15px;
+  font-weight: 700;
+  color: #e8e8e8;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.label {
+  font-size: 12px;
+  font-weight: 600;
+  color: #888888;
+}
+
+.input,
+.textarea {
+  background: #131313;
+  border: 0.5px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-size: 13px;
+  color: #e8e8e8;
+  font-family: inherit;
+  resize: vertical;
+}
+
+.input:focus,
+.textarea:focus {
+  outline: none;
+  border-color: rgba(249, 115, 22, 0.5);
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.chip {
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+  background: rgba(255, 255, 255, 0.04);
+  color: #888888;
+  border: 0.5px solid rgba(255, 255, 255, 0.1);
+  cursor: pointer;
+  transition: background-color 0.15s, color 0.15s, border-color 0.15s;
+}
+
+.chipOn {
+  background: rgba(167, 139, 250, 0.15);
+  color: #c4b5fd;
+  border-color: rgba(167, 139, 250, 0.4);
+}
+
+.formActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.btnCancel,
+.btnSubmit {
+  padding: 9px 20px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: opacity 0.15s, border-color 0.15s, color 0.15s;
+}
+
+.btnCancel {
+  background: transparent;
+  color: rgba(255, 255, 255, 0.65);
+  border: 1.5px solid rgba(255, 255, 255, 0.2);
+}
+
+.btnCancel:hover {
+  border-color: rgba(255, 255, 255, 0.5);
+  color: #e8e8e8;
+}
+
+.btnDraft {
+  padding: 9px 20px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: opacity 0.15s, border-color 0.15s, color 0.15s;
+  background: transparent;
+  color: #a78bfa;
+  border: 1.5px solid rgba(167, 139, 250, 0.4);
+}
+
+.btnDraft:hover {
+  border-color: #a78bfa;
+  opacity: 0.9;
+}
+
+.btnSubmit {
+  padding: 9px 20px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: opacity 0.15s;
+  background: #f97316;
+  color: #fff;
+  border: none;
+}
+
+.btnSubmit:hover {
+  opacity: 0.88;
+}
+
+.btnSubmit:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* ── Per-story wrapper ──────────────────────────── */
+.storyWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.btnChapters {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 0.5px solid rgba(255, 255, 255, 0.07);
+  border-top: none;
+  border-radius: 0 0 14px 14px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #888888;
+  cursor: pointer;
+  transition: color 0.15s, background 0.15s;
+  width: 100%;
+  text-align: left;
+}
+
+.btnChapters:hover {
+  color: #c4b5fd;
+  background: rgba(167, 139, 250, 0.06);
+}
+
+.btnChaptersActive {
+  color: #c4b5fd;
+  background: rgba(167, 139, 250, 0.06);
+  border-radius: 0;
+  border-bottom: none;
+}
+
+/* ── Chapter manager panel ──────────────────────── */
+.chapterManager {
+  background: #161616;
+  border: 0.5px solid rgba(255, 255, 255, 0.07);
+  border-top: none;
+  border-radius: 0 0 14px 14px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.noChapters {
+  font-size: 12px;
+  color: #555555;
+  text-align: center;
+  padding: 8px 0;
+}
+
+.chapterList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.chapterItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 12px;
+  color: #cccccc;
+  padding: 6px 8px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.chapterNum {
+  font-size: 10px;
+  font-weight: 700;
+  color: #666666;
+  min-width: 18px;
+  text-align: right;
+}
+
+/* ── Add chapter form ───────────────────────────── */
+.addChapterForm {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-top: 10px;
+  border-top: 0.5px solid rgba(255, 255, 255, 0.06);
+}

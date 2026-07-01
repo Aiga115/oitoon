@@ -4,18 +4,14 @@ import { useState } from "react";
 import { useParams } from "next/navigation";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { BookOpen, BookMarked, Layers, UserPlus } from "lucide-react";
+import { BookOpen, BookMarked, Layers, UserPlus, Settings } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import Header from "@/components/Header";
+import { useAuth } from "@/lib/auth";
+import { useSubscriptions } from "@/lib/subscriptions";
 import { MOCK_AUTHORS } from "@/lib/mockAuthors";
 import { MOCK_STORIES } from "@/lib/mockStories";
-import {
-  GENRE_STYLES,
-  DEFAULT_GENRE_STYLE,
-  STATUS_STYLES,
-  DEFAULT_STATUS_STYLE,
-} from "@/lib/genreStyles";
-import type { StoryItem } from "@/components/StoryCard";
+import { GENRE_BADGE } from "@/lib/genreStyles";
+import type { StoryItem } from "@/components/StoryListItem";
 import styles from "./page.module.css";
 
 type StoryTab = "all" | "ongoing" | "completed";
@@ -36,50 +32,51 @@ function getInitials(name: string): string {
 
 function AuthorStoryCard({ story }: { story: StoryItem }) {
   const { t } = useTranslation();
-  const primaryGenre = story.genres[0] ?? "";
-  const gs = GENRE_STYLES[primaryGenre] ?? DEFAULT_GENRE_STYLE;
-  const ss = STATUS_STYLES[story.status] ?? DEFAULT_STATUS_STYLE;
+  const languageList = story.language
+    .map((l) => t(`languageNames.${l}`, { defaultValue: l }))
+    .join(", ");
 
   return (
     <Link href={`/stories/${story.id}`} className={styles.storyCard}>
       {/* Cover */}
-      <div className={styles.cardCover} style={{ background: gs.gradient }}>
+      <div className={styles.cardCover}>
         <div className={styles.cardCoverOverlay} />
-        <BookOpen
-          size={26}
-          className={styles.cardCoverIcon}
-          style={{ color: gs.iconColor }}
-        />
-        <span
-          className={styles.cardBadge}
-          style={{ background: ss.badgeBg, color: ss.badgeColor }}
-        >
-          {t(`storyCard.${story.status}`, { defaultValue: story.status })}
-        </span>
+        <BookOpen size={32} className={styles.cardCoverIcon} />
+        <div className={styles.cardBadges}>
+          <span className={styles.cardBadge}>
+            {t(`storyCard.${story.status}`, { defaultValue: story.status })}
+          </span>
+        </div>
       </div>
 
       {/* Body */}
       <div className={styles.cardBody}>
-        <div className={styles.cardTop}>
-          <div className={styles.cardTopLeft}>
-            <h3 className={styles.cardTitle}>{story.title}</h3>
-            <div className={styles.cardPills}>
-              {story.genres.map((g) => {
-                const s = GENRE_STYLES[g] ?? DEFAULT_GENRE_STYLE;
-                return (
-                  <span
-                    key={g}
-                    className={styles.cardPill}
-                    style={{ background: s.badgeBg, color: s.badgeColor }}
-                  >
-                    {t(`genreNames.${g}`, { defaultValue: g })}
-                  </span>
-                );
-              })}
-            </div>
-          </div>
+        <div className={styles.cardTitleRow}>
+          <h3 className={styles.cardTitle}>{story.title}</h3>
           <span className={styles.cardRating}>★ {story.rating.toFixed(1)}</span>
         </div>
+
+        <div className={styles.cardMeta}>
+          <span>{story.author}</span>
+          <span className={styles.cardMetaDot} />
+          <span>{story.year}</span>
+        </div>
+
+        <div className={styles.cardPills}>
+          {story.genres.map((g) => {
+            return (
+              <span
+                key={g}
+                className={styles.cardPill}
+                style={{ background: GENRE_BADGE.bg, color: GENRE_BADGE.color, borderColor: GENRE_BADGE.border }}
+              >
+                {t(`genreNames.${g}`, { defaultValue: g })}
+              </span>
+            );
+          })}
+        </div>
+
+        <p className={styles.cardLanguages}>{languageList}</p>
 
         <p className={styles.cardDesc}>{story.description}</p>
 
@@ -104,14 +101,19 @@ function AuthorStoryCard({ story }: { story: StoryItem }) {
 export default function AuthorProfilePage() {
   const { id } = useParams<{ id: string }>();
   const { t } = useTranslation();
+  const { user, isLoggedIn } = useAuth();
+  const { isSubscribed, toggleSubscription } = useSubscriptions();
   const [tab, setTab] = useState<StoryTab>("all");
-  const [following, setFollowing] = useState(false);
 
   const author = MOCK_AUTHORS.find((a) => a.id === Number(id));
   if (!author) {
     notFound();
     return null;
   }
+
+  const following = isSubscribed(author.id);
+
+  const isOwner = isLoggedIn && user?.username === author.username;
 
   const authorStories = MOCK_STORIES.filter(
     (s) => s.author === author.displayName
@@ -125,8 +127,7 @@ export default function AuthorProfilePage() {
       : authorStories.filter((s) => s.status === tab);
 
   return (
-    <div className="flex flex-col min-h-screen">
-      <Header />
+    <div>
       <main className={styles.main}>
         <div className={styles.container}>
 
@@ -175,15 +176,22 @@ export default function AuthorProfilePage() {
             </div>
 
             <div className={styles.profileActions}>
-              <button
-                className={`${styles.btnFollow} ${following ? styles.btnFollowActive : ""}`}
-                onClick={() => setFollowing((f) => !f)}
-              >
-                <UserPlus size={14} />
-                {following
-                  ? t("authorProfile.following")
-                  : t("authorProfile.follow")}
-              </button>
+              {isOwner ? (
+                <Link href={`/authors/${id}/dashboard`} className={styles.btnFollow}>
+                  <Settings size={14} />
+                  {t("authorDashboard.manageStories")}
+                </Link>
+              ) : (
+                <button
+                  className={`${styles.btnFollow} ${following ? styles.btnFollowActive : ""}`}
+                  onClick={() => toggleSubscription(author.id)}
+                >
+                  <UserPlus size={14} />
+                  {following
+                    ? t("authorProfile.following")
+                    : t("authorProfile.follow")}
+                </button>
+              )}
             </div>
           </section>
 

@@ -1,4 +1,4 @@
-import type { StoryItem } from "@/components/StoryCard";
+import type { StoryItem } from "@/components/StoryListItem";
 
 export const MOCK_STORIES: StoryItem[] = [
   // ── Russian-language stories ────────────────────────────────────────────────
@@ -9,7 +9,6 @@ export const MOCK_STORIES: StoryItem[] = [
     genres: ["fantasy", "adventure"],
     language: ["ru"],
     year: 2023,
-    country: "Russia",
     status: "ongoing",
     pages: 120,
     chapters: 18,
@@ -24,7 +23,6 @@ export const MOCK_STORIES: StoryItem[] = [
     genres: ["mystery", "thriller"],
     language: ["ru"],
     year: 2022,
-    country: "Kazakhstan",
     status: "completed",
     pages: 85,
     chapters: 34,
@@ -39,7 +37,6 @@ export const MOCK_STORIES: StoryItem[] = [
     genres: ["steampunk", "scifi"],
     language: ["ru"],
     year: 2024,
-    country: "Russia",
     status: "ongoing",
     pages: 200,
     chapters: 52,
@@ -54,7 +51,6 @@ export const MOCK_STORIES: StoryItem[] = [
     genres: ["romance", "fantasy"],
     language: ["ru"],
     year: 2023,
-    country: "Kyrgyzstan",
     status: "completed",
     pages: 65,
     chapters: 29,
@@ -69,7 +65,6 @@ export const MOCK_STORIES: StoryItem[] = [
     genres: ["scifi", "adventure"],
     language: ["ru"],
     year: 2024,
-    country: "Russia",
     status: "ongoing",
     pages: 350,
     chapters: 11,
@@ -84,7 +79,6 @@ export const MOCK_STORIES: StoryItem[] = [
     genres: ["adventure", "mystery"],
     language: ["ru"],
     year: 2021,
-    country: "Uzbekistan",
     status: "completed",
     pages: 145,
     chapters: 7,
@@ -99,7 +93,6 @@ export const MOCK_STORIES: StoryItem[] = [
     genres: ["fantasy", "romance"],
     language: ["ru"],
     year: 2024,
-    country: "Kazakhstan",
     status: "ongoing",
     pages: 280,
     chapters: 61,
@@ -114,7 +107,6 @@ export const MOCK_STORIES: StoryItem[] = [
     genres: ["historical", "action"],
     language: ["ru"],
     year: 2022,
-    country: "Russia",
     status: "completed",
     pages: 420,
     chapters: 23,
@@ -131,7 +123,6 @@ export const MOCK_STORIES: StoryItem[] = [
     genres: ["historical", "adventure"],
     language: ["ky"],
     year: 2023,
-    country: "Kyrgyzstan",
     status: "ongoing",
     pages: 210,
     chapters: 28,
@@ -146,7 +137,6 @@ export const MOCK_STORIES: StoryItem[] = [
     genres: ["mystery", "adventure"],
     language: ["ky"],
     year: 2022,
-    country: "Kyrgyzstan",
     status: "completed",
     pages: 95,
     chapters: 15,
@@ -161,7 +151,6 @@ export const MOCK_STORIES: StoryItem[] = [
     genres: ["romance", "scifi"],
     language: ["ky"],
     year: 2024,
-    country: "Kyrgyzstan",
     status: "ongoing",
     pages: 135,
     chapters: 19,
@@ -176,7 +165,6 @@ export const MOCK_STORIES: StoryItem[] = [
     genres: ["historical", "romance"],
     language: ["ky"],
     year: 2021,
-    country: "Kyrgyzstan",
     status: "completed",
     pages: 175,
     chapters: 24,
@@ -193,7 +181,6 @@ export const MOCK_STORIES: StoryItem[] = [
     genres: ["fantasy", "adventure"],
     language: ["ru", "ky"],
     year: 2024,
-    country: "Kyrgyzstan",
     status: "ongoing",
     pages: 250,
     chapters: 33,
@@ -210,7 +197,6 @@ export const MOCK_STORIES: StoryItem[] = [
     genres: ["horror", "thriller"],
     language: ["ru"],
     year: 2023,
-    country: "Russia",
     status: "ongoing",
     pages: 310,
     chapters: 44,
@@ -225,7 +211,6 @@ export const MOCK_STORIES: StoryItem[] = [
     genres: ["drama", "mystery"],
     language: ["ru"],
     year: 2022,
-    country: "Russia",
     status: "completed",
     pages: 78,
     chapters: 20,
@@ -240,7 +225,6 @@ export const MOCK_STORIES: StoryItem[] = [
     genres: ["dystopia", "scifi"],
     language: ["ru"],
     year: 2024,
-    country: "Russia",
     status: "ongoing",
     pages: 480,
     chapters: 67,
@@ -255,7 +239,6 @@ export const MOCK_STORIES: StoryItem[] = [
     genres: ["comedy", "romance"],
     language: ["ru"],
     year: 2023,
-    country: "Kazakhstan",
     status: "completed",
     pages: 55,
     chapters: 16,
@@ -270,7 +253,6 @@ export const MOCK_STORIES: StoryItem[] = [
     genres: ["horror", "fantasy"],
     language: ["ru"],
     year: 2021,
-    country: "Russia",
     status: "completed",
     pages: 230,
     chapters: 31,
@@ -285,7 +267,6 @@ export const MOCK_STORIES: StoryItem[] = [
     genres: ["poetry", "romance"],
     language: ["ru"],
     year: 2024,
-    country: "Tajikistan",
     status: "ongoing",
     pages: 40,
     chapters: 12,
@@ -300,7 +281,6 @@ export const MOCK_STORIES: StoryItem[] = [
     genres: ["historical", "drama"],
     language: ["ru"],
     year: 2022,
-    country: "Kazakhstan",
     status: "completed",
     pages: 390,
     chapters: 48,
@@ -315,7 +295,6 @@ export const MOCK_STORIES: StoryItem[] = [
     genres: ["scifi", "thriller"],
     language: ["ru"],
     year: 2025,
-    country: "Uzbekistan",
     status: "ongoing",
     pages: 160,
     chapters: 22,
@@ -332,7 +311,6 @@ export const MOCK_STORIES: StoryItem[] = [
     genres: ["drama", "romance"],
     language: ["ky"],
     year: 2023,
-    country: "Kyrgyzstan",
     status: "completed",
     pages: 110,
     chapters: 17,
@@ -347,7 +325,6 @@ export const MOCK_STORIES: StoryItem[] = [
     genres: ["dystopia", "adventure"],
     language: ["ky"],
     year: 2024,
-    country: "Kyrgyzstan",
     status: "ongoing",
     pages: 195,
     chapters: 26,
@@ -362,7 +339,6 @@ export const MOCK_STORIES: StoryItem[] = [
     genres: ["poetry", "historical"],
     language: ["ky"],
     year: 2022,
-    country: "Kyrgyzstan",
     status: "completed",
     pages: 48,
     chapters: 10,
@@ -377,7 +353,6 @@ export const MOCK_STORIES: StoryItem[] = [
     genres: ["comedy", "adventure"],
     language: ["ky"],
     year: 2023,
-    country: "Kyrgyzstan",
     status: "completed",
     pages: 70,
     chapters: 14,
@@ -385,4 +360,57 @@ export const MOCK_STORIES: StoryItem[] = [
     description:
       "Бишкектен Ошко чейинки унутулгус сапар жөнүндө комедия. Үч дос, бузулган машина жана сансыз кыйынчылыктар.",
   },
+  {
+    id: 26,
+    title: "The Last Cartographer",
+    author: "Sarah Hollis",
+    genres: ["fantasy", "adventure"],
+    language: ["en"],
+    year: 2025,
+    status: "ongoing",
+    pages: 210,
+    chapters: 34,
+    rating: 4.7,
+    description:
+      "A mapmaker discovers that the blank territories on ancient charts are not uncharted — they are deliberately hidden.",
+  },
 ];
+
+export function addStory(input: {
+  title: string;
+  author: string;
+  description: string;
+  genres: string[];
+  language: string[];
+  status?: "ongoing" | "draft";
+}): StoryItem {
+  const nextId = MOCK_STORIES.reduce((max, s) => Math.max(max, s.id), 0) + 1;
+  const story: StoryItem = {
+    id: nextId,
+    title: input.title,
+    author: input.author,
+    genres: input.genres,
+    language: input.language,
+    year: new Date().getFullYear(),
+    status: input.status ?? "ongoing",
+    pages: 0,
+    chapters: 0,
+    rating: 0,
+    description: input.description,
+  };
+  MOCK_STORIES.push(story);
+  return story;
+}
+
+export function incrementChapterCount(storyId: number): void {
+  const story = MOCK_STORIES.find((s) => s.id === storyId);
+  if (story) story.chapters += 1;
+}
+
+export function updateStory(
+  id: number,
+  changes: Partial<Pick<StoryItem, "title" | "description" | "status">>
+): void {
+  const story = MOCK_STORIES.find((s) => s.id === id);
+  if (story) Object.assign(story, changes);
+}

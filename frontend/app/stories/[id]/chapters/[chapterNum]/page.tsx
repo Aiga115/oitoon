@@ -3,7 +3,6 @@
 import { useParams } from "next/navigation";
 import Link from "next/link";
 import { ArrowLeft, ArrowRight, BookOpen } from "lucide-react";
-import Header from "@/components/Header";
 import { MOCK_STORIES } from "@/lib/mockStories";
 import { getStoryExtra, getChapterContent } from "@/lib/mockStoryDetails";
 import styles from "./page.module.css";
@@ -24,10 +23,9 @@ export default function ChapterPage() {
 
   if (!story || !content) {
     return (
-      <div className="flex flex-col min-h-screen">
-        <Header />
+      <div>
         <main className={styles.notFound}>
-          <BookOpen size={48} style={{ color: "#4b4870" }} />
+          <BookOpen size={48} style={{ color: "#444444" }} />
           <p>Chapter not found.</p>
           <Link href={`/stories/${id}`} className={styles.backLink}>
             <ArrowLeft size={14} />
@@ -39,8 +37,7 @@ export default function ChapterPage() {
   }
 
   return (
-    <div className="flex flex-col min-h-screen">
-      <Header />
+    <div>
       <main className={styles.main}>
         <div className={styles.container}>
 

@@ -19,14 +19,14 @@
 
 /* ── Modal card ───────────────────────────────────── */
 .modal {
-  background: #13102b;
-  border: 0.5px solid rgba(167, 139, 250, 0.25);
+  background: #181818;
+  border: 1.5px solid #242424;
   border-radius: 20px;
   width: 100%;
   max-width: 420px;
   padding: 44px 44px 40px;
   position: relative;
-  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.55), 0 0 0 0.5px rgba(167, 139, 250, 0.1) inset;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.55), 0 0 0 0.5px rgba(255, 255, 255, 0.04) inset;
   animation: slideUp 0.25s ease;
   text-align: center;
 }
@@ -46,7 +46,7 @@
   border-radius: 8px;
   border: 0.5px solid rgba(255, 255, 255, 0.08);
   background: transparent;
-  color: #6b6887;
+  color: #888888;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -56,7 +56,7 @@
 
 .closeBtn:hover {
   background: rgba(255, 255, 255, 0.06);
-  color: #c4b5fd;
+  color: #e8e8e8;
 }
 
 /* ── Icon ─────────────────────────────────────────── */
@@ -80,14 +80,14 @@
 .title {
   font-size: 1.25rem;
   font-weight: 700;
-  color: #f5f3ff;
+  color: #e8e8e8;
   margin: 0 0 10px;
   letter-spacing: -0.01em;
 }
 
 .subtitle {
   font-size: 0.875rem;
-  color: #8b849e;
+  color: #888888;
   line-height: 1.6;
   margin: 0 0 32px;
 }
@@ -141,5 +141,5 @@
 
 .btnRegister:hover {
   border-color: rgba(255, 255, 255, 0.5);
-  color: #f0eeff;
+  color: #e8e8e8;
 }

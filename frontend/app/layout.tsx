@@ -3,6 +3,7 @@ import { Inter, Geist_Mono, Roboto_Mono } from "next/font/google";
 import "./globals.css";
 import I18nProvider from "@/components/I18nProvider";
 import { AuthProvider } from "@/lib/auth";
+import AppShell from "@/components/AppShell";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -36,13 +37,15 @@ export default function RootLayout({
       lang="en"
       className={`${inter.variable} ${geistMono.variable} ${robotoMono.variable} h-full antialiased`}
       style={{
-        backgroundColor: "#0d0b1e",
-        color: "#f1f0fa",
+        backgroundColor: "#141414",
+        color: "#e8e8e8",
       }}
     >
       <body className={`${inter.className} min-h-full flex flex-col`}>
         <I18nProvider>
-          <AuthProvider>{children}</AuthProvider>
+          <AuthProvider>
+            <AppShell>{children}</AppShell>
+          </AuthProvider>
         </I18nProvider>
       </body>
     </html>

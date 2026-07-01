@@ -32,7 +32,6 @@
   "filters": {
     "genres": "Жанры",
     "year": "Год",
-    "country": "Страна",
     "pages": "Страниц",
     "reset": "Сбросить",
     "language": "Язык",
@@ -53,7 +52,8 @@
   },
   "languageNames": {
     "ru": "Русский",
-    "ky": "Кыргызский"
+    "ky": "Кыргызский",
+    "en": "Английский"
   },
   "genreNames": {
     "fantasy": "Фэнтези",
@@ -71,19 +71,14 @@
     "comedy": "Комедия",
     "poetry": "Поэзия"
   },
-  "countries": {
-    "Russia": "Россия",
-    "Kazakhstan": "Казахстан",
-    "Uzbekistan": "Узбекистан",
-    "Kyrgyzstan": "Кыргызстан",
-    "Tajikistan": "Таджикистан",
-    "Turkmenistan": "Туркменистан"
-  },
   "authors": {
     "popular": "Популярные",
     "thisWeek": "На этой неделе",
     "subscribersSuffix": "подписчиков",
-    "weeklyGainPrefix": "+"
+    "weeklyGainPrefix": "+",
+    "tabAll": "Все",
+    "tabSubscribed": "Подписки",
+    "noSubscriptions": "Вы пока не подписаны ни на одного автора."
   },
   "authorProfile": {
     "memberSince": "Участник с",
@@ -98,12 +93,37 @@
     "completed": "Завершено",
     "noStories": "Историй пока нет."
   },
+  "authorDashboard": {
+    "manageStories": "Управлять историями",
+    "addStory": "Добавить историю",
+    "cancelAdd": "Отмена",
+    "viewPublicProfile": "Посмотреть публичный профиль",
+    "noStories": "Вы пока не опубликовали ни одной истории.",
+    "formTitle": "Новая история",
+    "titleLabel": "Название",
+    "titlePlaceholder": "Дайте название вашей истории",
+    "descriptionLabel": "Описание",
+    "descriptionPlaceholder": "О чём ваша история?",
+    "genresLabel": "Жанры",
+    "languagesLabel": "Языки",
+    "submit": "Опубликовать",
+    "saveDraft": "Сохранить как черновик",
+    "manageChapters": "Главы",
+    "noChapters": "Глав пока нет.",
+    "chapterTitleLabel": "Название главы",
+    "chapterTitlePlaceholder": "Введите название главы",
+    "chapterContentLabel": "Текст",
+    "chapterContentPlaceholder": "Напишите текст главы…",
+    "addChapterSubmit": "Добавить главу",
+    "cancelChapters": "Закрыть"
+  },
   "storyCard": {
     "infoLabel": "Информация",
     "ongoing": "Выходит",
     "completed": "Завершено",
     "upcoming": "Скоро",
     "hiatus": "Пауза",
+    "draft": "Черновик",
     "authorLabel": "Автор",
     "chaptersSuffix": "глав",
     "pagesSuffix": "страниц"
@@ -135,7 +155,13 @@
     "prologue": "Пролог",
     "epilogue": "Эпилог",
     "you": "Вы",
-    "notFound": "История не найдена."
+    "notFound": "История не найдена.",
+    "draftNotice": "Это черновик — только вы видите эту историю.",
+    "titleLabel": "Название",
+    "descriptionLabel": "Описание",
+    "publishOngoing": "Опубликовать как «Выходит»",
+    "publishCompleted": "Опубликовать как «Завершено»",
+    "saveDraft": "Сохранить черновик"
   },
   "auth": {
     "login": {
@@ -169,48 +195,6 @@
       "usernameOrEmailPlaceholder": "Имя пользователя или email",
       "passwordPlaceholder": "Введите пароль",
       "confirmPasswordPlaceholder": "Повторите пароль"
-    }
-  },
-  "becomeAuthorModal": {
-    "close": "Закрыть",
-    "step1": {
-      "stepLabel": "Шаг 1 из 3",
-      "title": "Добро пожаловать, будущий автор!",
-      "subtitle": "Что значит быть автором на Oitoon",
-      "point1": "Делитесь своими историями с тысячами читателей по всей Центральной Азии",
-      "point2": "Создайте свою авторскую страницу и обретите преданных читателей",
-      "point3": "Публикуйте рассказы, фанфики и комиксы на любом языке",
-      "next": "Начать"
-    },
-    "step2": {
-      "stepLabel": "Шаг 2 из 3",
-      "title": "Настройте профиль",
-      "subtitle": "Расскажите читателям о себе. Это всегда можно изменить позже.",
-      "penName": "Псевдоним",
-      "penNamePlaceholder": "например, Айкен Бекова",
-      "bio": "О себе",
-      "bioPlaceholder": "Краткое описание о вас…",
-      "website": "Веб-сайт",
-      "websitePlaceholder": "https://yoursite.com",
-      "instagram": "Instagram",
-      "instagramPlaceholder": "@ваш_ник",
-      "back": "Назад",
-      "next": "Продолжить"
-    },
-    "step3": {
-      "stepLabel": "Шаг 3 из 3",
-      "title": "Начните свою первую историю",
-      "subtitle": "Каждый великий автор начинал с одной идеи. Какова ваша?",
-      "promptPlaceholder": "Молодая девушка узнаёт, что может говорить с мёртвыми…",
-      "back": "Назад",
-      "skip": "Сделаю это позже",
-      "next": "Создать историю"
-    },
-    "step4": {
-      "title": "Вы теперь автор!",
-      "subtitle": "Ваш авторский профиль активен. Начните публиковать и собирайте свою аудиторию.",
-      "cta": "Создать первую историю",
-      "dismiss": "Перейти в мой кабинет"
     }
   },
   "favourites": {

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
 import {
@@ -10,14 +10,14 @@ import {
   Hash, Heart, BookmarkPlus, BookmarkCheck,
 } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import Header from "@/components/Header";
 import AuthRequiredModal from "@/components/AuthRequiredModal";
 import { useAuth } from "@/lib/auth";
-import { MOCK_STORIES } from "@/lib/mockStories";
+import { MOCK_STORIES, updateStory } from "@/lib/mockStories";
+import { MOCK_AUTHORS } from "@/lib/mockAuthors";
 import { getStoryExtra, generateChapters, hasChapterContent } from "@/lib/mockStoryDetails";
 import {
   GENRE_STYLES, DEFAULT_GENRE_STYLE,
-  STATUS_STYLES, DEFAULT_STATUS_STYLE,
+  STATUS_STYLES, DEFAULT_STATUS_STYLE, GENRE_BADGE,
 } from "@/lib/genreStyles";
 import styles from "./page.module.css";
 
@@ -66,21 +66,30 @@ const MOCK_SCORES = [71, 48, 38];
 export default function StoryDetailPage() {
   const { id } = useParams<{ id: string }>();
   const { t }  = useTranslation();
-  const { isLoggedIn } = useAuth();
+  const { isLoggedIn, user } = useAuth();
 
-  const storyId       = parseInt(id, 10);
+  const storyId        = parseInt(id, 10);
   const story          = MOCK_STORIES.find((s) => s.id === storyId);
   const extra          = getStoryExtra(storyId);
   const chapters       = generateChapters(story?.chapters ?? 0);
   const chaptersLinked = hasChapterContent(storyId);
 
+  /* wait for auth to hydrate before enforcing draft access */
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => { setMounted(true); }, []);
+
   /* auth gate modal */
   const [authModalOpen, setAuthModalOpen] = useState(false);
 
+  /* draft editing state */
+  const [editTitle,       setEditTitle]       = useState(story?.title ?? "");
+  const [editDescription, setEditDescription] = useState(story?.description ?? "");
+  const [currentStatus,   setCurrentStatus]   = useState(story?.status ?? "ongoing");
+
   /* story rating */
-  const [likes,     setLikes]     = useState(extra.likes);
-  const [dislikes,  setDislikes]  = useState(extra.dislikes);
-  const [userVote,  setUserVote]  = useState<"like" | "dislike" | null>(null);
+  const [likes,    setLikes]    = useState(extra.likes);
+  const [dislikes, setDislikes] = useState(extra.dislikes);
+  const [userVote, setUserVote] = useState<"like" | "dislike" | null>(null);
 
   /* favourites */
   const [inFavourites, setInFavourites] = useState(false);
@@ -105,10 +114,9 @@ export default function StoryDetailPage() {
 
   if (!story) {
     return (
-      <div className="flex flex-col min-h-screen">
-        <Header />
+      <div>
         <main className={styles.notFound}>
-          <BookOpen size={48} style={{ color: "#4b4870", marginBottom: 16 }} />
+          <BookOpen size={48} style={{ color: "#444444", marginBottom: 16 }} />
           <p>{t("storyDetail.notFound", { defaultValue: "Story not found." })}</p>
           <Link href="/stories" className={styles.backLink}>
             <ArrowLeft size={14} />
@@ -119,9 +127,48 @@ export default function StoryDetailPage() {
     );
   }
 
+  /* owner detection */
+  const authorRecord  = MOCK_AUTHORS.find((a) => a.displayName === story.author);
+  const isOwner       = isLoggedIn && !!authorRecord && user?.username === authorRecord.username;
+  const isDraft       = currentStatus === "draft";
+  const isAuthorDraft = isDraft && isOwner;
+
+  /* block non-owners from viewing drafts (only after auth hydrates) */
+  if (isDraft && mounted && !isOwner) {
+    return (
+      <div>
+        <main className={styles.notFound}>
+          <BookOpen size={48} style={{ color: "#444444", marginBottom: 16 }} />
+          <p>{t("storyDetail.notFound", { defaultValue: "Story not found." })}</p>
+          <Link href="/stories" className={styles.backLink}>
+            <ArrowLeft size={14} />
+            {t("storyDetail.backToStories", { defaultValue: "Back to stories" })}
+          </Link>
+        </main>
+      </div>
+    );
+  }
+
+  /* while auth is still loading for a draft, render nothing */
+  if (isDraft && !mounted) return null;
+
   const primaryGenre = story.genres[0] ?? "";
   const gs = GENRE_STYLES[primaryGenre] ?? DEFAULT_GENRE_STYLE;
-  const ss = STATUS_STYLES[story.status]  ?? DEFAULT_STATUS_STYLE;
+  const ss = STATUS_STYLES[currentStatus as keyof typeof STATUS_STYLES] ?? DEFAULT_STATUS_STYLE;
+
+  /* draft publish / save */
+  function handlePublish(newStatus: "ongoing" | "completed") {
+    const trimmed = editTitle.trim() || story!.title;
+    updateStory(storyId, { title: trimmed, description: editDescription.trim(), status: newStatus });
+    setCurrentStatus(newStatus);
+  }
+
+  function handleSaveDraft() {
+    updateStory(storyId, {
+      title:       editTitle.trim() || story!.title,
+      description: editDescription.trim(),
+    });
+  }
 
   /* story rating handlers */
   function handleLike() {
@@ -138,10 +185,10 @@ export default function StoryDetailPage() {
   }
 
   /* comment vote handler */
-  function handleCommentVote(id: number, vote: "up" | "down") {
+  function handleCommentVote(commentId: number, vote: "up" | "down") {
     if (!isLoggedIn) { setAuthModalOpen(true); return; }
     setComments(prev => prev.map(c => {
-      if (c.id !== id) return c;
+      if (c.id !== commentId) return c;
       const undo   = c.userVote === vote;
       const change = vote === "up" ? 1 : -1;
       const revert = c.userVote ? (c.userVote === "up" ? -1 : 1) : 0;
@@ -168,16 +215,14 @@ export default function StoryDetailPage() {
   }
 
   function chapterTitle(idx: number, total: number) {
-    if (idx === 0)              return t("storyDetail.prologue", { defaultValue: "Prologue" });
-    if (idx === total - 1 && total > 2)
-                                return t("storyDetail.epilogue", { defaultValue: "Epilogue" });
+    if (idx === 0)                        return t("storyDetail.prologue", { defaultValue: "Prologue" });
+    if (idx === total - 1 && total > 2)   return t("storyDetail.epilogue", { defaultValue: "Epilogue" });
     return `${t("storyDetail.chapter", { defaultValue: "Chapter" })} ${idx + 1}`;
   }
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div>
       {authModalOpen && <AuthRequiredModal onClose={() => setAuthModalOpen(false)} />}
-      <Header />
       <main className={styles.main}>
         <div className={styles.container}>
 
@@ -195,26 +240,41 @@ export default function StoryDetailPage() {
             />
 
             <div className={styles.bannerBadges}>
-              {story.genres.map((genre) => {
-                const s = GENRE_STYLES[genre] ?? DEFAULT_GENRE_STYLE;
-                return (
-                  <span key={genre} className={styles.genreBadge}
-                    style={{ background: s.badgeBg, color: s.badgeColor }}>
-                    {t(`genreNames.${genre}`, { defaultValue: genre })}
-                  </span>
-                );
-              })}
+              {story.genres.map((genre) => (
+                <span key={genre} className={styles.genreBadge}
+                  style={{ background: GENRE_BADGE.bg, color: GENRE_BADGE.color, borderColor: GENRE_BADGE.border }}>
+                  {t(`genreNames.${genre}`, { defaultValue: genre })}
+                </span>
+              ))}
               <span className={styles.statusBadge}
                 style={{ background: ss.badgeBg, color: ss.badgeColor }}>
-                {t(`storyCard.${story.status}`, { defaultValue: story.status })}
+                {t(`storyCard.${currentStatus}`, { defaultValue: currentStatus })}
               </span>
             </div>
 
-            <h1 className={styles.bannerTitle}>{story.title}</h1>
-            <p className={styles.bannerAuthor}>
-              {t("storyDetail.by", { defaultValue: "by" })}{" "}
-              {story.author}
-            </p>
+            {isAuthorDraft ? (
+              <input
+                className={styles.draftTitleInput}
+                value={editTitle}
+                onChange={(e) => setEditTitle(e.target.value)}
+                placeholder={t("storyDetail.titleLabel", { defaultValue: "Title" })}
+              />
+            ) : (
+              <h1 className={styles.bannerTitle}>{story.title}</h1>
+            )}
+
+            {!isAuthorDraft && (
+              <p className={styles.bannerAuthor}>
+                {t("storyDetail.by", { defaultValue: "by" })}{" "}
+                {story.author}
+              </p>
+            )}
+
+            {isAuthorDraft && (
+              <p className={styles.draftNotice}>
+                {t("storyDetail.draftNotice", { defaultValue: "This is a draft — only you can see this story." })}
+              </p>
+            )}
 
             <div className={styles.bannerStats}>
               <span className={styles.bannerStat}>
@@ -233,26 +293,39 @@ export default function StoryDetailPage() {
               </span>
               <span className={styles.bannerSep}>·</span>
               <span className={styles.bannerStat}>
-                {story.year} · {t(`countries.${story.country}`, { defaultValue: story.country })}
+                {story.year}
               </span>
             </div>
 
             <div className={styles.bannerActions}>
-              <button
-                className={styles.btnPrimary}
-                disabled
-              >
-                {t("storyDetail.readNow", { defaultValue: "Read now" })}
-              </button>
-              <button
-                className={styles.btnGhost}
-                onClick={() => isLoggedIn ? setInFavourites(v => !v) : setAuthModalOpen(true)}
-              >
-                {inFavourites
-                  ? <><BookmarkCheck size={14} /> {t("storyDetail.inFavourites", { defaultValue: "In favourites" })}</>  
-                  : <><BookmarkPlus  size={14} /> {t("storyDetail.addToFavourites", { defaultValue: "Add to my favourites" })}</>
-                }
-              </button>
+              {isAuthorDraft ? (
+                <>
+                  <button className={styles.btnPrimary} onClick={() => handlePublish("ongoing")}>
+                    {t("storyDetail.publishOngoing", { defaultValue: "Publish as Ongoing" })}
+                  </button>
+                  <button className={styles.btnSuccess} onClick={() => handlePublish("completed")}>
+                    {t("storyDetail.publishCompleted", { defaultValue: "Publish as Completed" })}
+                  </button>
+                  <button className={styles.btnGhost} onClick={handleSaveDraft}>
+                    {t("storyDetail.saveDraft", { defaultValue: "Save draft" })}
+                  </button>
+                </>
+              ) : (
+                <>
+                  <button className={styles.btnPrimary} disabled>
+                    {t("storyDetail.readNow", { defaultValue: "Read now" })}
+                  </button>
+                  <button
+                    className={styles.btnGhost}
+                    onClick={() => isLoggedIn ? setInFavourites(v => !v) : setAuthModalOpen(true)}
+                  >
+                    {inFavourites
+                      ? <><BookmarkCheck size={14} /> {t("storyDetail.inFavourites", { defaultValue: "In favourites" })}</>
+                      : <><BookmarkPlus  size={14} /> {t("storyDetail.addToFavourites", { defaultValue: "Add to my favourites" })}</>
+                    }
+                  </button>
+                </>
+              )}
             </div>
           </div>
 
@@ -266,67 +339,81 @@ export default function StoryDetailPage() {
                 <h2 className={styles.sectionTitle}>
                   {t("storyDetail.description", { defaultValue: "Description" })}
                 </h2>
-                <p className={styles.descText}>{story.description}</p>
+                {isAuthorDraft ? (
+                  <textarea
+                    className={styles.draftDescTextarea}
+                    value={editDescription}
+                    onChange={(e) => setEditDescription(e.target.value)}
+                    placeholder={t("storyDetail.descriptionLabel", { defaultValue: "Description" })}
+                    rows={5}
+                  />
+                ) : (
+                  <p className={styles.descText}>{story.description}</p>
+                )}
               </section>
 
-              <section className={styles.section}>
-                <h2 className={styles.sectionTitle}>
-                  {t("storyDetail.aboutAuthor", { defaultValue: "About the Author" })}
-                </h2>
-                <div className={styles.authorCard}>
-                  {(() => {
-                    const av = avatarStyle(story.author);
-                    return (
-                      <div className={styles.authorAvatar}
-                        style={{ background: av.bg }}>
-                        <div className={styles.avatarStripes} />
-                        <span className={styles.avatarLetter}
-                          style={{ color: av.color }}>
-                          {story.author.charAt(0)}
-                        </span>
-                      </div>
-                    );
-                  })()}
-                  <div className={styles.authorDetails}>
-                    <p className={styles.authorName}>{story.author}</p>
-                    {extra.authorNote && (
-                      <p className={styles.authorNote}>{extra.authorNote}</p>
-                    )}
-                    {extra.authorLinks.length > 0 && (
-                      <div className={styles.authorLinks}>
-                        {extra.authorLinks.map((link) => (
-                          <a key={link.platform} href={link.url}
-                            target="_blank" rel="noopener noreferrer"
-                            className={styles.authorLink}>
-                            <PlatformIcon platform={link.platform} />
-                            {platformLabel(link.platform)}
-                          </a>
-                        ))}
-                      </div>
-                    )}
+              {!isAuthorDraft && (
+                <section className={styles.section}>
+                  <h2 className={styles.sectionTitle}>
+                    {t("storyDetail.aboutAuthor", { defaultValue: "About the Author" })}
+                  </h2>
+                  <div className={styles.authorCard}>
+                    {(() => {
+                      const av = avatarStyle(story.author);
+                      return (
+                        <div className={styles.authorAvatar}
+                          style={{ background: av.bg }}>
+                          <div className={styles.avatarStripes} />
+                          <span className={styles.avatarLetter}
+                            style={{ color: av.color }}>
+                            {story.author.charAt(0)}
+                          </span>
+                        </div>
+                      );
+                    })()}
+                    <div className={styles.authorDetails}>
+                      <p className={styles.authorName}>{story.author}</p>
+                      {extra.authorNote && (
+                        <p className={styles.authorNote}>{extra.authorNote}</p>
+                      )}
+                      {extra.authorLinks.length > 0 && (
+                        <div className={styles.authorLinks}>
+                          {extra.authorLinks.map((link) => (
+                            <a key={link.platform} href={link.url}
+                              target="_blank" rel="noopener noreferrer"
+                              className={styles.authorLink}>
+                              <PlatformIcon platform={link.platform} />
+                              {platformLabel(link.platform)}
+                            </a>
+                          ))}
+                        </div>
+                      )}
+                    </div>
                   </div>
-                </div>
-              </section>
+                </section>
+              )}
 
-              <section className={styles.section}>
-                <h2 className={styles.sectionTitle}>
-                  {t("storyDetail.rateStory", { defaultValue: "Rate this story" })}
-                </h2>
-                <div className={styles.voteRow}>
-                  <button
-                    className={`${styles.voteBtn} ${userVote === "like" ? styles.voteLikeActive : ""}`}
-                    onClick={handleLike}>
-                    <ThumbsUp size={16} />
-                    <span>{likes.toLocaleString()}</span>
-                  </button>
-                  <button
-                    className={`${styles.voteBtn} ${userVote === "dislike" ? styles.voteDislikeActive : ""}`}
-                    onClick={handleDislike}>
-                    <ThumbsDown size={16} />
-                    <span>{dislikes.toLocaleString()}</span>
-                  </button>
-                </div>
-              </section>
+              {!isAuthorDraft && (
+                <section className={styles.section}>
+                  <h2 className={styles.sectionTitle}>
+                    {t("storyDetail.rateStory", { defaultValue: "Rate this story" })}
+                  </h2>
+                  <div className={styles.voteRow}>
+                    <button
+                      className={`${styles.voteBtn} ${userVote === "like" ? styles.voteLikeActive : ""}`}
+                      onClick={handleLike}>
+                      <ThumbsUp size={16} />
+                      <span>{likes.toLocaleString()}</span>
+                    </button>
+                    <button
+                      className={`${styles.voteBtn} ${userVote === "dislike" ? styles.voteDislikeActive : ""}`}
+                      onClick={handleDislike}>
+                      <ThumbsDown size={16} />
+                      <span>{dislikes.toLocaleString()}</span>
+                    </button>
+                  </div>
+                </section>
+              )}
             </div>
 
             {/* Aside */}
@@ -406,117 +493,118 @@ export default function StoryDetailPage() {
             </div>
           </section>
 
-          {/* ── Comments ── */}
-          <section className={styles.fullSection}>
-            <h2 className={styles.sectionTitle}>
-              {t("storyDetail.comments", { defaultValue: "Comments" })} ({comments.length})
-            </h2>
+          {/* ── Comments (hidden for author's own draft) ── */}
+          {!isAuthorDraft && (
+            <section className={styles.fullSection}>
+              <h2 className={styles.sectionTitle}>
+                {t("storyDetail.comments", { defaultValue: "Comments" })} ({comments.length})
+              </h2>
 
-            {/* Input */}
-            <div className={styles.commentInputWrap}>
-              {isLoggedIn ? (
-                <>
-                  <label htmlFor="comment-input" className={styles.commentLabel}>
-                    {t("storyDetail.shareThoughts", { defaultValue: "Share your thoughts" })}
-                  </label>
-                  <textarea
-                    id="comment-input"
-                    className={styles.commentTextarea}
-                    value={commentText}
-                    onChange={(e) => setCommentText(e.target.value)}
-                    placeholder={t("storyDetail.commentPlaceholder",
-                      { defaultValue: "What did you think of this story?" })}
-                    rows={3}
-                    onKeyDown={(e) => {
-                      if (e.key === "Enter" && (e.ctrlKey || e.metaKey))
-                        handleSubmitComment();
-                    }}
-                  />
-                  <div className={styles.commentInputFooter}>
-                    <button className={styles.postBtn}
-                      onClick={handleSubmitComment}
-                      disabled={!commentText.trim()}>
-                      <Send size={12} />
-                      {t("storyDetail.submitComment", { defaultValue: "Post" })}
-                    </button>
-                  </div>
-                </>
-              ) : (
-                <button
-                  className={styles.commentGuestPrompt}
-                  onClick={() => setAuthModalOpen(true)}
-                >
-                  {t("storyDetail.commentGuestPrompt", { defaultValue: "Sign in to leave a comment" })}
-                </button>
-              )}
-            </div>
-
-            {/* Sort tabs */}
-            <div className={styles.sortTabs}>
-              <button
-                className={`${styles.sortTab} ${sortOrder === "best" ? styles.sortTabActive : ""}`}
-                onClick={() => setSortOrder("best")}>
-                ↓ {t("storyDetail.sortBest", { defaultValue: "Best" })}
-              </button>
-              <button
-                className={`${styles.sortTab} ${sortOrder === "newest" ? styles.sortTabActive : ""}`}
-                onClick={() => setSortOrder("newest")}>
-                ↓ {t("storyDetail.sortNewest", { defaultValue: "Newest" })}
-              </button>
-            </div>
-
-            {/* Comment list */}
-            <div className={styles.commentList}>
-              {sortedComments.map((comment) => {
-                const av = avatarStyle(comment.user);
-                return (
-                  <div key={comment.id} className={styles.commentItem}>
-                    <div className={styles.commentAvatar}
-                      style={{ background: av.bg }}>
-                      <div className={styles.avatarStripes} />
-                      <span className={styles.avatarLetter}
-                        style={{ color: av.color }}>
-                        {comment.user.charAt(0).toUpperCase()}
-                      </span>
+              {/* Input */}
+              <div className={styles.commentInputWrap}>
+                {isLoggedIn ? (
+                  <>
+                    <label htmlFor="comment-input" className={styles.commentLabel}>
+                      {t("storyDetail.shareThoughts", { defaultValue: "Share your thoughts" })}
+                    </label>
+                    <textarea
+                      id="comment-input"
+                      className={styles.commentTextarea}
+                      value={commentText}
+                      onChange={(e) => setCommentText(e.target.value)}
+                      placeholder={t("storyDetail.commentPlaceholder",
+                        { defaultValue: "What did you think of this story?" })}
+                      rows={3}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter" && (e.ctrlKey || e.metaKey))
+                          handleSubmitComment();
+                      }}
+                    />
+                    <div className={styles.commentInputFooter}>
+                      <button className={styles.postBtn}
+                        onClick={handleSubmitComment}
+                        disabled={!commentText.trim()}>
+                        <Send size={12} />
+                        {t("storyDetail.submitComment", { defaultValue: "Post" })}
+                      </button>
                     </div>
-                    <div className={styles.commentBody}>
-                      <div className={styles.commentTop}>
-                        <span className={styles.commentUser}>{comment.user}</span>
-                        <span className={styles.commentDate}>{comment.date}</span>
+                  </>
+                ) : (
+                  <button
+                    className={styles.commentGuestPrompt}
+                    onClick={() => setAuthModalOpen(true)}
+                  >
+                    {t("storyDetail.commentGuestPrompt", { defaultValue: "Sign in to leave a comment" })}
+                  </button>
+                )}
+              </div>
+
+              {/* Sort tabs */}
+              <div className={styles.sortTabs}>
+                <button
+                  className={`${styles.sortTab} ${sortOrder === "best" ? styles.sortTabActive : ""}`}
+                  onClick={() => setSortOrder("best")}>
+                  ↓ {t("storyDetail.sortBest", { defaultValue: "Best" })}
+                </button>
+                <button
+                  className={`${styles.sortTab} ${sortOrder === "newest" ? styles.sortTabActive : ""}`}
+                  onClick={() => setSortOrder("newest")}>
+                  ↓ {t("storyDetail.sortNewest", { defaultValue: "Newest" })}
+                </button>
+              </div>
+
+              {/* Comment list */}
+              <div className={styles.commentList}>
+                {sortedComments.map((comment) => {
+                  const av = avatarStyle(comment.user);
+                  return (
+                    <div key={comment.id} className={styles.commentItem}>
+                      <div className={styles.commentAvatar}
+                        style={{ background: av.bg }}>
+                        <div className={styles.avatarStripes} />
+                        <span className={styles.avatarLetter}
+                          style={{ color: av.color }}>
+                          {comment.user.charAt(0).toUpperCase()}
+                        </span>
                       </div>
-                      <p className={styles.commentText}>{comment.text}</p>
-                      <div className={styles.commentActions}>
-                        <button className={styles.replyBtn}>
-                          ↩ {t("storyDetail.reply", { defaultValue: "Reply" })}
-                        </button>
-                        <div className={styles.voteGroup}>
-                          <button
-                            aria-label="Dislike comment"
-                            className={`${styles.heartBtn} ${comment.userVote === "down" ? styles.heartBtnDislikeActive : ""}`}
-                            onClick={() => handleCommentVote(comment.id, "down")}>
-                            <ThumbsDown size={15} />
+                      <div className={styles.commentBody}>
+                        <div className={styles.commentTop}>
+                          <span className={styles.commentUser}>{comment.user}</span>
+                          <span className={styles.commentDate}>{comment.date}</span>
+                        </div>
+                        <p className={styles.commentText}>{comment.text}</p>
+                        <div className={styles.commentActions}>
+                          <button className={styles.replyBtn}>
+                            ↩ {t("storyDetail.reply", { defaultValue: "Reply" })}
                           </button>
-                          <span className={styles.voteScore}>
-                            {comment.score > 0 ? `+${comment.score}` : comment.score}
-                          </span>
-                          <button
-                            aria-label="Like comment"
-                            className={`${styles.heartBtn} ${comment.userVote === "up" ? styles.heartBtnLikeActive : ""}`}
-                            onClick={() => handleCommentVote(comment.id, "up")}>
-                            <Heart size={15} />
-                          </button>
+                          <div className={styles.voteGroup}>
+                            <button
+                              aria-label="Dislike comment"
+                              className={`${styles.heartBtn} ${comment.userVote === "down" ? styles.heartBtnDislikeActive : ""}`}
+                              onClick={() => handleCommentVote(comment.id, "down")}>
+                              <ThumbsDown size={15} />
+                            </button>
+                            <span className={styles.voteScore}>
+                              {comment.score > 0 ? `+${comment.score}` : comment.score}
+                            </span>
+                            <button
+                              aria-label="Like comment"
+                              className={`${styles.heartBtn} ${comment.userVote === "up" ? styles.heartBtnLikeActive : ""}`}
+                              onClick={() => handleCommentVote(comment.id, "up")}>
+                              <Heart size={15} />
+                            </button>
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                );
-              })}
-            </div>
-          </section>
+                  );
+                })}
+              </div>
+            </section>
+          )}
 
         </div>
       </main>
     </div>
   );
 }
-

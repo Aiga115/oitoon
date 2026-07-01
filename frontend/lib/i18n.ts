@@ -16,6 +16,7 @@ if (!i18n.isInitialized) {
     interpolation: {
       escapeValue: false,
     },
+    initImmediate: false,
   });
 }
 
