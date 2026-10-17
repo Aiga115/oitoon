@@ -1,0 +1,6 @@
+body { max-width: 800px; margin: 0 auto; padding: 16px; font-family: sans-serif; }
+.navbar { display: flex; gap: 12px; align-items: center; padding-bottom: 12px; border-bottom: 1px solid #ccc; margin-bottom: 16px; }
+.navbar .spacer { flex: 1; }
+form { display: flex; flex-direction: column; gap: 10px; max-width: 500px; }
+.error { color: #b00020; }
+.ql-editor { min-height: 250px; }
