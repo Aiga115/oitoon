@@ -12,4 +12,8 @@ urlpatterns = [
     path("stories/<int:pk>/", views.StoryDetailView.as_view()),
     path("stories/<int:pk>/rating/", views.RatingView.as_view()),
     path("authors/<str:username>/", views.AuthorProfileView.as_view()),
+    path("admin/users/", views.AdminUserListView.as_view()),
+    path("admin/users/<int:pk>/", views.AdminUserDetailView.as_view()),
+    path("admin/stories/", views.AdminStoryListView.as_view()),
+    path("admin/stories/<int:pk>/", views.AdminStoryDetailView.as_view()),
 ]

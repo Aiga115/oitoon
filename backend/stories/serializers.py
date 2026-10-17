@@ -86,3 +86,24 @@ class StorySerializer(serializers.ModelSerializer):
 
 class RatingSerializer(serializers.Serializer):
     value = serializers.IntegerField(min_value=1, max_value=5)
+    
+class AdminUserSerializer(serializers.ModelSerializer):
+    story_count = serializers.SerializerMethodField()
+    rating_count = serializers.SerializerMethodField()
+
+    class Meta:
+        model = User
+        fields = ["id", "username", "is_staff", "is_superuser",
+                  "date_joined", "last_login", "story_count", "rating_count"]
+
+    def get_story_count(self, obj):
+        return obj.stories.count()
+
+    def get_rating_count(self, obj):
+        return obj.ratings.count()
+
+
+class AdminStorySerializer(StorySerializer):
+    """Same as StorySerializer, but an admin may change is_published."""
+    class Meta(StorySerializer.Meta):
+        read_only_fields = ["created_at", "updated_at"]

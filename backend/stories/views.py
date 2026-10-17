@@ -6,12 +6,13 @@ from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_simplejwt.views import TokenObtainPairView
+from rest_framework.permissions import AllowAny, IsAdminUser
 
 from .models import Rating, Story
 from .permissions import IsAuthorOrReadOnly, IsNormalUser
-from .serializers import (AdminTokenSerializer, RatingSerializer,
-                          RegisterSerializer, StorySerializer, UserTokenSerializer)
-
+from .serializers import (AdminStorySerializer, AdminTokenSerializer, AdminUserSerializer,
+                          RatingSerializer, RegisterSerializer, StorySerializer,
+                          UserTokenSerializer)
 
 class RegisterView(generics.CreateAPIView):
     serializer_class = RegisterSerializer
@@ -86,3 +87,37 @@ class RatingView(APIView):
             return Response({"detail": "No rating to delete."}, status=status.HTTP_404_NOT_FOUND)
         # Sprint 7: clear the recommender cache here
         return Response(status=status.HTTP_204_NO_CONTENT)
+    
+class AdminUserListView(generics.ListAPIView):
+    queryset = User.objects.order_by("id")
+    serializer_class = AdminUserSerializer
+    permission_classes = [IsAdminUser]
+
+
+class AdminUserDetailView(generics.RetrieveDestroyAPIView):
+    queryset = User.objects.all()
+    serializer_class = AdminUserSerializer
+    permission_classes = [IsAdminUser]
+
+    def destroy(self, request, *args, **kwargs):
+        target = self.get_object()
+        if target == request.user:
+            return Response({"detail": "You cannot delete yourself."},
+                            status=status.HTTP_403_FORBIDDEN)
+        if target.is_superuser:
+            return Response({"detail": "You cannot delete a superuser."},
+                            status=status.HTTP_403_FORBIDDEN)
+        # Sprint 6: clear the recommender cache here (their ratings disappear)
+        return super().destroy(request, *args, **kwargs)
+
+
+class AdminStoryListView(generics.ListAPIView):
+    queryset = Story.objects.select_related("author").order_by("-created_at")
+    serializer_class = AdminStorySerializer
+    permission_classes = [IsAdminUser]
+
+
+class AdminStoryDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Story.objects.select_related("author")
+    serializer_class = AdminStorySerializer
+    permission_classes = [IsAdminUser]
