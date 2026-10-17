@@ -4,3 +4,8 @@ body { max-width: 800px; margin: 0 auto; padding: 16px; font-family: sans-serif;
 form { display: flex; flex-direction: column; gap: 10px; max-width: 500px; }
 .error { color: #b00020; }
 .ql-editor { min-height: 250px; }
+.story-card { border-bottom: 1px solid #ddd; padding: 12px 0; }
+.story-body .ql-editor { min-height: 0; padding: 0; }
+.star { background: none; border: none; font-size: 1.6rem; cursor: pointer; color: #e0a000; }
+table { border-collapse: collapse; width: 100%; }
+th, td { border: 1px solid #ccc; padding: 6px; text-align: left; }
