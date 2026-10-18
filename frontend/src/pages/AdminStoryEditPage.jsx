@@ -21,12 +21,20 @@ export default function AdminStoryEditPage() {
       .catch((err) => setError(errorText(err)));
   }, [id]);
 
-  async function handleSave(title, content, cover, removeCover) {
+  async function handleSave(
+    title,
+    content,
+    cover,
+    removeCover,
+    status,
+    genres,
+  ) {
     setError("");
     try {
       await api.put(
         `/admin/stories/${id}/`,
         storyFormData(title, content, cover, removeCover, {
+          genres,
           is_published: published,
         }),
       );
@@ -48,6 +56,7 @@ export default function AdminStoryEditPage() {
       initialCover={story.cover}
       onSubmit={handleSave}
       error={error}
+      initialGenres={story.genres}
       extra={
         <label>
           <input

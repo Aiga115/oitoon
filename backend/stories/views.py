@@ -1,5 +1,5 @@
 from django.contrib.auth.models import User
-from django.db.models import Q
+from django.db.models import Avg, Count, F, Q
 from django.shortcuts import get_object_or_404
 from rest_framework import generics, status
 from rest_framework.permissions import AllowAny
@@ -8,11 +8,16 @@ from rest_framework.views import APIView
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework.permissions import AllowAny, IsAdminUser
 
-from .models import Rating, Story
 from .permissions import IsAuthorOrReadOnly, IsNormalUser
+from .models import Genre, Rating, Story
 from .serializers import (AdminStorySerializer, AdminTokenSerializer, AdminUserSerializer,
-                          RatingSerializer, RegisterSerializer, StorySerializer,
-                          UserTokenSerializer)
+                          GenreSerializer, RatingSerializer, RegisterSerializer,
+                          StorySerializer, UserTokenSerializer)
+
+class GenreListView(generics.ListAPIView):
+    queryset = Genre.objects.all()
+    serializer_class = GenreSerializer
+    permission_classes = [AllowAny]
 
 class RegisterView(generics.CreateAPIView):
     serializer_class = RegisterSerializer
@@ -32,7 +37,30 @@ class StoryListCreateView(generics.ListCreateAPIView):
     permission_classes = [IsAuthorOrReadOnly]
 
     def get_queryset(self):
-        return Story.objects.filter(is_published=True).select_related("author")
+        params = self.request.query_params
+        user = self.request.user
+
+        # ?mine=1 -> the logged-in author's own stories, drafts included
+        if params.get("mine") == "1":
+            stories = Story.objects.filter(author=user) if user.is_authenticated else Story.objects.none()
+        else:
+            stories = Story.objects.public()
+        stories = stories.select_related("author").prefetch_related("genres")
+
+        search = params.get("search", "").strip()
+        if search:
+            stories = stories.filter(Q(title__icontains=search) | Q(author__username__icontains=search))
+        if params.get("genre"):
+            stories = stories.filter(genres__slug=params["genre"])
+        if params.get("status") in ("draft", "coming_out", "done"):
+            stories = stories.filter(status=params["status"])
+
+        # popularity = number of ratings, then average rating, then newest
+        stories = stories.annotate(num_ratings=Count("ratings", distinct=True),
+                                   avg_rating=Avg("ratings__value"))
+        if params.get("sort") == "popular":
+            return stories.order_by("-num_ratings", F("avg_rating").desc(nulls_last=True), "-created_at")
+        return stories.order_by("-created_at")
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
@@ -42,13 +70,14 @@ class StoryDetailView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = StorySerializer
     permission_classes = [IsAuthorOrReadOnly]
     http_method_names = ["get", "put", "delete", "head", "options"]   # matches the API contract
-
+    
     def get_queryset(self):
-        stories = Story.objects.select_related("author")
+        stories = Story.objects.select_related("author").prefetch_related("genres")
+        public = Q(is_published=True) & ~Q(status="draft")
         user = self.request.user
         if user.is_authenticated:
-            return stories.filter(Q(is_published=True) | Q(author=user))
-        return stories.filter(is_published=True)
+            return stories.filter(public | Q(author=user))   # authors also see their own drafts
+        return stories.filter(public)
 
 
 class AuthorProfileView(APIView):
@@ -56,7 +85,7 @@ class AuthorProfileView(APIView):
 
     def get(self, request, username):
         author = get_object_or_404(User, username=username, is_staff=False)
-        stories = Story.objects.filter(author=author, is_published=True)
+        stories = Story.objects.public().filter(author=author).prefetch_related("genres")
         return Response({
             "username": author.username,
             "date_joined": author.date_joined,
@@ -68,7 +97,7 @@ class RatingView(APIView):
     permission_classes = [IsNormalUser]
 
     def put(self, request, pk):
-        story = get_object_or_404(Story, pk=pk, is_published=True)
+        story = get_object_or_404(Story.objects.public(), pk=pk)
         if story.author == request.user:
             return Response({"detail": "You cannot rate your own story."},
                             status=status.HTTP_403_FORBIDDEN)

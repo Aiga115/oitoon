@@ -3,9 +3,9 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import "react-quill-new/dist/quill.snow.css"; // needed so the bigger/smaller sizes display
 import api, { errorText } from "../api";
 import { useAuth } from "../AuthContext";
+import Cover from "../components/Cover";
 import RatingStars from "../components/RatingStars";
 import { formatDate, ratingText } from "../utils";
-import Cover from "../components/Cover";
 
 export default function StoryPage() {
   const { id } = useParams();
@@ -25,6 +25,7 @@ export default function StoryPage() {
     try {
       const res = await api.put(`/stories/${id}/rating/`, { value });
       setStory(res.data); // the backend returns the story with the new average
+      setError("");
     } catch (err) {
       setError(errorText(err));
     }
@@ -35,6 +36,7 @@ export default function StoryPage() {
       await api.delete(`/stories/${id}/rating/`);
       const res = await api.get(`/stories/${id}/`); // reload to get the new average
       setStory(res.data);
+      setError("");
     } catch (err) {
       setError(errorText(err));
     }
@@ -58,10 +60,14 @@ export default function StoryPage() {
   return (
     <div>
       <h1>{story.title}</h1>
-      {!story.is_published && (
+
+      {story.status === "draft" && (
         <p className="error">
-          This story is unpublished. Only you and the admins can see it.
+          This story is a draft. Only you can see it. Edit it to publish.
         </p>
+      )}
+      {!story.is_published && story.status !== "draft" && (
+        <p className="error">This story was hidden by an admin.</p>
       )}
 
       <div className="detail">
@@ -78,6 +84,10 @@ export default function StoryPage() {
             </Link>
           </span>
           <span>{formatDate(story.created_at)}</span>
+          <span>{story.status_label}</span>
+          {story.genre_names.length > 0 && (
+            <span>{story.genre_names.join(", ")}</span>
+          )}
           <span>{ratingText(story)}</span>
           {error && <span className="error">{error}</span>}
 
@@ -112,7 +122,6 @@ export default function StoryPage() {
       </div>
 
       <div className="story-text">
-        {/* The backend sanitised this HTML with nh3 before saving, so it is safe to display. */}
         <div className="ql-snow story-body">
           <div
             className="ql-editor"
