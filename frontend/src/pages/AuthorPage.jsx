@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import api from "../api";
 import { formatDate } from "../utils";
+import Hero from "../components/Hero";
+import StoryTile from "../components/StoryTile";
 
 export default function AuthorPage() {
   const { username } = useParams();
