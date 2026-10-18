@@ -16,4 +16,5 @@ urlpatterns = [
     path("admin/users/<int:pk>/", views.AdminUserDetailView.as_view()),
     path("admin/stories/", views.AdminStoryListView.as_view()),
     path("admin/stories/<int:pk>/", views.AdminStoryDetailView.as_view()),
+    path("genres/", views.GenreListView.as_view()),
 ]

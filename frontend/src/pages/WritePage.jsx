@@ -8,25 +8,15 @@ export default function WritePage() {
   const navigate = useNavigate();
   const [error, setError] = useState("");
 
-  async function handlePublish(title, content, cover) {
+  async function handleSave(title, content, cover, removeCover, status, genres) {
     setError("");
     try {
-      const res = await api.post(
-        "/stories/",
-        storyFormData(title, content, cover),
-      );
-      navigate(`/stories/${res.data.id}`);
+      const res = await api.post("/stories/", storyFormData(title, content, cover, false, { status, genres }));
+      navigate(status === "draft" ? "/my-stories" : `/stories/${res.data.id}`);
     } catch (err) {
       setError(errorText(err));
     }
   }
 
-  return (
-    <StoryForm
-      heading="Write a story"
-      submitLabel="Publish"
-      onSubmit={handlePublish}
-      error={error}
-    />
-  );
+  return <StoryForm heading="Write a story" showStatus onSubmit={handleSave} error={error} />;
 }

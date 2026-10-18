@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 from rest_framework.test import APITestCase
 
-from .models import Rating, Story
+from .models import Genre, Rating, Story
 import io
 import tempfile
 from unittest.mock import patch
@@ -189,3 +189,87 @@ class CoverTests(BaseTest):
                             format="multipart")
         self.assertEqual(r.status_code, 200)
         self.assertIsNone(r.data["cover"])
+        
+class DiscoveryTests(BaseTest):
+    def setUp(self):
+        super().setUp()
+        self.fantasy = Genre.objects.get(slug="fantasy")
+        self.horror = Genre.objects.get(slug="horror")
+        self.story.genres.add(self.fantasy)                         # "Anna story", status done
+        self.dark = Story.objects.create(author=self.ben, title="Dark Night",
+                                         content="<p>x</p>", status="coming_out")
+        self.dark.genres.add(self.horror, self.fantasy)
+        self.draft = Story.objects.create(author=self.ben, title="Hidden Draft",
+                                          content="<p>x</p>", status="draft")
+
+    def titles(self, query=""):
+        return [s["title"] for s in self.client.get("/api/stories/" + query).data]
+
+    # --- genres ---
+    def test_only_listed_genres_exist(self):
+        slugs = [g["slug"] for g in self.client.get("/api/genres/").data]
+        self.assertEqual(slugs, ["fantasy", "horror", "romcom", "action",
+                                 "slice-of-life", "superhero", "sci-fi", "drama"])
+
+    def test_unknown_genre_rejected(self):
+        self.login_as(self.anna)
+        r = self.client.post("/api/stories/", {"title": "T", "content": "<p>x</p>", "genres": ["western"]})
+        self.assertEqual(r.status_code, 400)
+
+    def test_story_with_several_genres(self):
+        self.login_as(self.anna)
+        r = self.client.post("/api/stories/", {"title": "T", "content": "<p>x</p>",
+                                               "genres": ["sci-fi", "drama"], "status": "coming_out"})
+        self.assertEqual(r.status_code, 201)
+        self.assertEqual(sorted(r.data["genres"]), ["drama", "sci-fi"])
+        self.assertEqual(r.data["status"], "coming_out")
+
+    # --- drafts ---
+    def test_drafts_are_not_public(self):
+        self.assertNotIn("Hidden Draft", self.titles())
+
+    def test_mine_shows_drafts_only_to_their_author(self):
+        self.login_as(self.ben)
+        self.assertIn("Hidden Draft", self.titles("?mine=1"))
+        self.login_as(self.anna)
+        self.assertNotIn("Hidden Draft", self.titles("?mine=1"))
+
+    def test_draft_page_only_for_author(self):
+        url = f"/api/stories/{self.draft.id}/"
+        self.assertEqual(self.client.get(url).status_code, 404)
+        self.login_as(self.anna)
+        self.assertEqual(self.client.get(url).status_code, 404)
+        self.login_as(self.ben)
+        self.assertEqual(self.client.get(url).status_code, 200)
+
+    def test_publish_a_draft(self):
+        self.login_as(self.ben)
+        r = self.client.put(f"/api/stories/{self.draft.id}/",
+                            {"title": "Hidden Draft", "content": "<p>x</p>", "status": "done"})
+        self.assertEqual(r.status_code, 200)
+        self.client.force_authenticate(user=None)
+        self.assertIn("Hidden Draft", self.titles())
+
+    def test_cannot_rate_a_draft(self):
+        self.login_as(self.anna)
+        r = self.client.put(f"/api/stories/{self.draft.id}/rating/", {"value": 4})
+        self.assertEqual(r.status_code, 404)
+
+    # --- search, filters, popularity ---
+    def test_search_by_title_and_author(self):
+        self.assertEqual(self.titles("?search=dark"), ["Dark Night"])
+        self.assertEqual(self.titles("?search=anna"), ["Anna story"])
+
+    def test_filter_by_genre(self):
+        self.assertEqual(self.titles("?genre=horror"), ["Dark Night"])
+        self.assertCountEqual(self.titles("?genre=fantasy"), ["Anna story", "Dark Night"])
+
+    def test_filter_by_status(self):
+        self.assertEqual(self.titles("?status=done"), ["Anna story"])
+        self.assertEqual(self.titles("?status=coming_out"), ["Dark Night"])
+
+    def test_sort_by_popularity(self):
+        Rating.objects.create(user=self.ben, story=self.story, value=4)
+        Rating.objects.create(user=self.root, story=self.story, value=5)
+        self.assertEqual(self.titles(), ["Dark Night", "Anna story"])
+        self.assertEqual(self.titles("?sort=popular"), ["Anna story", "Dark Night"])

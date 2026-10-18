@@ -13,6 +13,7 @@ import AdminUsersPage from "./pages/AdminUsersPage";
 import AdminUserPage from "./pages/AdminUserPage";
 import AdminStoriesPage from "./pages/AdminStoriesPage";
 import AdminStoryEditPage from "./pages/AdminStoryEditPage";
+import MyStoriesPage from "./pages/MyStoriesPage";
 import Footer from "./components/Footer";
 
 export default function App() {
@@ -25,6 +26,7 @@ export default function App() {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/admin/login" element={<LoginPage isAdmin />} />
+          <Route path="/my-stories" element={<ProtectedRoute><MyStoriesPage /></ProtectedRoute>} />
 
           <Route
             path="/write"

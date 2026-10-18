@@ -13,15 +13,37 @@ def cover_path(instance, filename):
     ext = os.path.splitext(filename)[1].lower()
     return f"covers/{uuid.uuid4().hex}{ext}"
 
+class Genre(models.Model):
+    name = models.CharField(max_length=30, unique=True)
+    slug = models.SlugField(max_length=30, unique=True)
+
+    class Meta:
+        ordering = ["id"]
+
+    def __str__(self):
+        return self.name
+
+
+class StoryQuerySet(models.QuerySet):
+    def public(self):
+        """Stories every reader may see: not hidden by an admin and not a draft."""
+        return self.filter(is_published=True).exclude(status="draft")
 
 class Story(models.Model):
+    DRAFT, COMING_OUT, DONE = "draft", "coming_out", "done"
+    STATUS_CHOICES = [(DRAFT, "Draft"), (COMING_OUT, "Coming out"), (DONE, "Done")]
+
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="stories")
     title = models.CharField(max_length=200)
     content = models.TextField()
     cover = models.ImageField(upload_to=cover_path, blank=True)
+    status = models.CharField(max_length=12, choices=STATUS_CHOICES, default=DONE)
+    genres = models.ManyToManyField(Genre, related_name="stories", blank=True)
     is_published = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    objects = StoryQuerySet.as_manager()
 
     class Meta:
         ordering = ["-created_at"]

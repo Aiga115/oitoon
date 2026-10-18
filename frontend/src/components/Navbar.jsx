@@ -9,6 +9,7 @@ export default function Navbar() {
     <nav className="navbar">
       <Link to="/">Home</Link>
       {user && <Link to="/write">Write</Link>}
+      {user && <Link to="/my-stories">My stories</Link>}
       {user && <Link to="/recommended">Recommended</Link>}
       {admin && <Link to="/admin/users">Users</Link>}
       {admin && <Link to="/admin/stories">Stories</Link>}

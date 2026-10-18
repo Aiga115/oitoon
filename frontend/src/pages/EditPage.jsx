@@ -19,14 +19,21 @@ export default function EditPage() {
       .catch(() => setError("Story not found."));
   }, [id]);
 
-  async function handleSave(title, content, cover, removeCover) {
+  async function handleSave(
+    title,
+    content,
+    cover,
+    removeCover,
+    status,
+    genres,
+  ) {
     setError("");
     try {
       await api.put(
         `/stories/${id}/`,
-        storyFormData(title, content, cover, removeCover),
+        storyFormData(title, content, cover, removeCover, { status, genres }),
       );
-      navigate(`/stories/${id}`);
+      navigate(status === "draft" ? "/my-stories" : `/stories/${id}`);
     } catch (err) {
       setError(errorText(err));
     }
@@ -42,8 +49,10 @@ export default function EditPage() {
       heading="Edit story"
       initialTitle={story.title}
       initialContent={story.content}
-      submitLabel="Save"
       initialCover={story.cover}
+      initialStatus={story.status}
+      initialGenres={story.genres}
+      showStatus
       onSubmit={handleSave}
       error={error}
     />

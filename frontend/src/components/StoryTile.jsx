@@ -7,10 +7,15 @@ export default function StoryTile({ story }) {
     <div className="tile">
       <Cover story={story} />
       <span className="no">Story: {String(story.id).padStart(3, "0")}</span>
-      <h3><Link to={`/stories/${story.id}`}>{story.title}</Link></h3>
+      <h3>
+        <Link to={`/stories/${story.id}`}>{story.title}</Link>
+      </h3>
       <span className="meta">
-        by <Link to={`/authors/${story.author_username}`}>{story.author_username}</Link> · {formatDate(story.created_at)}
+        {story.status_label}
+        {story.genre_names.length > 0 && " · " + story.genre_names.join(", ")}
+        {!story.is_published && " · hidden by admin"}
       </span>
+      <span className="meta">{ratingText(story)}</span>
       <p className="excerpt">{story.excerpt}</p>
       <span className="meta">{ratingText(story)}</span>
     </div>

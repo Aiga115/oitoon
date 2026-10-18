@@ -6,7 +6,7 @@ from rest_framework import serializers
 from rest_framework.exceptions import AuthenticationFailed
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
-from .models import Story
+from .models import Genre, Story
 
 # Only these tags/attributes survive. They match what the Quill toolbar can produce
 # (bold, italic, size). Quill sizes are span classes like "ql-size-large".
@@ -14,6 +14,11 @@ ALLOWED_TAGS = {"p", "br", "strong", "em", "u", "span"}
 ALLOWED_ATTRIBUTES = {"span": {"class"}, "p": {"class"}}
 MAX_COVER_BYTES = 2 * 1024 * 1024        # 2 MB
 ALLOWED_COVER_TYPES = {"image/jpeg", "image/png", "image/webp"}
+
+class GenreSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Genre
+        fields = ["id", "name", "slug"]
 
 class RegisterSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True, min_length=8)
@@ -53,6 +58,9 @@ class StorySerializer(serializers.ModelSerializer):
     rating_count = serializers.SerializerMethodField()
     my_rating = serializers.SerializerMethodField()
     cover = serializers.ImageField(required=False, allow_null=True)
+    genres = serializers.SlugRelatedField(many=True, slug_field="slug", queryset=Genre.objects.all(), required=False)
+    genre_names = serializers.SerializerMethodField()
+    status_label = serializers.CharField(source="get_status_display", read_only=True)
     
     def validate_cover(self, value):
         if value is None:                       # None means "remove the cover"
@@ -70,10 +78,13 @@ class StorySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Story
-        fields = ["id", "title", "content", "cover", "author_username", "is_published",
-                  "created_at", "updated_at", "excerpt",
+        fields = ["id", "title", "content", "cover", "status", "status_label", "genres", "genre_names",
+                  "author_username", "is_published", "created_at", "updated_at", "excerpt",
                   "average_rating", "rating_count", "my_rating"]
         read_only_fields = ["is_published", "created_at", "updated_at"]
+    
+    def get_genre_names(self, obj):
+        return [g.name for g in obj.genres.all()]
 
     def validate_content(self, value):
         clean = nh3.clean(value, tags=ALLOWED_TAGS, attributes=ALLOWED_ATTRIBUTES)
