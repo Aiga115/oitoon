@@ -12,7 +12,8 @@ from .models import Story
 # (bold, italic, size). Quill sizes are span classes like "ql-size-large".
 ALLOWED_TAGS = {"p", "br", "strong", "em", "u", "span"}
 ALLOWED_ATTRIBUTES = {"span": {"class"}, "p": {"class"}}
-
+MAX_COVER_BYTES = 2 * 1024 * 1024        # 2 MB
+ALLOWED_COVER_TYPES = {"image/jpeg", "image/png", "image/webp"}
 
 class RegisterSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True, min_length=8)
@@ -51,10 +52,25 @@ class StorySerializer(serializers.ModelSerializer):
     average_rating = serializers.SerializerMethodField()
     rating_count = serializers.SerializerMethodField()
     my_rating = serializers.SerializerMethodField()
+    cover = serializers.ImageField(required=False, allow_null=True)
+    
+    def validate_cover(self, value):
+        if value is None:                       # None means "remove the cover"
+            return value
+        if value.size > MAX_COVER_BYTES:
+            raise serializers.ValidationError("The cover image must be 2 MB or smaller.")
+        if getattr(value, "content_type", None) not in ALLOWED_COVER_TYPES:
+            raise serializers.ValidationError("Use a JPEG, PNG or WEBP image.")
+        return value
+
+    def update(self, instance, validated_data):
+        if "cover" in validated_data:           # replaced or removed: delete the old file first
+            instance.cover.delete(save=False)
+        return super().update(instance, validated_data)
 
     class Meta:
         model = Story
-        fields = ["id", "title", "content", "author_username", "is_published",
+        fields = ["id", "title", "content", "cover", "author_username", "is_published",
                   "created_at", "updated_at", "excerpt",
                   "average_rating", "rating_count", "my_rating"]
         read_only_fields = ["is_published", "created_at", "updated_at"]

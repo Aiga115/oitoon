@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import api, { errorText } from "../api";
 import { useAuth } from "../AuthContext";
 import StoryForm from "../components/StoryForm";
+import { storyFormData } from "../utils";
 
 export default function EditPage() {
   const { id } = useParams();
@@ -12,24 +13,39 @@ export default function EditPage() {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    api.get(`/stories/${id}/`).then((res) => setStory(res.data)).catch(() => setError("Story not found."));
+    api
+      .get(`/stories/${id}/`)
+      .then((res) => setStory(res.data))
+      .catch(() => setError("Story not found."));
   }, [id]);
 
-  async function handleSave(title, content) {
+  async function handleSave(title, content, cover, removeCover) {
     setError("");
     try {
-      await api.put(`/stories/${id}/`, { title, content });
+      await api.put(
+        `/stories/${id}/`,
+        storyFormData(title, content, cover, removeCover),
+      );
       navigate(`/stories/${id}`);
     } catch (err) {
       setError(errorText(err));
     }
   }
 
-  if (!story) return error ? <p className="error">{error}</p> : <p>Loading...</p>;
-  if (story.author_username !== user) return <p className="error">You can only edit your own stories.</p>;
+  if (!story)
+    return error ? <p className="error">{error}</p> : <p>Loading...</p>;
+  if (story.author_username !== user)
+    return <p className="error">You can only edit your own stories.</p>;
 
   return (
-    <StoryForm heading="Edit story" initialTitle={story.title} initialContent={story.content}
-               submitLabel="Save" onSubmit={handleSave} error={error} />
+    <StoryForm
+      heading="Edit story"
+      initialTitle={story.title}
+      initialContent={story.content}
+      submitLabel="Save"
+      initialCover={story.cover}
+      onSubmit={handleSave}
+      error={error}
+    />
   );
 }

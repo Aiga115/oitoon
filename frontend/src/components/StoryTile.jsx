@@ -1,9 +1,11 @@
 import { Link } from "react-router-dom";
 import { formatDate, ratingText } from "../utils";
+import Cover from "./Cover";
 
 export default function StoryTile({ story }) {
   return (
     <div className="tile">
+      <Cover story={story} />
       <span className="no">Story: {String(story.id).padStart(3, "0")}</span>
       <h3><Link to={`/stories/${story.id}`}>{story.title}</Link></h3>
       <span className="meta">
