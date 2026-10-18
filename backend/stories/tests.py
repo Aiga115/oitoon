@@ -10,6 +10,12 @@ from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test import override_settings
 from PIL import Image
 
+import pandas as pd
+from django.core.cache import cache
+from django.core.management import call_command
+from django.test import SimpleTestCase, TestCase, override_settings   # (keep override_settings)
+
+from .recommender import CACHE_KEY, score_candidates, similarity_from_ratings
 
 class BaseTest(APITestCase):
     """Builds the same small world before every test (the test database is empty each time)."""
@@ -273,3 +279,136 @@ class DiscoveryTests(BaseTest):
         Rating.objects.create(user=self.root, story=self.story, value=5)
         self.assertEqual(self.titles(), ["Dark Night", "Anna story"])
         self.assertEqual(self.titles("?sort=popular"), ["Anna story", "Dark Night"])
+        
+def ratings_frame(rows):
+    """(reader, story, value) tuples -> DataFrame, like the one built from the database."""
+    return pd.DataFrame(rows, columns=["user_id", "story_id", "value"])
+
+
+# The tiny matrix. Both readers have average 3, so after centring:
+#   r1: +2 -2 +2 -2      r2: +1 -1 +1 -1
+# Stories 1 and 3 move together, stories 1 and 2 move in opposite directions.
+TINY = [
+    ("r1", 1, 5), ("r1", 2, 1), ("r1", 3, 5), ("r1", 4, 1),
+    ("r2", 1, 4), ("r2", 2, 2), ("r2", 3, 4), ("r2", 4, 2),
+]
+
+
+class SimilarityTests(SimpleTestCase):          # no database needed
+    def test_same_direction_is_plus_one_and_opposite_is_minus_one(self):
+        sim = similarity_from_ratings(ratings_frame(TINY))
+        self.assertAlmostEqual(sim.loc[1, 3], 1.0)      # (2*2 + 1*1) / (sqrt5 * sqrt5)
+        self.assertAlmostEqual(sim.loc[1, 2], -1.0)     # (2*-2 + 1*-1) / (sqrt5 * sqrt5)
+        self.assertAlmostEqual(sim.loc[2, 4], 1.0)
+
+    def test_a_story_is_not_similar_to_itself(self):
+        sim = similarity_from_ratings(ratings_frame(TINY))
+        self.assertEqual(sim.loc[1, 1], 0.0)
+
+    def test_pair_with_one_shared_rater_is_ignored(self):
+        rows = TINY + [("r3", 1, 5), ("r3", 5, 1)]       # only r3 rated story 5, together with story 1
+        sim = similarity_from_ratings(ratings_frame(rows))
+        self.assertEqual(sim.loc[1, 5], 0.0)             # would be -1 if one shared rater were enough
+
+    def test_reader_who_rates_everything_the_same_has_no_influence(self):
+        rows = TINY + [("r4", 1, 5), ("r4", 2, 5), ("r4", 3, 5), ("r4", 4, 5)]
+        sim = similarity_from_ratings(ratings_frame(rows))
+        self.assertAlmostEqual(sim.loc[1, 3], 1.0)
+        self.assertAlmostEqual(sim.loc[1, 2], -1.0)
+
+    def test_scores_for_a_reader(self):
+        sim = similarity_from_ratings(ratings_frame(TINY))
+        # reader rated story 1 = 5 and story 2 = 1: average 3, so +2 and -2
+        scores = score_candidates(sim, {1: 5, 2: 1})
+        self.assertAlmostEqual(scores[3], 1 * 2 + (-1) * (-2))     # = 4
+        self.assertAlmostEqual(scores[4], (-1) * 2 + 1 * (-2))     # = -4
+
+    def test_no_ratings_give_an_empty_matrix(self):
+        self.assertTrue(similarity_from_ratings(ratings_frame([])).empty)
+
+
+class RecommendationApiTests(BaseTest):
+    """The same matrix, but stored in the database and asked for through the API."""
+
+    def setUp(self):
+        super().setUp()
+        cache.clear()
+        self.r1 = User.objects.create_user("r1", password="secret1234")
+        self.r2 = User.objects.create_user("r2", password="secret1234")
+        self.viewer = User.objects.create_user("viewer", password="secret1234")
+        self.newbie = User.objects.create_user("newbie", password="secret1234")
+
+        def make(title, author, status="done"):
+            return Story.objects.create(author=author, title=title, content="<p>x</p>", status=status)
+
+        self.s = {n: make(f"S{n}", self.anna) for n in range(1, 6)}
+        self.hidden = make("Draft", self.anna, status="draft")    # rated like story 3, but not public
+        self.mine = make("Mine", self.viewer)                       # rated like story 3, but the viewer's own
+
+        # r1 / r2 ratings: the TINY matrix, plus the two extra stories rated like story 3
+        for story, a, b in [(self.s[1], 5, 4), (self.s[2], 1, 2), (self.s[3], 5, 4),
+                            (self.s[4], 1, 2), (self.hidden, 5, 4), (self.mine, 5, 4)]:
+            Rating.objects.create(user=self.r1, story=story, value=a)
+            Rating.objects.create(user=self.r2, story=story, value=b)
+
+        # the viewer: average 3, likes story 1 (+2), dislikes story 2 (-2), story 5 is neutral
+        for n, value in [(1, 5), (2, 1), (5, 3)]:
+            Rating.objects.create(user=self.viewer, story=self.s[n], value=value)
+
+    def ids(self, response):
+        return [s["id"] for s in response.data["results"]]
+
+    def test_personalised_list_follows_the_formula_and_the_exclusions(self):
+        self.login_as(self.viewer)
+        r = self.client.get("/api/recommendations/")
+        self.assertEqual(r.status_code, 200)
+        self.assertEqual(r.data["mode"], "personalised")
+        # story 3 scores +4. Story 4 scores -4. Stories 1, 2, 5 are already rated,
+        # "Mine" is the reader's own and "Draft" is not public, although both score +4.
+        self.assertEqual(self.ids(r), [self.s[3].id])
+
+    def test_cold_start_shows_top_rated_stories(self):
+        self.login_as(self.newbie)
+        r = self.client.get("/api/recommendations/")
+        self.assertEqual(r.data["mode"], "top_rated")
+        ids = self.ids(r)
+        self.assertEqual(ids[0], self.s[1].id)           # best average: 5, 4, 5
+        self.assertNotIn(self.s[5].id, ids)               # only one rating
+        self.assertNotIn(self.hidden.id, ids)             # not public
+
+    def test_two_ratings_is_still_cold_start(self):
+        Rating.objects.create(user=self.newbie, story=self.s[1], value=5)
+        Rating.objects.create(user=self.newbie, story=self.s[2], value=1)
+        self.login_as(self.newbie)
+        r = self.client.get("/api/recommendations/")
+        self.assertEqual(r.data["mode"], "top_rated")
+        self.assertEqual(r.data["ratings_given"], 2)
+
+    def test_no_dummy_ratings_are_created(self):
+        before = Rating.objects.count()
+        self.login_as(self.newbie)
+        self.client.get("/api/recommendations/")
+        self.assertEqual(Rating.objects.count(), before)
+
+    def test_cache_is_filled_and_cleared_when_a_rating_changes(self):
+        self.login_as(self.viewer)
+        self.client.get("/api/recommendations/")
+        self.assertIsNotNone(cache.get(CACHE_KEY))                               # filled by the request
+        self.client.put(f"/api/stories/{self.s[3].id}/rating/", {"value": 4})    # the viewer saves a rating
+        self.assertIsNone(cache.get(CACHE_KEY))                                  # cleared by the signal
+
+    def test_only_normal_users_can_ask(self):
+        self.assertEqual(self.client.get("/api/recommendations/").status_code, 401)
+        self.login_as(self.admin)
+        self.assertEqual(self.client.get("/api/recommendations/").status_code, 403)
+
+
+class SeedCommandTests(TestCase):
+    def test_seed_creates_users_stories_and_ratings_once(self):
+        args = dict(users=5, stories=10, ratings=30, stdout=io.StringIO(), stderr=io.StringIO())
+        call_command("seed_demo", **args)
+        self.assertEqual(User.objects.filter(username__startswith="demo_").count(), 5)
+        self.assertEqual(Story.objects.filter(author__username__startswith="demo_").count(), 10)
+        self.assertGreater(Rating.objects.count(), 0)
+        call_command("seed_demo", **args)
+        self.assertEqual(Story.objects.filter(author__username__startswith="demo_").count(), 10)
