@@ -5,6 +5,7 @@ import api, { errorText } from "../api";
 import { useAuth } from "../AuthContext";
 import RatingStars from "../components/RatingStars";
 import { formatDate, ratingText } from "../utils";
+import Cover from "../components/Cover";
 
 export default function StoryPage() {
   const { id } = useParams();
@@ -64,14 +65,8 @@ export default function StoryPage() {
       )}
 
       <div className="detail">
-        <div className="detail-main">
-          {/* The backend sanitised this HTML with nh3 before saving, so it is safe to display. */}
-          <div className="ql-snow story-body">
-            <div
-              className="ql-editor"
-              dangerouslySetInnerHTML={{ __html: story.content }}
-            />
-          </div>
+        <div className="detail-cover">
+          <Cover story={story} large />
         </div>
 
         <div className="detail-side">
@@ -113,6 +108,16 @@ export default function StoryPage() {
               )}
             </>
           )}
+        </div>
+      </div>
+
+      <div className="story-text">
+        {/* The backend sanitised this HTML with nh3 before saving, so it is safe to display. */}
+        <div className="ql-snow story-body">
+          <div
+            className="ql-editor"
+            dangerouslySetInnerHTML={{ __html: story.content }}
+          />
         </div>
       </div>
     </div>

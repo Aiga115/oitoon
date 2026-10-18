@@ -1,3 +1,4 @@
+/* ---------- Design tokens: change the look here ---------- */
 :root {
   --navy: #0b2d6b;
   --bg: #fbfbf8;
@@ -11,11 +12,9 @@
   --mono: "Roboto Mono", "Courier New", monospace;
 }
 
+/* ---------- Base ---------- */
 * {
   box-sizing: border-box;
-}
-#root {
-  height: 100vh;
 }
 body {
   margin: 0;
@@ -23,10 +22,12 @@ body {
   color: var(--ink);
   font-family: var(--body);
   line-height: 1.5;
-  height: 100vh;
 }
 a {
   color: inherit;
+}
+img {
+  max-width: 100%;
 }
 main {
   max-width: 1100px;
@@ -39,8 +40,10 @@ h1 {
   font-size: clamp(1.8rem, 5vw, 3rem);
   line-height: 1.05;
   margin: 0 0 16px;
+  overflow-wrap: anywhere;
 }
 
+/* ---------- Navbar ---------- */
 .navbar {
   display: flex;
   flex-wrap: wrap;
@@ -71,7 +74,12 @@ h1 {
   padding: 4px 10px;
   font-size: 0.75rem;
 }
+.navbar button:hover {
+  background: #fff;
+  color: var(--navy);
+}
 
+/* ---------- Hero ---------- */
 .hero h1 {
   font-size: clamp(3rem, 15vw, 9rem);
   text-align: center;
@@ -88,6 +96,45 @@ h1 {
   margin: 16px 0 24px;
 }
 
+/* ---------- Covers: the box itself has the size ---------- */
+.cover {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.cover-large {
+  width: 280px;
+  max-width: 100%;
+  aspect-ratio: 1 / 1;
+  margin: 0 auto;
+}
+.cover-placeholder {
+  background: var(--ink);
+  color: var(--bg);
+}
+.cover-placeholder svg {
+  width: 40%;
+  height: auto;
+}
+.cover-preview {
+  width: 260px;
+  max-width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border: 1px solid var(--line);
+}
+
+/* ---------- Tile grid ---------- */
 .grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -101,7 +148,7 @@ h1 {
   display: flex;
   flex-direction: column;
   gap: 8px;
-  min-height: 220px;
+  min-width: 0;
 }
 .tile:hover {
   background: var(--ink);
@@ -113,6 +160,7 @@ h1 {
   font-size: 1.15rem;
   line-height: 1.15;
   margin: 0;
+  overflow-wrap: anywhere;
 }
 .tile h3 a {
   text-decoration: none;
@@ -121,6 +169,7 @@ h1 {
   font-family: var(--mono);
   font-size: 0.8rem;
   margin: 0;
+  overflow-wrap: anywhere;
 }
 .no,
 .meta {
@@ -129,13 +178,14 @@ h1 {
   text-transform: uppercase;
 }
 
+/* ---------- Story page: cover cell + info cell ---------- */
 .detail {
   display: grid;
-  grid-template-columns: 2fr 1fr;
+  grid-template-columns: 320px 1fr;
   border: 1px solid var(--line);
 }
-.detail-main {
-  padding: 24px;
+.detail-cover {
+  padding: 20px;
   border-right: 1px solid var(--line);
 }
 .detail-side {
@@ -143,17 +193,25 @@ h1 {
   display: flex;
   flex-direction: column;
   gap: 14px;
+  min-width: 0;
   font-family: var(--mono);
   font-size: 0.8rem;
   text-transform: uppercase;
+  overflow-wrap: anywhere;
+}
+.story-text {
+  max-width: 720px;
+  margin: 32px auto 0;
 }
 .story-body .ql-editor {
   padding: 0;
   min-height: 0;
   font-size: 1.05rem;
   line-height: 1.7;
+  overflow-wrap: anywhere;
 }
 
+/* ---------- Buttons ---------- */
 button,
 .button {
   font-family: var(--heading);
@@ -186,6 +244,11 @@ button.secondary:hover {
   background: var(--ink);
   color: var(--bg);
 }
+.navbar button {
+  background: none;
+  color: #fff;
+  border: 1px solid #fff;
+}
 .navbar button:hover {
   background: #fff;
   color: var(--navy);
@@ -203,6 +266,7 @@ button.secondary:hover {
   color: var(--ink);
 }
 
+/* ---------- Forms ---------- */
 form {
   display: flex;
   flex-direction: column;
@@ -210,7 +274,7 @@ form {
   max-width: 640px;
   margin: 0 auto;
 }
-input:not([type="checkbox"]) {
+input:not([type="checkbox"]):not([type="file"]) {
   font-family: var(--mono);
   font-size: 0.9rem;
   padding: 12px;
@@ -234,6 +298,7 @@ input:not([type="checkbox"]) {
   font-size: 0.85rem;
 }
 
+/* ---------- Admin tables ---------- */
 .table-wrap {
   overflow-x: auto;
 }
@@ -255,12 +320,10 @@ td {
   padding: 8px;
 }
 
+/* ---------- Footer ---------- */
 .footer {
   border-top: 1px solid var(--line);
   padding: 32px 20px 24px;
-  position: fixed;
-  bottom: 0;
-  width: stretch;
 }
 .footer .big {
   display: flex;
@@ -286,6 +349,7 @@ td {
   font-size: 0.85rem;
 }
 
+/* ---------- Responsive ---------- */
 @media (max-width: 900px) {
   .grid {
     grid-template-columns: repeat(2, 1fr);
@@ -298,12 +362,13 @@ td {
   .detail {
     grid-template-columns: 1fr;
   }
-  .detail-main {
+  .detail-cover {
     border-right: none;
     border-bottom: 1px solid var(--line);
   }
 }
 
+/* ---------- Optional: navy theme on phones. Delete this block to keep it light. ---------- */
 @media (max-width: 700px) {
   :root {
     --bg: #0b2d6b;

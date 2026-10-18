@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import api, { errorText } from "../api";
 import StoryForm from "../components/StoryForm";
+import { storyFormData } from "../utils";
 
 export default function AdminStoryEditPage() {
   const { id } = useParams();
@@ -11,22 +12,32 @@ export default function AdminStoryEditPage() {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    api.get(`/admin/stories/${id}/`)
-      .then((res) => { setStory(res.data); setPublished(res.data.is_published); })
+    api
+      .get(`/admin/stories/${id}/`)
+      .then((res) => {
+        setStory(res.data);
+        setPublished(res.data.is_published);
+      })
       .catch((err) => setError(errorText(err)));
   }, [id]);
 
-  async function handleSave(title, content) {
+  async function handleSave(title, content, cover, removeCover) {
     setError("");
     try {
-      await api.put(`/admin/stories/${id}/`, { title, content, is_published: published });
+      await api.put(
+        `/admin/stories/${id}/`,
+        storyFormData(title, content, cover, removeCover, {
+          is_published: published,
+        }),
+      );
       navigate("/admin/stories");
     } catch (err) {
       setError(errorText(err));
     }
   }
 
-  if (!story) return error ? <p className="error">{error}</p> : <p>Loading...</p>;
+  if (!story)
+    return error ? <p className="error">{error}</p> : <p>Loading...</p>;
 
   return (
     <StoryForm
@@ -34,11 +45,17 @@ export default function AdminStoryEditPage() {
       initialTitle={story.title}
       initialContent={story.content}
       submitLabel="Save"
+      initialCover={story.cover}
       onSubmit={handleSave}
       error={error}
       extra={
         <label>
-          <input type="checkbox" checked={published} onChange={(e) => setPublished(e.target.checked)} /> Published
+          <input
+            type="checkbox"
+            checked={published}
+            onChange={(e) => setPublished(e.target.checked)}
+          />{" "}
+          Published
         </label>
       }
     />
