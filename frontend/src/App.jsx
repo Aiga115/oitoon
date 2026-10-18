@@ -13,6 +13,7 @@ import AdminUsersPage from "./pages/AdminUsersPage";
 import AdminUserPage from "./pages/AdminUserPage";
 import AdminStoriesPage from "./pages/AdminStoriesPage";
 import AdminStoryEditPage from "./pages/AdminStoryEditPage";
+import Footer from "./components/Footer";
 
 export default function App() {
   return (
@@ -89,6 +90,7 @@ export default function App() {
           <Route path="*" element={<p>Page not found.</p>} />
         </Routes>
       </main>
+      <Footer />
     </>
   );
 }

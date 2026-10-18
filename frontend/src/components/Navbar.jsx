@@ -7,7 +7,7 @@ export default function Navbar() {
 
   return (
     <nav className="navbar">
-      <Link to="/">Oitoon</Link>
+      <Link to="/">Home</Link>
       {user && <Link to="/write">Write</Link>}
       {user && <Link to="/recommended">Recommended</Link>}
       {admin && <Link to="/admin/users">Users</Link>}
