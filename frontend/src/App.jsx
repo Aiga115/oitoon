@@ -15,6 +15,8 @@ import AdminStoriesPage from "./pages/AdminStoriesPage";
 import AdminStoryEditPage from "./pages/AdminStoryEditPage";
 import MyStoriesPage from "./pages/MyStoriesPage";
 import Footer from "./components/Footer";
+import RecommendedPage from "./pages/RecommendedPage";
+
 
 export default function App() {
   return (
@@ -27,6 +29,7 @@ export default function App() {
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/admin/login" element={<LoginPage isAdmin />} />
           <Route path="/my-stories" element={<ProtectedRoute><MyStoriesPage /></ProtectedRoute>} />
+          <Route path="/recommended" element={<ProtectedRoute><RecommendedPage /></ProtectedRoute>} />
 
           <Route
             path="/write"

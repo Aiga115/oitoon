@@ -1,19 +1,20 @@
 import html
 import json
 import re
+import random
 from pathlib import Path
 
 from django.contrib.auth.models import User
 from django.core.management.base import BaseCommand
 from django.db import transaction
 
-from stories.models import Genre, Story
+from stories.models import Genre, Rating, Story
+from stories.recommender import clear_cache
 
 DATA_FILE = Path(__file__).resolve().parents[2] / "data" / "tinystories_sample.json"
 PREFIX = "demo_"      # every demo user starts with this, so --reset only touches demo data
 
-# Rough keyword guesses, so the genre filter has something to show.
-# A story with no match gets "slice-of-life". Edit the words to change the mix.
+
 KEYWORDS = [
     ("superhero", {"superhero", "cape", "superpower", "hero"}),
     ("sci-fi", {"robot", "space", "alien", "planet", "rocket", "spaceship"}),
@@ -55,6 +56,7 @@ class Command(BaseCommand):
         parser.add_argument("--stories", type=int, default=60)
         parser.add_argument("--password", default="demo-pass-1234", help="password of the demo users")
         parser.add_argument("--reset", action="store_true", help="delete earlier demo users and their stories first")
+        parser.add_argument("--ratings", type=int, default=400)
 
     @transaction.atomic
     def handle(self, *args, **options):
@@ -69,6 +71,7 @@ class Command(BaseCommand):
                  for n in range(1, options["users"] + 1)]
         genres = {g.slug: g for g in Genre.objects.all()}
         genre_counts = {}
+        created = []
 
         for i, text in enumerate(texts):
             story = Story.objects.create(
@@ -81,7 +84,30 @@ class Command(BaseCommand):
             story.genres.set([genres[s] for s in slugs])
             for slug in slugs:
                 genre_counts[slug] = genre_counts.get(slug, 0) + 1
+            created.append(story)
 
-        self.stdout.write(self.style.SUCCESS(f"Created {len(users)} users and {len(texts)} stories."))
+        n_ratings = self.make_ratings(users, created, options["ratings"])
+
+        self.stdout.write(self.style.SUCCESS(
+            f"Created {len(users)} users, {len(created)} stories and {n_ratings} ratings."))
         self.stdout.write(f"Genres: {genre_counts}")
         self.stdout.write(f"Demo logins: {PREFIX}01 ... {PREFIX}{len(users):02d}, password: {options['password']}")
+
+    def make_ratings(self, users, stories, wanted):
+        """Three taste groups: readers like the stories of their own group and dislike the others."""
+        rng = random.Random(42)                        # fixed seed: the same demo data every time
+        taste = {u.id: n % 3 for n, u in enumerate(users)}
+        kind = {s.id: n % 3 for n, s in enumerate(stories)}
+        per_user = wanted // len(users)
+        batch = []
+        for user in users:
+            candidates = [s for s in stories if s.author_id != user.id]       # nobody rates their own story
+            for story in rng.sample(candidates, min(per_user, len(candidates))):
+                if kind[story.id] == taste[user.id]:
+                    value = rng.choice([4, 5, 5])
+                else:
+                    value = rng.choice([1, 2, 2, 3])
+                batch.append(Rating(user=user, story=story, value=value))
+        Rating.objects.bulk_create(batch)
+        clear_cache()                                  # bulk_create sends no signals, so clear by hand
+        return len(batch)

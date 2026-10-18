@@ -7,6 +7,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework.permissions import AllowAny, IsAdminUser
+from . import recommender
 
 from .permissions import IsAuthorOrReadOnly, IsNormalUser
 from .models import Genre, Rating, Story
@@ -107,14 +108,12 @@ class RatingView(APIView):
             user=request.user, story=story,
             defaults={"value": serializer.validated_data["value"]},
         )
-        # Sprint 7: clear the recommender cache here
         return Response(StorySerializer(story, context={"request": request}).data)
 
     def delete(self, request, pk):
         deleted, _ = Rating.objects.filter(user=request.user, story_id=pk).delete()
         if not deleted:
             return Response({"detail": "No rating to delete."}, status=status.HTTP_404_NOT_FOUND)
-        # Sprint 7: clear the recommender cache here
         return Response(status=status.HTTP_204_NO_CONTENT)
     
 class AdminUserListView(generics.ListAPIView):
@@ -150,3 +149,14 @@ class AdminStoryDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Story.objects.select_related("author")
     serializer_class = AdminStorySerializer
     permission_classes = [IsAdminUser]
+    
+class RecommendationView(APIView):
+    permission_classes = [IsNormalUser]
+
+    def get(self, request):
+        mode, ids, ratings_given = recommender.recommend_for(request.user)
+        found = Story.objects.filter(id__in=ids).select_related("author").prefetch_related("genres")
+        by_id = {s.id: s for s in found}
+        ordered = [by_id[i] for i in ids if i in by_id]
+        data = StorySerializer(ordered, many=True, context={"request": request}).data
+        return Response({"mode": mode, "ratings_given": ratings_given, "results": data})
