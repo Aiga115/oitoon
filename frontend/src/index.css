@@ -1,0 +1,444 @@
+/* ---------- Design tokens: change the look here ---------- */
+:root {
+  --navy: #0b2d6b;
+  --bg: #fbfbf8;
+  --ink: #0b2d6b;
+  --line: #b9c3d8;
+  --btn-bg: #0b2d6b;
+  --btn-ink: #ffffff;
+  --danger: #b00020;
+  --heading: "Archivo Black", "Arial Black", Impact, sans-serif;
+  --body: "Archivo", Arial, sans-serif;
+  --mono: "Roboto Mono", "Courier New", monospace;
+}
+
+/* ---------- Base ---------- */
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--body);
+  line-height: 1.5;
+}
+a {
+  color: inherit;
+}
+img {
+  max-width: 100%;
+}
+main {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 24px 20px 48px;
+}
+h1 {
+  font-family: var(--heading);
+  text-transform: uppercase;
+  font-size: clamp(1.8rem, 5vw, 3rem);
+  line-height: 1.05;
+  margin: 0 0 16px;
+  overflow-wrap: anywhere;
+}
+
+/* ---------- Navbar ---------- */
+.navbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 20px;
+  background: var(--navy);
+  color: #fff;
+  padding: 12px 20px;
+  font-family: var(--heading);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.navbar a {
+  color: #fff;
+  text-decoration: none;
+}
+.navbar a:hover {
+  text-decoration: underline;
+}
+.navbar .spacer {
+  flex: 1;
+}
+.navbar button {
+  background: none;
+  color: #fff;
+  border: 1px solid #fff;
+  padding: 4px 10px;
+  font-size: 0.75rem;
+}
+.navbar button:hover {
+  background: #fff;
+  color: var(--navy);
+}
+
+.hero h1 {
+  font-size: 100px;
+  text-align: center;
+  margin: 8px 0 0;
+  line-height: 0.95;
+}
+.tagline {
+  font-family: var(--heading);
+  text-transform: uppercase;
+  text-align: center;
+  font-size: clamp(0.75rem, 2.4vw, 1.1rem);
+  border-bottom: 1px solid var(--line);
+  padding: 16px 0;
+  margin: 16px 0 24px;
+}
+
+/* ---------- Covers: the box itself has the size ---------- */
+.cover {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.cover-large {
+  width: 280px;
+  max-width: 100%;
+  aspect-ratio: 1 / 1;
+  margin: 0 auto;
+}
+.cover-placeholder {
+  background: var(--ink);
+  color: var(--bg);
+}
+.cover-placeholder svg {
+  width: 40%;
+  height: auto;
+}
+.cover-preview {
+  width: 260px;
+  max-width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border: 1px solid var(--line);
+}
+
+/* ---------- Tile grid ---------- */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border-top: 1px solid var(--line);
+  border-left: 1px solid var(--line);
+}
+.tile {
+  border-right: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+.tile:hover {
+  background: var(--ink);
+  color: var(--bg);
+}
+.tile h3 {
+  font-family: var(--heading);
+  text-transform: uppercase;
+  font-size: 1.15rem;
+  line-height: 1.15;
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+.tile h3 a {
+  text-decoration: none;
+}
+.tile .excerpt {
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+.no,
+.meta {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+}
+
+/* ---------- Story page: cover cell + info cell ---------- */
+.detail {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  border: 1px solid var(--line);
+}
+.detail-cover {
+  padding: 20px;
+  border-right: 1px solid var(--line);
+}
+.detail-side {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-width: 0;
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  overflow-wrap: anywhere;
+}
+.story-text {
+  max-width: 720px;
+  margin: 32px auto 0;
+}
+.story-body .ql-editor {
+  padding: 0;
+  min-height: 0;
+  font-size: 1.05rem;
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+}
+
+/* ---------- Buttons ---------- */
+button,
+.button {
+  font-family: var(--heading);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-size: 0.85rem;
+  background: var(--btn-bg);
+  color: var(--btn-ink);
+  border: 1px solid var(--btn-bg);
+  padding: 12px 18px;
+  cursor: pointer;
+}
+button:hover,
+.button:hover {
+  background: transparent;
+  color: var(--ink);
+  border-color: var(--ink);
+}
+a.button {
+  display: block;
+  text-align: center;
+  text-decoration: none;
+}
+button.secondary {
+  background: transparent;
+  color: var(--ink);
+  border: 1px solid var(--ink);
+}
+button.secondary:hover {
+  background: var(--ink);
+  color: var(--bg);
+}
+.navbar button {
+  background: none;
+  color: #fff;
+  border: 1px solid #fff;
+}
+.navbar button:hover {
+  background: #fff;
+  color: var(--navy);
+}
+.star {
+  background: none;
+  border: none;
+  color: var(--ink);
+  font-size: 1.6rem;
+  padding: 0 2px;
+}
+.star:hover {
+  background: none;
+  border: none;
+  color: var(--ink);
+}
+
+/* ---------- Forms ---------- */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 640px;
+  margin: 0 auto;
+}
+input:not([type="checkbox"]):not([type="file"]) {
+  font-family: var(--mono);
+  font-size: 0.9rem;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 0;
+  background: transparent;
+  color: inherit;
+}
+.ql-toolbar,
+.ql-container {
+  background: #fff;
+  color: #0b2d6b;
+  border-color: var(--line) !important;
+}
+.ql-editor {
+  min-height: 250px;
+}
+.error {
+  color: var(--danger);
+  font-family: var(--mono);
+  font-size: 0.85rem;
+}
+
+/* ---------- Admin tables ---------- */
+.table-wrap {
+  overflow-x: auto;
+}
+table {
+  border-collapse: collapse;
+  width: 100%;
+  font-family: var(--mono);
+  font-size: 0.8rem;
+}
+th {
+  background: var(--navy);
+  color: #fff;
+  text-transform: uppercase;
+  text-align: left;
+}
+th,
+td {
+  border: 1px solid var(--line);
+  padding: 8px;
+}
+
+/* ---------- Footer ---------- */
+.footer {
+  border-top: 1px solid var(--line);
+  padding: 32px 20px 24px;
+}
+.footer .big {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px 28px;
+}
+.footer .big a {
+  font-family: var(--heading);
+  text-transform: uppercase;
+  text-decoration: none;
+  font-size: clamp(1rem, 2.5vw, 1.4rem);
+}
+.footer .big a:hover {
+  text-decoration: underline;
+}
+.footer .bottom {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 28px;
+  font-family: var(--heading);
+  text-transform: uppercase;
+  font-size: 0.85rem;
+}
+
+/* ---------- Discovery: filters and genres ---------- */
+select {
+  font-family: var(--mono);
+  font-size: 0.85rem;
+  padding: 12px 42px 12px 12px; /* extra space on the right for the arrow */
+  border: 1px solid var(--line);
+  border-radius: 0;
+  background-color: transparent;
+  color: inherit;
+  -webkit-appearance: none;
+  appearance: none; /* hide the browser's own arrow */
+  background-image:
+    linear-gradient(45deg, transparent 50%, currentColor 50%),
+    linear-gradient(135deg, currentColor 50%, transparent 50%);
+  background-position:
+    calc(100% - 22px) 50%,
+    calc(100% - 16px) 50%;
+  background-size:
+    6px 6px,
+    6px 6px;
+  background-repeat: no-repeat;
+  cursor: pointer;
+}
+
+select option {
+  color: #0b2d6b;
+  background: #fff;
+}
+
+form.filters {
+  flex-direction: row;
+  flex-wrap: wrap;
+  max-width: none;
+  margin: 0 0 20px;
+}
+form.filters input {
+  flex: 1 1 220px;
+}
+fieldset {
+  border: 1px solid var(--line);
+  padding: 10px 14px;
+  margin: 0;
+}
+legend {
+  font-family: var(--heading);
+  text-transform: uppercase;
+  font-size: 0.75rem;
+}
+.genre-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 16px;
+  font-family: var(--mono);
+  font-size: 0.8rem;
+}
+
+.notice {
+  font-family: var(--mono);
+  font-size: 0.85rem;
+  border: 1px solid var(--line);
+  padding: 12px;
+  margin-bottom: 20px;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 900px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 600px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+  .detail {
+    grid-template-columns: 1fr;
+  }
+  .detail-cover {
+    border-right: none;
+    border-bottom: 1px solid var(--line);
+  }
+}
+
+/* ---------- Optional: navy theme on phones. Delete this block to keep it light. ---------- */
+@media (max-width: 700px) {
+  :root {
+    --bg: #0b2d6b;
+    --ink: #ffffff;
+    --line: rgba(255, 255, 255, 0.35);
+    --btn-bg: #ffffff;
+    --btn-ink: #0b2d6b;
+    --danger: #ffb4b4;
+  }
+}
