@@ -1,17 +1,17 @@
 services:
   backend:
     build: ./backend
-    env_file: ./backend/.env            # SECRET_KEY comes from your local .env
+    env_file: ./backend/.env
     environment:
-      DEBUG: "True"                     # local only: lets Django serve uploaded cover images
+      DEBUG: "True"
       ALLOWED_HOSTS: localhost,127.0.0.1
       CORS_ORIGINS: http://localhost:8080
       DATABASE_URL: sqlite:////data/db.sqlite3
     ports:
       - "8000:8000"
     volumes:
-      - db_data:/data                   # the database survives restarts
-      - media_data:/app/media           # so do the uploaded covers
+      - db_data:/data
+      - media_data:/app/media
 
   frontend:
     build:
